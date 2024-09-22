@@ -7,9 +7,7 @@ object AptGetDistUpgradeChecker {
     )
 
     fun isValid(command: String): Boolean {
-        // Удаляем префикс 'RUN' и пробелы
         val cmd = command.removePrefix("RUN").trim()
-        // Проверяем, содержит ли команда 'apt-get dist-upgrade'
         return !pattern.containsMatchIn(cmd)
     }
 }

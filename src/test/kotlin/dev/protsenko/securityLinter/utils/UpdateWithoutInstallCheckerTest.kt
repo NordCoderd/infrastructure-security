@@ -191,7 +191,6 @@ class UpdateWithoutInstallCheckerTest : TestCase() {
             "awk '{print $1}' file.txt"
         )
         for (command in commands) {
-            // Эти команды не должны вызывать срабатывание предупреждения
             assertTrue(
                 "Command '$command' should be valid (no package manager commands)",
                 UpdateWithoutInstallChecker.isValid(command)

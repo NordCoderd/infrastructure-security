@@ -1,7 +1,9 @@
 # Infrastructure Security Plugin
 
-## Features
+<!-- Plugin description -->
+Plugin provides an easy and effective way to identify security issues (misconfigurations) and adhere to best practices for Infrastructure as Code (IaC) files.
 
+## Features
 - **Dockerfile Analysis**: Includes 23 inspections aimed at detecting vulnerabilities and optimizing Docker images.
 
 ## Planned Features
@@ -13,3 +15,4 @@
 
 ## Thanks
 - [Trivy-checks](https://github.com/aquasecurity/trivy-checks/tree/main) for providing a good starting point by porting their Dockerfile rules.
+<!-- Plugin description end -->
