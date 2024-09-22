@@ -1,4 +1,11 @@
 package dev.protsenko.securityLinter.docker
 
-class DS009SudoIsUsedInspectionTest {
-}
+import com.intellij.codeInspection.LocalInspectionTool
+import dev.protsenko.securityLinter.core.DockerHighlightingBaseTest
+import dev.protsenko.securityLinter.docker.inspection.DS009SudoIsUsedInspection
+
+class DS009SudoIsUsedInspectionTest(
+    override val dockerRuleFolder: String = "DS009",
+    override val customDockerFiles: Set<String> = emptySet(),
+    override val targetInspection: LocalInspectionTool = DS009SudoIsUsedInspection()
+) : DockerHighlightingBaseTest()

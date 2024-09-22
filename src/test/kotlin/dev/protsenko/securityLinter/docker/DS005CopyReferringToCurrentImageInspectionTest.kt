@@ -2,9 +2,10 @@ package dev.protsenko.securityLinter.docker
 
 import com.intellij.codeInspection.LocalInspectionTool
 import dev.protsenko.securityLinter.core.DockerHighlightingBaseTest
+import dev.protsenko.securityLinter.docker.inspection.DS005CopyReferringToCurrentImageInspection
 
-class DS004AddInsteadCopyInspectionTest(
-    override val dockerRuleFolder: String = "DS004",
-    override val customDockerFiles: Set<String> = emptySet<String>(),
-    override val targetInspection: LocalInspectionTool = DS004AddInsteadCopyInspection()
+class DS005CopyReferringToCurrentImageInspectionTest(
+    override val dockerRuleFolder: String = "DS005",
+    override val customDockerFiles: Set<String> = setOf("Dockerfile-multi-step.denied"),
+    override val targetInspection: LocalInspectionTool = DS005CopyReferringToCurrentImageInspection()
 ) : DockerHighlightingBaseTest()

@@ -1,0 +1,5 @@
+FROM golang AS build
+WORKDIR /app
+RUN --mount=type=bind,target=. go build -o /myapp ./cmd
+
+COPY --from=build build.go test /usr/bin/

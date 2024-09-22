@@ -1,3 +1,4 @@
 FROM alpine:3.13
 USER mike
-EXPOSE 22
+<warning descr="Port 22 exposed
+Exposing port 22 might allow users to SSH into the container.">EXPOSE 22</warning>

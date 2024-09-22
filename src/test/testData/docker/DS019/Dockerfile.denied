@@ -1,3 +1,4 @@
 FROM node:12
 USER mike
-RUN apt-get install apt-utils && apt-get clean
+<warning descr="'apt-get' missing '-y' to avoid manual input
+'apt-get' calls should use the flag '-y' to avoid manual user input.">RUN apt-get install apt-utils && apt-get clean</warning>

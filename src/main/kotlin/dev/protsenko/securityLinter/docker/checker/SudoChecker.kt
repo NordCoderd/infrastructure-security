@@ -1,4 +1,4 @@
-package dev.protsenko.securityLinter.utils
+package dev.protsenko.securityLinter.docker.checker
 
 object SudoChecker {
     private val regex = Regex("\\bsudo\\b")

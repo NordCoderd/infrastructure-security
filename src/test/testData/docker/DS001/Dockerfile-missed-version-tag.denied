@@ -1,4 +1,4 @@
-<warning descr="[Missed version tag
-When using a 'FROM' statement you should use a specific tag to avoid uncontrolled behavior when the image is updated.]">FROM debian</warning>
+<warning descr="Missing version tag
+When using a 'FROM' statement you should use a specific tag to avoid uncontrolled behavior when the image is updated.">FROM debian</warning>
 RUN apt-get update && apt-get -y install vim && apt-get clean
 USER foo

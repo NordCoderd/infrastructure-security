@@ -1,3 +1,4 @@
 FROM busybox:1.33.1
 USER mike
-MAINTAINER Lukas Martinelli <me@lukasmartinelli.ch>
+<warning descr="Deprecated MAINTAINER used
+MAINTAINER has been deprecated since Docker 1.13.0.">MAINTAINER Lukas Martinelli <me@lukasmartinelli.ch></warning>

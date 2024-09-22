@@ -1,4 +1,5 @@
 FROM nginx:2.2
-RUN cd /usr/share/nginx/html
+<warning descr="'RUN cd ...' to change directory
+Use WORKDIR instead of proliferating instructions like 'RUN cd ?  do-something', which are hard to read, troubleshoot, and maintain.">RUN cd /usr/share/nginx/html</warning>
 USER mike
-CMD cd /usr/share/nginx/html && sed -e s/Docker/\"$AUTHOR\"/ Hello_docker.html > index.html ; nginx -g 'daemon off;'
+CMD cd /usr/share/nginx/html && sed -e s/Docker/\"nordcoderd\"/ Hello_docker.html > index.html ; nginx -g 'daemon off;'

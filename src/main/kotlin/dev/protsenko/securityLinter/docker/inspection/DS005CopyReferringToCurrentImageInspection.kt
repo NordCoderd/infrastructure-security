@@ -1,15 +1,18 @@
-package dev.protsenko.securityLinter.docker
+package dev.protsenko.securityLinter.docker.inspection
 
 import com.intellij.codeInspection.LocalInspectionTool
 import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.docker.dockerFile.parser.psi.DockerFileAddOrCopyCommand
 import com.intellij.docker.dockerFile.parser.psi.DockerFileFromCommand
 import com.intellij.psi.PsiElementVisitor
-import dev.protsenko.securityLinter.core.DockerFileInspectionConstants.COPY_FROM_OPTION_NAME
 import dev.protsenko.securityLinter.core.DockerVisitor
 import dev.protsenko.securityLinter.core.SecurityPluginBundle
 
 class DS005CopyReferringToCurrentImageInspection: LocalInspectionTool() {
+    companion object {
+        const val COPY_FROM_OPTION_NAME = "from"
+    }
+
     override fun buildVisitor(holder: ProblemsHolder, isOnTheFly: Boolean): PsiElementVisitor {
         return object : DockerVisitor(){
             var currentStep: String? = null

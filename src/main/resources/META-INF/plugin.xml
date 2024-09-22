@@ -5,26 +5,148 @@
 
     <!-- Public plugin name should be written in Title Case.
          Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-name -->
-    <name>Security-linter</name>
+    <name>Infrastructure Security</name>
 
     <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
-    <vendor email="support@yourcompany.com" url="https://www.yourcompany.com">YourCompany</vendor>
+    <vendor email="tech@protsenko.dev" url="https://protsenko.dev">Dmitry Protsenko</vendor>
 
     <!-- Description of the plugin displayed on the Plugin Page and IDE Plugin Manager.
          Simple HTML elements (text formatting, paragraphs, and lists) can be added inside of <![CDATA[ ]]> tag.
          Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
     <description><![CDATA[
-    Enter short description for your plugin here.<br>
-    <em>most HTML tags may be used</em>
-  ]]></description>
+<h2>Infrastructure Security Plugin</h2>
+
+<p>Our plugin provides an easy and effective way to identify security issues (misconfigurations) and adhere to best practices for Infrastructure as Code (IaC) files.</p>
+
+<h3>Features</h3>
+<ul>
+  <li><strong>Dockerfile Analysis</strong>: Includes 23 inspections aimed at detecting vulnerabilities and optimizing Docker images.</li>
+</ul>
+
+<h3>Planned Features</h3>
+<ul>
+  <li><strong>Quick Fixes</strong>: Providing quick fixes to resolve problems faster.</li>
+  <li><strong>Docker Compose</strong>: Checking <code>docker-compose</code> configuration files to ensure security and efficiency.</li>
+  <li><strong>Kubernetes Files</strong>: Analyzing Kubernetes YAML files to comply with best practices and security standards.</li>
+  <li><strong>And More</strong>: Expanding support for other IaC tools and formats to comprehensively protect and optimize your infrastructure configurations.</li>
+</ul>
+]]></description>
 
     <!-- Product and plugin compatibility requirements.
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
     <depends>com.intellij.modules.platform</depends>
+    <depends>Docker</depends>
 
-    <!-- Extension points defined by the plugin.
-         Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
+    <resource-bundle>messages.SecurityPluginBundle</resource-bundle>
+
     <extensions defaultExtensionNs="com.intellij">
-
+        <localInspection
+                implementationClass="dev.protsenko.securityLinter.docker.inspection.DS001LatestTagIsUsedInspection"
+                displayName="Docker latest tag is used"
+                groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
+                enabledByDefault="true"/>
+        <localInspection
+                implementationClass="dev.protsenko.securityLinter.docker.inspection.DS002MissedOrRootUserIsUsedInspection"
+                displayName="Missing user or root is used"
+                groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
+                enabledByDefault="true"/>
+        <localInspection
+                implementationClass="dev.protsenko.securityLinter.docker.inspection.DS003SshPortExposedInspection"
+                displayName="SSH port exposed"
+                groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
+                enabledByDefault="true"/>
+        <localInspection
+                implementationClass="dev.protsenko.securityLinter.docker.inspection.DS004AddInsteadCopyInspection"
+                displayName="ADD instead of copy"
+                groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
+                enabledByDefault="true"/>
+        <localInspection
+                implementationClass="dev.protsenko.securityLinter.docker.inspection.DS005CopyReferringToCurrentImageInspection"
+                displayName="COPY '--from' referring to the current image"
+                groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
+                enabledByDefault="true"/>
+        <localInspection
+                implementationClass="dev.protsenko.securityLinter.docker.inspection.DS006MultipleEntrypointInspection"
+                displayName="Multiple ENTRYPOINT instructions listed"
+                groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
+                enabledByDefault="true"/>
+        <localInspection
+                implementationClass="dev.protsenko.securityLinter.docker.inspection.DS007ExposedPortOutOfRangeInspection"
+                displayName="Exposed port out of range"
+                groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
+                enabledByDefault="true"/>
+        <localInspection
+                implementationClass="dev.protsenko.securityLinter.docker.inspection.DS008WorkdirPathNotAbsoluteInspection"
+                displayName="WORKDIR path not absolute"
+                groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
+                enabledByDefault="true"/>
+        <localInspection implementationClass="dev.protsenko.securityLinter.docker.inspection.DS009SudoIsUsedInspection"
+                         displayName="RUN using 'sudo'"
+                         groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
+                         enabledByDefault="true"/>
+        <localInspection
+                implementationClass="dev.protsenko.securityLinter.docker.inspection.DS010UseSlashForCopyArgsInspection"
+                displayName="COPY with more than two arguments not ending with slash"
+                groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
+                enabledByDefault="true"/>
+        <localInspection
+                implementationClass="dev.protsenko.securityLinter.docker.inspection.DS011DuplicateAliasesDefinedInspection"
+                displayName="Duplicate aliases defined in different FROMs"
+                groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
+                enabledByDefault="true"/>
+        <localInspection
+                implementationClass="dev.protsenko.securityLinter.docker.inspection.DS012UsingCdToChangeDirectoryInspection"
+                displayName="'RUN cd ...' to change directory"
+                groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
+                enabledByDefault="true"/>
+        <localInspection
+                implementationClass="dev.protsenko.securityLinter.docker.inspection.DS013UsingWgetAndCurlBothInspection"
+                displayName="RUN using 'wget' and 'curl'"
+                groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
+                enabledByDefault="true"/>
+        <localInspection
+                implementationClass="dev.protsenko.securityLinter.docker.inspection.DS014YumInstallWithoutCleanInspection"
+                displayName="'yum clean all' missing"
+                groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
+                enabledByDefault="true"/>
+        <localInspection
+                implementationClass="dev.protsenko.securityLinter.docker.inspection.DS015MultipleCmdIsUsedInspection"
+                displayName="Multiple CMD instructions listed"
+                groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
+                enabledByDefault="true"/>
+        <localInspection
+                implementationClass="dev.protsenko.securityLinter.docker.inspection.DS016PackageManagerUpdateWithoutInstallInspection"
+                displayName="RUN package-manager update instruction alone"
+                groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
+                enabledByDefault="true"/>
+        <localInspection
+                implementationClass="dev.protsenko.securityLinter.docker.inspection.DS017MissingDnfCleanInspection"
+                displayName="RUN package-manager update instruction alone"
+                groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
+                enabledByDefault="true"/>
+        <localInspection
+                implementationClass="dev.protsenko.securityLinter.docker.inspection.DS018ZypperInstallWithoutCleanInspection"
+                displayName="'zypper clean' missing"
+                groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
+                enabledByDefault="true"/>
+        <localInspection
+                implementationClass="dev.protsenko.securityLinter.docker.inspection.DS019AptGetInstallWithoutAutoConfirmInspection"
+                displayName="'apt-get' missing '-y' to avoid manual input"
+                groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
+                enabledByDefault="true"/>
+        <localInspection
+                implementationClass="dev.protsenko.securityLinter.docker.inspection.DS020MaintainerUsedInspection"
+                displayName="Deprecated MAINTAINER used"
+                groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
+                enabledByDefault="true"/>
+        <localInspection
+                implementationClass="dev.protsenko.securityLinter.docker.inspection.DS021MultipleHealthCheckDefinedInspection"
+                displayName="Multiple HEALTHCHECK defined"
+                groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
+                enabledByDefault="true"/>
+        <localInspection implementationClass="dev.protsenko.securityLinter.docker.inspection.DS022DistUpgradeInspection"
+                         displayName="'apt-get dist-upgrade' used"
+                         groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
+                         enabledByDefault="true"/>
     </extensions>
 </idea-plugin>

@@ -1,3 +1,4 @@
 FROM alpine:3.13
 USER mike
-WORKDIR path/to/workdir
+<warning descr="WORKDIR path not absolute
+For clarity and reliability, you should always use absolute paths for your WORKDIR.">WORKDIR path/to/workdir</warning>

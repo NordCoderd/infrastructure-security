@@ -1,4 +1,4 @@
-package dev.protsenko.securityLinter.docker
+package dev.protsenko.securityLinter.docker.inspection
 
 import com.intellij.codeInspection.LocalInspectionTool
 import com.intellij.codeInspection.ProblemsHolder
@@ -23,7 +23,6 @@ class DS006MultipleEntrypointInspection : LocalInspectionTool() {
                     holder.registerProblem(file, SecurityPluginBundle.message("ds006.multiple-entrypoint"))
                 }
             }
-
         }
     }
 }

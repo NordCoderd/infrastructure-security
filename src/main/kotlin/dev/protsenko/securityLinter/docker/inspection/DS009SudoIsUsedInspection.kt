@@ -1,4 +1,4 @@
-package dev.protsenko.securityLinter.docker
+package dev.protsenko.securityLinter.docker.inspection
 
 import com.intellij.codeInspection.LocalInspectionTool
 import com.intellij.codeInspection.ProblemsHolder
@@ -6,7 +6,7 @@ import com.intellij.docker.dockerFile.parser.psi.DockerFileRunCommand
 import com.intellij.psi.PsiElementVisitor
 import dev.protsenko.securityLinter.core.DockerVisitor
 import dev.protsenko.securityLinter.core.SecurityPluginBundle
-import dev.protsenko.securityLinter.utils.SudoChecker
+import dev.protsenko.securityLinter.docker.checker.SudoChecker
 
 class DS009SudoIsUsedInspection: LocalInspectionTool() {
     override fun buildVisitor(holder: ProblemsHolder, isOnTheFly: Boolean): PsiElementVisitor {

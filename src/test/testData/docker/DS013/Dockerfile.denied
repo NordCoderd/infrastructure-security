@@ -1,7 +1,9 @@
-FROM debian:stable-20210621
+<warning descr="RUN using 'wget' and 'curl'
+Avoid using both 'wget' and 'curl' since these tools have the same effect.">FROM debian:stable-20210621
 RUN wget http://bing.com
 RUN curl http://google.com
 
 FROM baseimage:1.0
 USER mike
 RUN curl http://bing.com
+</warning>

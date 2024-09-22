@@ -1,4 +1,4 @@
-package dev.protsenko.securityLinter.utils
+package dev.protsenko.securityLinter.docker.checker
 
 object AptGetDistUpgradeChecker {
     private val pattern = Regex(

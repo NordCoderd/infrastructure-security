@@ -1,2 +1,4 @@
 FROM debian:9
+<warning descr="Image user should not be 'root'
+Running containers with 'root' user can lead to a container escape situation.">USER root</warning>
 RUN apt-get update && apt-get -y install vim && apt-get clean

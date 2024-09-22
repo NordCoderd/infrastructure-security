@@ -1,4 +1,4 @@
-package dev.protsenko.securityLinter.docker
+package dev.protsenko.securityLinter.docker.inspection
 
 import com.intellij.codeInspection.LocalInspectionTool
 import com.intellij.codeInspection.ProblemsHolder
@@ -9,15 +9,19 @@ import dev.protsenko.securityLinter.core.DockerVisitor
 import dev.protsenko.securityLinter.core.SecurityPluginBundle
 
 class DS007ExposedPortOutOfRangeInspection : LocalInspectionTool() {
+    companion object {
+        const val EXPOSE_COMMAND = "EXPOSE"
+    }
+
     override fun buildVisitor(holder: ProblemsHolder, isOnTheFly: Boolean): PsiElementVisitor {
         return object : DockerVisitor() {
             override fun visitDockerFileExposeCommand(element: DockerFileExposeCommand) {
                 val commandParts = DockerPsiAnalyzer.splitCommand(element)
                 if (commandParts.size < 2 || commandParts.size > 3) return
 
-                //TODO: Port definition also could be invalid. Should it be highlighted?
+                //TODO: DS024 Port definition also could be invalid. Should it be highlighted?
                 val ports = commandParts.mapNotNull { commandPart ->
-                    if (commandPart == "EXPOSE") return@mapNotNull null
+                    if (commandPart == EXPOSE_COMMAND) return@mapNotNull null
                     try {
                         val normalizedPortNumber = commandPart.substringBefore("/")
                         Integer.parseInt(normalizedPortNumber)
@@ -26,7 +30,7 @@ class DS007ExposedPortOutOfRangeInspection : LocalInspectionTool() {
                     }
                 }
 
-                //TODO: Some ports could be exposed twice
+                //TODO: DS025 Some ports could be exposed twice
                 ports.forEach { port ->
                     if (port < 0 || port > 65535){
                         holder.registerProblem(element, SecurityPluginBundle.message("ds007.port-out-of-range", port.toString()))

@@ -1,3 +1,4 @@
 FROM alpine:3.13
 USER mike
-EXPOSE 65536 8080
+<warning descr="Exposed port 65536 out of range
+UNIX ports outside the range 0-65535 are exposed.">EXPOSE 65536 8080</warning>

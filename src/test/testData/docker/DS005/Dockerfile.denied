@@ -1,5 +1,6 @@
 FROM golang:1.7.3 as dep
-COPY --from=dep /binary /
+COPY <warning descr="COPY '--from' referring to the current image
+COPY '--from' should not mention the current FROM alias, since it is impossible to copy from itself.">--from=dep</warning> /binary /
 
 FROM alpine:3.13
 USER mike

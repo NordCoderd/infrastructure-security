@@ -1,7 +1,4 @@
 FROM debian:9
 USER nobody
 COPY test.zip test.zip
-ADD test.gz test.jar
-ADD "test-1.gz" test-1.txt
-ADD 'test-2.gz' test-2.txt
-ADD test-3.gz test-3.txt
+ADD
