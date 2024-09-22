@@ -1,5 +1,6 @@
 package dev.protsenko.securityLinter.utils
 
+import dev.protsenko.securityLinter.docker.checker.SudoChecker
 import junit.framework.TestCase
 
 class SudoCheckerTest : TestCase() {

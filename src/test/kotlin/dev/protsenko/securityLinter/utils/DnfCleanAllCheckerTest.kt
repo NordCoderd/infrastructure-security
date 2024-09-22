@@ -1,5 +1,6 @@
 package dev.protsenko.securityLinter.utils
 
+import dev.protsenko.securityLinter.docker.checker.DnfCleanAllChecker
 import junit.framework.TestCase
 
 class DnfCleanAllCheckerTest : TestCase() {
