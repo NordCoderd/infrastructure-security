@@ -1,5 +1,7 @@
 # Infrastructure Security Plugin
 
+[![Test and Build](https://github.com/NordCoderd/infrastructure-security/actions/workflows/gradle.yml/badge.svg)](https://github.com/NordCoderd/infrastructure-security/actions/workflows/gradle.yml)
+
 <!-- Plugin description -->
 Plugin provides an easy and effective way to identify security issues (misconfigurations) and adhere to best practices for Infrastructure as Code (IaC) files.
 
