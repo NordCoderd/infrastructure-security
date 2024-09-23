@@ -2,7 +2,7 @@ package dev.protsenko.securityLinter.docker
 
 import com.intellij.codeInspection.LocalInspectionTool
 import dev.protsenko.securityLinter.core.DockerHighlightingBaseTest
-import dev.protsenko.securityLinter.docker.inspection.DS011DuplicateAliasesDefinedInspection
+import dev.protsenko.securityLinter.docker.inspection.from.DS011DuplicateAliasesDefinedInspection
 
 class DS011DuplicateAliasesDefinedInspectionTest(
     override val dockerRuleFolder: String = "DS011",

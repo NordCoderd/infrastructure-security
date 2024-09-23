@@ -2,7 +2,7 @@ package dev.protsenko.securityLinter.docker
 
 import com.intellij.codeInspection.LocalInspectionTool
 import dev.protsenko.securityLinter.core.DockerHighlightingBaseTest
-import dev.protsenko.securityLinter.docker.inspection.DS012UsingCdToChangeDirectoryInspection
+import dev.protsenko.securityLinter.docker.inspection.run.DS012UsingCdToChangeDirectoryInspection
 
 class DS012UsingCdToChangeDirectoryInspectionTest(
     override val dockerRuleFolder: String = "DS012",

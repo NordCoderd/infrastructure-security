@@ -41,110 +41,110 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <localInspection
-                implementationClass="dev.protsenko.securityLinter.docker.inspection.DS001LatestTagIsUsedInspection"
+                implementationClass="dev.protsenko.securityLinter.docker.inspection.from.DS001LatestTagIsUsedInspection"
                 displayName="Docker latest tag is used"
                 groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
                 enabledByDefault="true"/>
         <localInspection
-                implementationClass="dev.protsenko.securityLinter.docker.inspection.DS002MissedOrRootUserIsUsedInspection"
+                implementationClass="dev.protsenko.securityLinter.docker.inspection.user.DS002MissedOrRootUserIsUsedInspection"
                 displayName="Missing user or root is used"
                 groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
                 enabledByDefault="true"/>
         <localInspection
-                implementationClass="dev.protsenko.securityLinter.docker.inspection.DS003SshPortExposedInspection"
+                implementationClass="dev.protsenko.securityLinter.docker.inspection.expose.DS003SshPortExposedInspection"
                 displayName="SSH port exposed"
                 groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
                 enabledByDefault="true"/>
         <localInspection
-                implementationClass="dev.protsenko.securityLinter.docker.inspection.DS004AddInsteadCopyInspection"
+                implementationClass="dev.protsenko.securityLinter.docker.inspection.add.DS004AddInsteadCopyInspection"
                 displayName="ADD instead of copy"
                 groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
                 enabledByDefault="true"/>
         <localInspection
-                implementationClass="dev.protsenko.securityLinter.docker.inspection.DS005CopyReferringToCurrentImageInspection"
+                implementationClass="dev.protsenko.securityLinter.docker.inspection.copy.DS005CopyReferringToCurrentImageInspection"
                 displayName="COPY '--from' referring to the current image"
                 groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
                 enabledByDefault="true"/>
         <localInspection
-                implementationClass="dev.protsenko.securityLinter.docker.inspection.DS006MultipleEntrypointInspection"
+                implementationClass="dev.protsenko.securityLinter.docker.inspection.entrypoint.DS006MultipleEntrypointInspection"
                 displayName="Multiple ENTRYPOINT instructions listed"
                 groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
                 enabledByDefault="true"/>
         <localInspection
-                implementationClass="dev.protsenko.securityLinter.docker.inspection.DS007ExposedPortOutOfRangeInspection"
+                implementationClass="dev.protsenko.securityLinter.docker.inspection.expose.DS007ExposedPortOutOfRangeInspection"
                 displayName="Exposed port out of range"
                 groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
                 enabledByDefault="true"/>
         <localInspection
-                implementationClass="dev.protsenko.securityLinter.docker.inspection.DS008WorkdirPathNotAbsoluteInspection"
+                implementationClass="dev.protsenko.securityLinter.docker.inspection.workdir.DS008WorkdirPathNotAbsoluteInspection"
                 displayName="WORKDIR path not absolute"
                 groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
                 enabledByDefault="true"/>
-        <localInspection implementationClass="dev.protsenko.securityLinter.docker.inspection.DS009SudoIsUsedInspection"
+        <localInspection implementationClass="dev.protsenko.securityLinter.docker.inspection.run.DS009SudoIsUsedInspection"
                          displayName="RUN using 'sudo'"
                          groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
                          enabledByDefault="true"/>
         <localInspection
-                implementationClass="dev.protsenko.securityLinter.docker.inspection.DS010UseSlashForCopyArgsInspection"
+                implementationClass="dev.protsenko.securityLinter.docker.inspection.copy.DS010UseSlashForCopyArgsInspection"
                 displayName="COPY with more than two arguments not ending with slash"
                 groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
                 enabledByDefault="true"/>
         <localInspection
-                implementationClass="dev.protsenko.securityLinter.docker.inspection.DS011DuplicateAliasesDefinedInspection"
+                implementationClass="dev.protsenko.securityLinter.docker.inspection.from.DS011DuplicateAliasesDefinedInspection"
                 displayName="Duplicate aliases defined in different FROMs"
                 groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
                 enabledByDefault="true"/>
         <localInspection
-                implementationClass="dev.protsenko.securityLinter.docker.inspection.DS012UsingCdToChangeDirectoryInspection"
+                implementationClass="dev.protsenko.securityLinter.docker.inspection.run.DS012UsingCdToChangeDirectoryInspection"
                 displayName="'RUN cd ...' to change directory"
                 groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
                 enabledByDefault="true"/>
         <localInspection
-                implementationClass="dev.protsenko.securityLinter.docker.inspection.DS013UsingWgetAndCurlBothInspection"
+                implementationClass="dev.protsenko.securityLinter.docker.inspection.run.DS013UsingWgetAndCurlBothInspection"
                 displayName="RUN using 'wget' and 'curl'"
                 groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
                 enabledByDefault="true"/>
         <localInspection
-                implementationClass="dev.protsenko.securityLinter.docker.inspection.DS014YumInstallWithoutCleanInspection"
+                implementationClass="dev.protsenko.securityLinter.docker.inspection.run.DS014YumInstallWithoutCleanInspection"
                 displayName="'yum clean all' missing"
                 groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
                 enabledByDefault="true"/>
         <localInspection
-                implementationClass="dev.protsenko.securityLinter.docker.inspection.DS015MultipleCmdIsUsedInspection"
+                implementationClass="dev.protsenko.securityLinter.docker.inspection.cmd.DS015MultipleCmdIsUsedInspection"
                 displayName="Multiple CMD instructions listed"
                 groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
                 enabledByDefault="true"/>
         <localInspection
-                implementationClass="dev.protsenko.securityLinter.docker.inspection.DS016PackageManagerUpdateWithoutInstallInspection"
+                implementationClass="dev.protsenko.securityLinter.docker.inspection.run.DS016PackageManagerUpdateWithoutInstallInspection"
                 displayName="RUN package-manager update instruction alone"
                 groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
                 enabledByDefault="true"/>
         <localInspection
-                implementationClass="dev.protsenko.securityLinter.docker.inspection.DS017MissingDnfCleanInspection"
+                implementationClass="dev.protsenko.securityLinter.docker.inspection.run.DS017MissingDnfCleanInspection"
                 displayName="RUN package-manager update instruction alone"
                 groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
                 enabledByDefault="true"/>
         <localInspection
-                implementationClass="dev.protsenko.securityLinter.docker.inspection.DS018ZypperInstallWithoutCleanInspection"
+                implementationClass="dev.protsenko.securityLinter.docker.inspection.run.DS018ZypperInstallWithoutCleanInspection"
                 displayName="'zypper clean' missing"
                 groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
                 enabledByDefault="true"/>
         <localInspection
-                implementationClass="dev.protsenko.securityLinter.docker.inspection.DS019AptGetInstallWithoutAutoConfirmInspection"
+                implementationClass="dev.protsenko.securityLinter.docker.inspection.run.DS019AptGetInstallWithoutAutoConfirmInspection"
                 displayName="'apt-get' missing '-y' to avoid manual input"
                 groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
                 enabledByDefault="true"/>
         <localInspection
-                implementationClass="dev.protsenko.securityLinter.docker.inspection.DS020MaintainerUsedInspection"
+                implementationClass="dev.protsenko.securityLinter.docker.inspection.maintainer.DS020MaintainerUsedInspection"
                 displayName="Deprecated MAINTAINER used"
                 groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
                 enabledByDefault="true"/>
         <localInspection
-                implementationClass="dev.protsenko.securityLinter.docker.inspection.DS021MultipleHealthCheckDefinedInspection"
+                implementationClass="dev.protsenko.securityLinter.docker.inspection.healthcheck.DS021MultipleHealthCheckDefinedInspection"
                 displayName="Multiple HEALTHCHECK defined"
                 groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
                 enabledByDefault="true"/>
-        <localInspection implementationClass="dev.protsenko.securityLinter.docker.inspection.DS022DistUpgradeInspection"
+        <localInspection implementationClass="dev.protsenko.securityLinter.docker.inspection.run.DS022DistUpgradeInspection"
                          displayName="'apt-get dist-upgrade' used"
                          groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
                          enabledByDefault="true"/>

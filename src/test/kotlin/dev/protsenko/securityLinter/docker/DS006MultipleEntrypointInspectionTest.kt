@@ -2,7 +2,7 @@ package dev.protsenko.securityLinter.docker
 
 import com.intellij.codeInspection.LocalInspectionTool
 import dev.protsenko.securityLinter.core.DockerHighlightingBaseTest
-import dev.protsenko.securityLinter.docker.inspection.DS006MultipleEntrypointInspection
+import dev.protsenko.securityLinter.docker.inspection.entrypoint.DS006MultipleEntrypointInspection
 
 class DS006MultipleEntrypointInspectionTest(
     override val dockerRuleFolder: String = "DS006",

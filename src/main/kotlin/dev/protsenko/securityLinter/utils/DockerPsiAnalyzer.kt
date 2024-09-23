@@ -1,4 +1,4 @@
-package dev.protsenko.securityLinter.core
+package dev.protsenko.securityLinter.utils
 
 import com.intellij.docker.dockerFile.parser.psi.DockerPsiCommand
 

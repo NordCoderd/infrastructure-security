@@ -3,7 +3,7 @@
 [![Test and Build](https://github.com/NordCoderd/infrastructure-security/actions/workflows/gradle.yml/badge.svg)](https://github.com/NordCoderd/infrastructure-security/actions/workflows/gradle.yml)
 
 <!-- Plugin description -->
-Plugin provides an easy and effective way to identify security issues (misconfigurations) and adhere to best practices for Infrastructure as Code (IaC) files.
+Plugin for JetBrains IDEs provides an easy and effective way to identify security issues (misconfigurations) and adhere to best practices for Infrastructure as Code (IaC) files.
 
 ## Features
 - **Dockerfile Analysis**: Includes 23 inspections aimed at detecting vulnerabilities and optimizing Docker images.

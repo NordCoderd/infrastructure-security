@@ -1,4 +1,4 @@
-package dev.protsenko.securityLinter.docker.inspection
+package dev.protsenko.securityLinter.docker.inspection.copy
 
 import com.intellij.codeInspection.LocalInspectionTool
 import com.intellij.codeInspection.ProblemsHolder

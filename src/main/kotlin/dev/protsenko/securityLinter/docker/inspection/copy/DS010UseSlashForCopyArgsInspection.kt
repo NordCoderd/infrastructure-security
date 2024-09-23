@@ -1,4 +1,4 @@
-package dev.protsenko.securityLinter.docker.inspection
+package dev.protsenko.securityLinter.docker.inspection.copy
 
 import com.intellij.codeInspection.LocalInspectionTool
 import com.intellij.codeInspection.ProblemsHolder
@@ -6,7 +6,7 @@ import com.intellij.docker.dockerFile.parser.psi.DockerFileAddOrCopyCommand
 import com.intellij.psi.PsiElementVisitor
 import dev.protsenko.securityLinter.core.DockerVisitor
 import dev.protsenko.securityLinter.core.SecurityPluginBundle
-import dev.protsenko.securityLinter.docker.removeQuotes
+import dev.protsenko.securityLinter.utils.removeQuotes
 
 class DS010UseSlashForCopyArgsInspection : LocalInspectionTool() {
     override fun buildVisitor(holder: ProblemsHolder, isOnTheFly: Boolean): PsiElementVisitor {

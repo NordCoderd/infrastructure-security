@@ -1,6 +1,5 @@
 package dev.protsenko.securityLinter.utils
 
-import dev.protsenko.securityLinter.docker.extension
 import junit.framework.TestCase
 
 class StringUtilsTest: TestCase() {

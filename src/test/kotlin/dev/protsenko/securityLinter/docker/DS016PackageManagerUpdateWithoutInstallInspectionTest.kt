@@ -2,7 +2,7 @@ package dev.protsenko.securityLinter.docker
 
 import com.intellij.codeInspection.LocalInspectionTool
 import dev.protsenko.securityLinter.core.DockerHighlightingBaseTest
-import dev.protsenko.securityLinter.docker.inspection.DS016PackageManagerUpdateWithoutInstallInspection
+import dev.protsenko.securityLinter.docker.inspection.run.DS016PackageManagerUpdateWithoutInstallInspection
 
 class DS016PackageManagerUpdateWithoutInstallInspectionTest(
     override val dockerRuleFolder: String = "DS016",

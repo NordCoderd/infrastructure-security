@@ -2,7 +2,7 @@ package dev.protsenko.securityLinter.docker
 
 import com.intellij.codeInspection.LocalInspectionTool
 import dev.protsenko.securityLinter.core.DockerHighlightingBaseTest
-import dev.protsenko.securityLinter.docker.inspection.DS008WorkdirPathNotAbsoluteInspection
+import dev.protsenko.securityLinter.docker.inspection.workdir.DS008WorkdirPathNotAbsoluteInspection
 
 class DS008WorkdirPathNotAbsoluteInspectionTest(
     override val dockerRuleFolder: String = "DS008",

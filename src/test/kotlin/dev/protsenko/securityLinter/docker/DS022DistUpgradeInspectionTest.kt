@@ -2,7 +2,7 @@ package dev.protsenko.securityLinter.docker
 
 import com.intellij.codeInspection.LocalInspectionTool
 import dev.protsenko.securityLinter.core.DockerHighlightingBaseTest
-import dev.protsenko.securityLinter.docker.inspection.DS022DistUpgradeInspection
+import dev.protsenko.securityLinter.docker.inspection.run.DS022DistUpgradeInspection
 
 class DS022DistUpgradeInspectionTest(
     override val dockerRuleFolder: String = "DS022",

@@ -1,10 +1,10 @@
-package dev.protsenko.securityLinter.docker.inspection
+package dev.protsenko.securityLinter.docker.inspection.expose
 
 import com.intellij.codeInspection.LocalInspectionTool
 import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.docker.dockerFile.parser.psi.DockerFileExposeCommand
 import com.intellij.psi.PsiElementVisitor
-import dev.protsenko.securityLinter.core.DockerPsiAnalyzer
+import dev.protsenko.securityLinter.utils.DockerPsiAnalyzer
 import dev.protsenko.securityLinter.core.DockerVisitor
 import dev.protsenko.securityLinter.core.SecurityPluginBundle
 

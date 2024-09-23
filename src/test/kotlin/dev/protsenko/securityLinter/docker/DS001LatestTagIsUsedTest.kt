@@ -2,7 +2,7 @@ package dev.protsenko.securityLinter.docker
 
 import com.intellij.codeInspection.LocalInspectionTool
 import dev.protsenko.securityLinter.core.DockerHighlightingBaseTest
-import dev.protsenko.securityLinter.docker.inspection.DS001LatestTagIsUsedInspection
+import dev.protsenko.securityLinter.docker.inspection.from.DS001LatestTagIsUsedInspection
 
 class DS001LatestTagIsUsedTest(
     override val dockerRuleFolder: String = "DS001",

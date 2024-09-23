@@ -2,7 +2,7 @@ package dev.protsenko.securityLinter.docker
 
 import com.intellij.codeInspection.LocalInspectionTool
 import dev.protsenko.securityLinter.core.DockerHighlightingBaseTest
-import dev.protsenko.securityLinter.docker.inspection.DS018ZypperInstallWithoutCleanInspection
+import dev.protsenko.securityLinter.docker.inspection.run.DS018ZypperInstallWithoutCleanInspection
 
 class DS018ZypperInstallWithoutCleanInspectionTest(
     override val dockerRuleFolder: String = "DS018",

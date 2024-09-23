@@ -1,11 +1,11 @@
-package dev.protsenko.securityLinter.docker.inspection
+package dev.protsenko.securityLinter.docker.inspection.run
 
 import com.intellij.codeInspection.LocalInspectionTool
 import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.docker.dockerFile.parser.psi.DockerFileRunCommand
 import com.intellij.psi.PsiElementVisitor
 import com.intellij.psi.PsiFile
-import dev.protsenko.securityLinter.core.DockerPsiAnalyzer
+import dev.protsenko.securityLinter.utils.DockerPsiAnalyzer
 import dev.protsenko.securityLinter.core.DockerVisitor
 import dev.protsenko.securityLinter.core.SecurityPluginBundle
 import java.util.concurrent.atomic.AtomicBoolean
