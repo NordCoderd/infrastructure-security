@@ -7,6 +7,7 @@ import com.intellij.psi.PsiElementVisitor
 import dev.protsenko.securityLinter.utils.DockerPsiAnalyzer
 import dev.protsenko.securityLinter.core.DockerVisitor
 import dev.protsenko.securityLinter.core.SecurityPluginBundle
+import dev.protsenko.securityLinter.core.quickFix.DeletePsiElementQuickFix
 
 class DS007ExposedPortOutOfRangeInspection : LocalInspectionTool() {
     companion object {
@@ -33,7 +34,11 @@ class DS007ExposedPortOutOfRangeInspection : LocalInspectionTool() {
                 //TODO: DS025 Some ports could be exposed twice
                 ports.forEach { port ->
                     if (port < 0 || port > 65535){
-                        holder.registerProblem(element, SecurityPluginBundle.message("ds007.port-out-of-range", port.toString()))
+                        holder.registerProblem(
+                            element,
+                            SecurityPluginBundle.message("ds007.port-out-of-range", port.toString()),
+                            DeletePsiElementQuickFix(SecurityPluginBundle.message("ds007.remove-broken-port"))
+                        )
                     }
                 }
 
