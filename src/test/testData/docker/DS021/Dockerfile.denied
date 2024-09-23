@@ -1,7 +1,7 @@
 FROM busybox:1.33.1
-HEALTHCHECK CMD curl http://localhost:8080
 <warning descr="Multiple HEALTHCHECK defined
-Providing more than one HEALTHCHECK instruction per stage is confusing and error-prone.">HEALTHCHECK CMD /bin/healthcheck</warning>
+Providing more than one HEALTHCHECK instruction per stage is confusing and error-prone.">HEALTHCHECK CMD curl http://localhost:8080</warning>
+HEALTHCHECK CMD /bin/healthcheck
 
 FROM alpine:3.13
 HEALTHCHECK CMD /bin/healthcheck

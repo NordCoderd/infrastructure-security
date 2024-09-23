@@ -20,7 +20,6 @@ class DS015MultipleCmdIsUsedInspection: LocalInspectionTool() {
 
     override fun buildVisitor(holder: ProblemsHolder, isOnTheFly: Boolean): PsiElementVisitor {
         return object: DockerVisitor(){
-            val cmdCount = AtomicInteger(0)
             val commands = mutableListOf<DockerFileCmdCommand>()
 
             override fun visitDockerFileCmdCommand(element: DockerFileCmdCommand) {
@@ -43,8 +42,6 @@ class DS015MultipleCmdIsUsedInspection: LocalInspectionTool() {
                             DeletePsiElementQuickFix(SecurityPluginBundle.message("ds015.remove-redundant-cmd")))
                     }
                 }
-
-                cmdCount.set(0)
                 commands.clear()
             }
         }
