@@ -80,10 +80,11 @@
                 displayName="WORKDIR path not absolute"
                 groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
                 enabledByDefault="true"/>
-        <localInspection implementationClass="dev.protsenko.securityLinter.docker.inspection.run.DS009SudoIsUsedInspection"
-                         displayName="RUN using 'sudo'"
-                         groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
-                         enabledByDefault="true"/>
+        <localInspection
+                implementationClass="dev.protsenko.securityLinter.docker.inspection.run.DS009SudoIsUsedInspection"
+                displayName="RUN using 'sudo'"
+                groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
+                enabledByDefault="true"/>
         <localInspection
                 implementationClass="dev.protsenko.securityLinter.docker.inspection.copy.DS010UseSlashForCopyArgsInspection"
                 displayName="COPY with more than two arguments not ending with slash"
@@ -144,9 +145,14 @@
                 displayName="Multiple HEALTHCHECK defined"
                 groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
                 enabledByDefault="true"/>
-        <localInspection implementationClass="dev.protsenko.securityLinter.docker.inspection.run.DS022DistUpgradeInspection"
-                         displayName="'apt-get dist-upgrade' used"
-                         groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
-                         enabledByDefault="true"/>
+        <localInspection
+                implementationClass="dev.protsenko.securityLinter.docker.inspection.run.DS022DistUpgradeInspection"
+                displayName="'apt-get dist-upgrade' used"
+                groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
+                enabledByDefault="true"/>
+
+        <notificationGroup id="dev.protsenko.securityLinter"
+                           displayType="BALLOON"
+                           key="common.notification-group"/>
     </extensions>
 </idea-plugin>

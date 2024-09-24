@@ -1,20 +1,14 @@
 package dev.protsenko.securityLinter.docker.inspection.cmd
 
 import com.intellij.codeInspection.LocalInspectionTool
-import com.intellij.codeInspection.LocalQuickFix
-import com.intellij.codeInspection.ProblemDescriptor
 import com.intellij.codeInspection.ProblemsHolder
-import com.intellij.codeInspection.util.IntentionFamilyName
 import com.intellij.docker.dockerFile.parser.psi.DockerFileCmdCommand
 import com.intellij.docker.dockerFile.parser.psi.DockerFileFromCommand
-import com.intellij.openapi.application.runWriteAction
-import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiElementVisitor
 import com.intellij.psi.PsiFile
 import dev.protsenko.securityLinter.core.DockerVisitor
 import dev.protsenko.securityLinter.core.SecurityPluginBundle
 import dev.protsenko.securityLinter.core.quickFix.DeletePsiElementQuickFix
-import java.util.concurrent.atomic.AtomicInteger
 
 class DS015MultipleCmdIsUsedInspection: LocalInspectionTool() {
 

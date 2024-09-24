@@ -7,7 +7,7 @@ import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.codeInspection.util.IntentionFamilyName
 import com.intellij.docker.dockerFile.parser.psi.DockerFileLabelCommand
 import com.intellij.docker.dockerFile.parser.psi.DockerFileMaintainerCommand
-import com.intellij.openapi.application.runWriteAction
+import com.intellij.openapi.application.ReadAction
 import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiElementVisitor
 import dev.protsenko.securityLinter.core.DockerVisitor
@@ -37,8 +37,8 @@ class DS020MaintainerUsedInspection : LocalInspectionTool() {
         override fun applyFix(project: Project, descriptor: ProblemDescriptor) {
             val maintainer = descriptor.psiElement.text
             val authorText = maintainer.replace("MAINTAINER ", AUTHOR_LABEL).trim() + "\""
-            runWriteAction {
-                val psiAuthor = PsiElementGenerator.fromText<DockerFileLabelCommand>(project, authorText) ?: return@runWriteAction
+            ReadAction.run<Exception> {
+                val psiAuthor = PsiElementGenerator.fromText<DockerFileLabelCommand>(project, authorText) ?: return@run
                 descriptor.psiElement.replace(psiAuthor)
             }
         }

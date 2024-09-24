@@ -1,0 +1,2 @@
+# It  should be highlighted, but this is a tech debt
+FROM ubuntu/apache2

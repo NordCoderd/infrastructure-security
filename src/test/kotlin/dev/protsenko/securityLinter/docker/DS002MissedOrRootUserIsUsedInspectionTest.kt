@@ -6,6 +6,10 @@ import dev.protsenko.securityLinter.docker.inspection.user.DS002MissedOrRootUser
 
 class DS002MissedOrRootUserIsUsedInspectionTest(
     override val dockerRuleFolder: String = "DS002",
-    override val customDockerFiles: Set<String> = setOf("Dockerfile-root-declared.denied"),
+    override val customDockerFiles: Set<String> = setOf(
+        "Dockerfile-root-declared.denied",
+        "Dockerfile-multistage.denied",
+        "Dockerfile-multistage-2.denied"
+    ),
     override val targetInspection: LocalInspectionTool = DS002MissedOrRootUserIsUsedInspection()
 ) : DockerHighlightingBaseTest()

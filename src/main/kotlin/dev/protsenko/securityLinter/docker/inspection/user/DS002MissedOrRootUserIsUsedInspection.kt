@@ -7,7 +7,7 @@ import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.codeInspection.util.IntentionFamilyName
 import com.intellij.docker.dockerFile.parser.psi.DockerFileFromCommand
 import com.intellij.docker.dockerFile.parser.psi.DockerFileUserCommand
-import com.intellij.openapi.application.runWriteAction
+import com.intellij.openapi.application.ReadAction
 import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiElementVisitor
 import com.intellij.psi.PsiFile
@@ -47,7 +47,6 @@ class DS002MissedOrRootUserIsUsedInspection : LocalInspectionTool() {
                         SecurityPluginBundle.message("ds002.missing-user"),
                         ReplaceOrAddUserQuickFix(replace = false)
                     )
-                    return
                 } else if (lastUser == ROOT_USER) {
                     holder.registerProblem(
                         lastUserCommand!!,
@@ -55,6 +54,9 @@ class DS002MissedOrRootUserIsUsedInspection : LocalInspectionTool() {
                         ReplaceOrAddUserQuickFix(replace = true)
                     )
                 }
+                 lastUser = null
+                 lastUserCommand = null
+                 lastStage = null
             }
         }
     }
@@ -72,13 +74,15 @@ class DS002MissedOrRootUserIsUsedInspection : LocalInspectionTool() {
 
         override fun applyFix(project: Project, descriptor: ProblemDescriptor) {
             val nobodyElement = PsiElementGenerator.fromText<DockerFileUserCommand>(project, USER_NOBODY) ?: return
-            runWriteAction {
+            ReadAction.run<Exception> {
                 if (replace) {
                     descriptor.psiElement.replace(nobodyElement)
                 } else {
-                    val newLine = PsiElementGenerator.newLine(project) ?: return@runWriteAction
-                    descriptor.psiElement.add(newLine)
-                    descriptor.psiElement.add(nobodyElement)
+                    val newLine = PsiElementGenerator.newLine(project) ?: return@run
+                    val targetElement = descriptor.psiElement
+                    val parentElement = targetElement.parent ?: return@run
+                    parentElement.add(newLine)
+                    parentElement.add(nobodyElement)
                 }
             }
         }

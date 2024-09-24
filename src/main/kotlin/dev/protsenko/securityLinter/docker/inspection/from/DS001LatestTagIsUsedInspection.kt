@@ -1,6 +1,5 @@
 package dev.protsenko.securityLinter.docker.inspection.from
 
-import com.intellij.codeInsight.hint.HintManager
 import com.intellij.codeInspection.LocalInspectionTool
 import com.intellij.codeInspection.LocalQuickFix
 import com.intellij.codeInspection.ProblemDescriptor
@@ -8,12 +7,10 @@ import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.codeInspection.util.IntentionFamilyName
 import com.intellij.docker.agent.DockerRepoTag
 import com.intellij.docker.dockerFile.parser.psi.DockerFileFromCommand
-import com.intellij.openapi.application.ApplicationManager
-import com.intellij.openapi.application.runWriteAction
-import com.intellij.openapi.editor.EditorFactory
-import com.intellij.openapi.fileEditor.FileEditorManager
+import com.intellij.notification.NotificationGroupManager
+import com.intellij.notification.NotificationType
+import com.intellij.openapi.application.ReadAction
 import com.intellij.openapi.project.Project
-import com.intellij.openapi.vfs.findDocument
 import com.intellij.psi.PsiElementVisitor
 import dev.protsenko.securityLinter.core.DockerVisitor
 import dev.protsenko.securityLinter.core.SecurityPluginBundle
@@ -65,23 +62,22 @@ class DS001LatestTagIsUsedInspection : LocalInspectionTool() {
             val fromToReplace = descriptor.psiElement
 
             try {
-                runWriteAction {
+                ReadAction.run<Exception> {
                     val digest = DockerImageDigestFetcher.fetchDigest(imageName).get()
                     val dockerFileFromCommand = PsiElementGenerator.getDockerFileFromCommand(project, imageName, digest)
-                        ?: return@runWriteAction
+                        ?: return@run
                     fromToReplace.replace(dockerFileFromCommand)
                 }
             } catch (e: Exception) {
-                ApplicationManager.getApplication().invokeLater {
-                    val document = FileEditorManager.getInstance(project).selectedEditor?.file?.findDocument()
-                        ?: return@invokeLater
-                    val editor =
-                        EditorFactory.getInstance().getEditors(document, project).firstOrNull() ?: return@invokeLater
-
-                    HintManager.getInstance()
-                        .showErrorHint(editor, "Failed to fetch digest for image '$imageName': ${e.message}")
-                }
+                notifyError(project, "Failed to fetch digest for image '$imageName': ${e.message}")
             }
+        }
+
+        fun notifyError(project: Project, content: String) {
+            NotificationGroupManager.getInstance()
+                .getNotificationGroup("dev.protsenko.securityLinter")
+                .createNotification(content, NotificationType.ERROR)
+                .notify(project);
         }
     }
 }
