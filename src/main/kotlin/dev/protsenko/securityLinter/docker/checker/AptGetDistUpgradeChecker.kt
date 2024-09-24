@@ -6,8 +6,5 @@ object AptGetDistUpgradeChecker {
         options = setOf(RegexOption.IGNORE_CASE, RegexOption.DOT_MATCHES_ALL)
     )
 
-    fun isValid(command: String): Boolean {
-        val cmd = command.removePrefix("RUN").trim()
-        return !pattern.containsMatchIn(cmd)
-    }
+    fun isValid(command: String): Boolean = !pattern.containsMatchIn(command)
 }

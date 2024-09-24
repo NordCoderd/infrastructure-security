@@ -6,6 +6,7 @@ import com.intellij.docker.dockerFile.parser.psi.DockerFileFromCommand
 import com.intellij.psi.PsiElementVisitor
 import dev.protsenko.securityLinter.core.DockerVisitor
 import dev.protsenko.securityLinter.core.SecurityPluginBundle
+import dev.protsenko.securityLinter.core.quickFix.DeletePsiElementQuickFix
 
 class DS011DuplicateAliasesDefinedInspection : LocalInspectionTool() {
     override fun buildVisitor(holder: ProblemsHolder, isOnTheFly: Boolean): PsiElementVisitor {
@@ -13,10 +14,15 @@ class DS011DuplicateAliasesDefinedInspection : LocalInspectionTool() {
             val aliases = mutableSetOf<String>()
 
             override fun visitDockerFileFromCommand(element: DockerFileFromCommand) {
-                val declaredStepName = element.fromStageDeclaration?.declaredName ?: return
+                val stageDeclaration = element.fromStageDeclaration ?: return
+                val declaredStepName = stageDeclaration.declaredName
                 val declaredStep = declaredStepName.text
                 if (aliases.contains(declaredStep)){
-                    holder.registerProblem(declaredStepName, SecurityPluginBundle.message("ds011.no-duplicate-alias"))
+                    holder.registerProblem(
+                        stageDeclaration,
+                        SecurityPluginBundle.message("ds011.no-duplicate-alias"),
+                        DeletePsiElementQuickFix(SecurityPluginBundle.message("ds011.remove-duplicated-alias"))
+                    )
                 } else {
                     aliases.add(declaredStep)
                 }

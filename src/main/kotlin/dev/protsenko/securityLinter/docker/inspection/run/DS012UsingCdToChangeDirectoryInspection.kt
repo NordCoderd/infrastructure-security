@@ -12,12 +12,14 @@ class DS012UsingCdToChangeDirectoryInspection: LocalInspectionTool() {
     override fun buildVisitor(holder: ProblemsHolder, isOnTheFly: Boolean): PsiElementVisitor {
         return object : DockerVisitor(){
             override fun visitDockerFileRunCommand(element: DockerFileRunCommand) {
+                val command = element.text
+                if (!command.contains("cd")) return
+
                 val commandParts = DockerPsiAnalyzer.splitCommand(element)
                 if (commandParts.size < 2) return
                 if (commandParts[1] == "cd") {
                     holder.registerProblem(element, SecurityPluginBundle.message("ds012.use-workdir-over-cd"))
                 }
-                super.visitDockerFileRunCommand(element)
             }
         }
     }

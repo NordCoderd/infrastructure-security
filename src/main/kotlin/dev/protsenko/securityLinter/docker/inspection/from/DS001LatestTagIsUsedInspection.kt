@@ -32,14 +32,23 @@ class DS001LatestTagIsUsedInspection : LocalInspectionTool() {
             override fun visitDockerFileFromCommand(element: DockerFileFromCommand) {
                 val children = element.nameChainList
                 val imageName = children.firstOrNull()?.text ?: return
-                when (children.size){
+                when (children.size) {
                     ONLY_DOCKER_IMAGE_NAME -> {
-                        holder.registerProblem(element, SecurityPluginBundle.message("ds001.missing-version-tag"), ReplaceTagWithDigestQuickFix(imageName))
+                        holder.registerProblem(
+                            element,
+                            SecurityPluginBundle.message("ds001.missing-version-tag"),
+                            ReplaceTagWithDigestQuickFix(imageName)
+                        )
                     }
+
                     DOCKER_IMAGE_NAME_WITH_VERSION -> {
                         val tag = children.last()
-                        if (tag.textMatches(DockerRepoTag.DEFAULT_TAG)){
-                            holder.registerProblem(element, SecurityPluginBundle.message("ds001.latest-tag"), ReplaceTagWithDigestQuickFix(imageName))
+                        if (tag.textMatches(DockerRepoTag.DEFAULT_TAG)) {
+                            holder.registerProblem(
+                                element,
+                                SecurityPluginBundle.message("ds001.latest-tag"),
+                                ReplaceTagWithDigestQuickFix(imageName)
+                            )
                         }
                     }
                 }
@@ -48,28 +57,31 @@ class DS001LatestTagIsUsedInspection : LocalInspectionTool() {
         }
     }
 
-    private class ReplaceTagWithDigestQuickFix(private val imageName: String): LocalQuickFix{
-        override fun getFamilyName(): @IntentionFamilyName String = SecurityPluginBundle.message("ds001.lookup-for-digest")
+    private class ReplaceTagWithDigestQuickFix(private val imageName: String) : LocalQuickFix {
+        override fun getFamilyName(): @IntentionFamilyName String =
+            SecurityPluginBundle.message("ds001.lookup-for-digest")
 
         override fun applyFix(project: Project, descriptor: ProblemDescriptor) {
             val fromToReplace = descriptor.psiElement
-            DockerImageDigestFetcher.fetchDigest(imageName)
-                .thenAccept { digest ->
-                  runWriteAction {
-                      val dockerFileFromCommand = PsiElementGenerator.getDockerFileFromCommand(project, imageName, digest) ?: return@runWriteAction
-                      fromToReplace.replace(dockerFileFromCommand)
-                  }
-                }
-                .exceptionally { throwable ->
-                    ApplicationManager.getApplication().invokeLater {
-                        val document = FileEditorManager.getInstance(project).selectedEditor?.file?.findDocument() ?: return@invokeLater
-                        val editor = EditorFactory.getInstance().getEditors(document, project).firstOrNull() ?: return@invokeLater
 
-                        HintManager.getInstance().showErrorHint(editor, "Failed to fetch digest for image '$imageName': ${throwable.message}")
-                    }
-                    null
+            try {
+                runWriteAction {
+                    val digest = DockerImageDigestFetcher.fetchDigest(imageName).get()
+                    val dockerFileFromCommand = PsiElementGenerator.getDockerFileFromCommand(project, imageName, digest)
+                        ?: return@runWriteAction
+                    fromToReplace.replace(dockerFileFromCommand)
                 }
+            } catch (e: Exception) {
+                ApplicationManager.getApplication().invokeLater {
+                    val document = FileEditorManager.getInstance(project).selectedEditor?.file?.findDocument()
+                        ?: return@invokeLater
+                    val editor =
+                        EditorFactory.getInstance().getEditors(document, project).firstOrNull() ?: return@invokeLater
 
+                    HintManager.getInstance()
+                        .showErrorHint(editor, "Failed to fetch digest for image '$imageName': ${e.message}")
+                }
+            }
         }
     }
 }

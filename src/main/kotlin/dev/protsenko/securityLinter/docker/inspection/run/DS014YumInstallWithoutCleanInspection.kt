@@ -15,7 +15,6 @@ class DS014YumInstallWithoutCleanInspection: LocalInspectionTool() {
                 if (runCommand.contains("yum install") && !runCommand.contains("yum clean all")){
                     holder.registerProblem(element, SecurityPluginBundle.message("ds014.purge-yum-package-cache"))
                 }
-                super.visitDockerFileRunCommand(element)
             }
         }
     }

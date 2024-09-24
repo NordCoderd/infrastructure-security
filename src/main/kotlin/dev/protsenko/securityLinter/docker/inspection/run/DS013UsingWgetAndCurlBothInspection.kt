@@ -17,6 +17,9 @@ class DS013UsingWgetAndCurlBothInspection: LocalInspectionTool() {
             val isContainWget = AtomicBoolean()
 
             override fun visitDockerFileRunCommand(element: DockerFileRunCommand) {
+                val command = element.text
+                if (!command.contains("wget") && !command.contains("curl")) return
+
                 val commandParts = DockerPsiAnalyzer.splitCommand(element)
                 if (commandParts.size <= 2) return
 
@@ -26,8 +29,6 @@ class DS013UsingWgetAndCurlBothInspection: LocalInspectionTool() {
                         "curl" -> isContainCurl.set(true)
                     }
                 }
-
-                super.visitDockerFileRunCommand(element)
             }
 
             override fun visitingIsFinished(file: PsiFile) {

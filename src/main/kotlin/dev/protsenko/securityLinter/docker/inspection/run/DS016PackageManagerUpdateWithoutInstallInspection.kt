@@ -13,10 +13,8 @@ class DS016PackageManagerUpdateWithoutInstallInspection : LocalInspectionTool() 
     override fun buildVisitor(holder: ProblemsHolder, isOnTheFly: Boolean): PsiElementVisitor {
         return object : DockerVisitor() {
             override fun visitDockerFileRunCommand(element: DockerFileRunCommand) {
-                val command = element.text.substringAfter("RUN ").trim()
-                if (!UpdateWithoutInstallChecker.isValid(command)) {
+                if (!UpdateWithoutInstallChecker.isValid(element.text)) {
                     holder.registerProblem(element, SecurityPluginBundle.message("ds016.no-orphan-package-update"))
-                    return
                 }
             }
         }

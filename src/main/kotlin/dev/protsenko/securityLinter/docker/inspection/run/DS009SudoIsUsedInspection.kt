@@ -15,7 +15,6 @@ class DS009SudoIsUsedInspection: LocalInspectionTool() {
                 if (SudoChecker.containsSudo(element.text)){
                     holder.registerProblem(element, SecurityPluginBundle.message("ds009.run-using-sudo"))
                 }
-                super.visitDockerFileRunCommand(element)
             }
         }
     }

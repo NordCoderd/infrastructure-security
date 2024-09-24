@@ -2,6 +2,7 @@ package dev.protsenko.securityLinter.utils
 
 import com.intellij.docker.dockerFile.DockerFileType
 import com.intellij.docker.dockerFile.parser.psi.DockerFileFromCommand
+import com.intellij.openapi.fileTypes.PlainTextFileType
 import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiFileFactory
@@ -25,6 +26,12 @@ object PsiElementGenerator {
             "FROM $image@$digest"
         )
         return dockerFile.childrenOfType<DockerFileFromCommand>().firstOrNull()
+    }
+
+    fun newLine(project: Project): PsiElement? {
+        val factory = PsiFileFactory.getInstance(project)
+        val emptyFile = factory.createFileFromText("raw", PlainTextFileType.INSTANCE, "\n")
+        return emptyFile.firstChild
     }
 
 }

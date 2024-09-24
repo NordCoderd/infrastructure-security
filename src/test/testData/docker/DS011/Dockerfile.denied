@@ -5,7 +5,7 @@ FROM debian:jesse2 as build
 USER mike
 RUN stuff
 
-FROM debian:jesse1 as <warning descr="Duplicate aliases defined in different FROMs
-Different FROMs can't have the same alias defined.">build</warning>
+FROM debian:jesse1 <warning descr="Duplicate aliases defined in different FROMs
+Different FROMs can't have the same alias defined.">as build</warning>
 USER mike
 RUN more_stuff

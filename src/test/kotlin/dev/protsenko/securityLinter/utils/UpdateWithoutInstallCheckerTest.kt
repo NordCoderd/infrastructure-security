@@ -7,16 +7,16 @@ class UpdateWithoutInstallCheckerTest : TestCase() {
 
     fun testUpdateWithInstall() {
         val commands = listOf(
-            "apt-get update && apt-get install -y package",
-            "apt update && apt install package",
-            "yum update && yum install package",
-            "apk update && apk add package",
-            "dnf update && dnf install package",
-            "zypper update && zypper install package",
-            "apt-get up && apt-get install package",
-            "apt-get update && echo 'Updating' && apt-get install package",
-            "yum up && yum reinstall package",
-            "dnf update && dnf groupinstall package",
+            "RUN apt-get update && apt-get install -y package",
+            "RUN apt update && apt install package",
+            "RUN yum update && yum install package",
+            "RUN apk update && apk add package",
+            "RUN dnf update && dnf install package",
+            "RUN zypper update && zypper install package",
+            "RUN apt-get up && apt-get install package",
+            "RUN apt-get update && echo 'Updating' && apt-get install package",
+            "RUN yum up && yum reinstall package",
+            "RUN dnf update && dnf groupinstall package",
             "RUN apt-get update && \\\n apt-get install -y screen"
         )
         for (command in commands) {
@@ -29,19 +29,19 @@ class UpdateWithoutInstallCheckerTest : TestCase() {
 
     fun testUpdateWithoutInstall() {
         val commands = listOf(
-            "apt-get update",
-            "apt update",
-            "yum update",
-            "apk update",
-            "dnf update",
-            "zypper update",
-            "apt-get up",
-            "yum up",
-            "apk up",
-            "dnf up",
-            "zypper up",
-            "apt-get update && echo 'No install command here'",
-            "yum update && echo 'Still no install'",
+            "RUN apt-get update",
+            "RUN apt update",
+            "RUN yum update",
+            "RUN apk update",
+            "RUN dnf update",
+            "RUN zypper update",
+            "RUN apt-get up",
+            "RUN yum up",
+            "RUN apk up",
+            "RUN dnf up",
+            "RUN zypper up",
+            "RUN apt-get update && echo 'No install command here'",
+            "RUN yum update && echo 'Still no install'",
         )
         for (command in commands) {
             assertFalse(
@@ -53,11 +53,11 @@ class UpdateWithoutInstallCheckerTest : TestCase() {
 
     fun testUpdateWithDifferentManagerInstall() {
         val commands = listOf(
-            "apt-get update && yum install package",
-            "yum update && apt-get install package",
-            "apk update && dnf install package",
-            "dnf update && zypper install package",
-            "zypper update && apk add package"
+            "RUN apt-get update && yum install package",
+            "RUN yum update && apt-get install package",
+            "RUN apk update && dnf install package",
+            "RUN dnf update && zypper install package",
+            "RUN zypper update && apk add package"
         )
         for (command in commands) {
             // These should be invalid because install is with a different package manager
@@ -70,10 +70,10 @@ class UpdateWithoutInstallCheckerTest : TestCase() {
 
     fun testCommandsWithInterveningCommands() {
         val commands = listOf(
-            "apt-get update && echo 'Updating' && apt-get install package",
-            "yum update && sleep 5 && yum install package",
-            "apk up && echo 'Upgrading' && apk add package",
-            "dnf update && echo 'No install command'" // Should be invalid
+            "RUN apt-get update && echo 'Updating' && apt-get install package",
+            "RUN yum update && sleep 5 && yum install package",
+            "RUN apk up && echo 'Upgrading' && apk add package",
+            "RUN dnf update && echo 'No install command'" // Should be invalid
         )
         val expectedResults = listOf(true, true, true, false)
         for ((command, expected) in commands.zip(expectedResults)) {
@@ -88,12 +88,12 @@ class UpdateWithoutInstallCheckerTest : TestCase() {
 
     fun testNonUpdateCommands() {
         val commands = listOf(
-            "echo 'Hello World'",
-            "apt-get install package",
-            "yum reinstall package",
-            "apk add package",
-            "dnf groupinstall package",
-            "zypper localinstall package"
+            "RUN echo 'Hello World'",
+            "RUN apt-get install package",
+            "RUN yum reinstall package",
+            "RUN apk add package",
+            "RUN dnf groupinstall package",
+            "RUN zypper localinstall package"
         )
         for (command in commands) {
             // These should be valid as they do not start with an update command
@@ -106,11 +106,11 @@ class UpdateWithoutInstallCheckerTest : TestCase() {
 
     fun testPartialMatches() {
         val commands = listOf(
-            "apt-get updatedb",
-            "yum updater",
-            "apk update-notifier",
-            "dnf updatenow",
-            "zypper update-manager"
+            "RUN apt-get updatedb",
+            "RUN yum updater",
+            "RUN apk update-notifier",
+            "RUN dnf updatenow",
+            "RUN zypper update-manager"
         )
         for (command in commands) {
             // Should be valid as they do not match 'update' or 'up' exactly
@@ -123,10 +123,10 @@ class UpdateWithoutInstallCheckerTest : TestCase() {
 
     fun testCommandsWithComments() {
         val commands = listOf(
-            "apt-get update && # apt-get install package",
-            "yum update && echo 'Update done' # yum install package", // Should be invalid
-            "apk update && apk add package # Install package", // Should be valid
-            "dnf update # && dnf install package" // Should be invalid
+            "RUN apt-get update && # apt-get install package",
+            "RUN yum update && echo 'Update done' # yum install package", // Should be invalid
+            "RUN apk update && apk add package # Install package", // Should be valid
+            "RUN dnf update # && dnf install package" // Should be invalid
         )
         val expectedResults = listOf(false, false, true, false)
         for ((command, expected) in commands.zip(expectedResults)) {

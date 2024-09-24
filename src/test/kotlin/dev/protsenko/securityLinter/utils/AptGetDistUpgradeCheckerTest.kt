@@ -24,7 +24,7 @@ class AptGetDistUpgradeCheckerTest : TestCase() {
         val commands = listOf(
             "RUN apt-get dist-upgrade",
             "RUN apt-get update && apt-get dist-upgrade",
-            "RUN apt-get dist-upgrade && apt-get install package",
+            "RUN apt-get \\\n dist-upgrade && apt-get install package",
             "RUN apt-get -y dist-upgrade",
             "RUN apt-get update && apt-get dist-upgrade && apt-get install package"
         )

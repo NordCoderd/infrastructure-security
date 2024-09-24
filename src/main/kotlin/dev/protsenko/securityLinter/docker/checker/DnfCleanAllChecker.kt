@@ -20,14 +20,11 @@ object DnfCleanAllChecker {
     )
 
     fun isValid(command: String): Boolean {
-        val cmd = command.lowercase()
-
-        if (dnfInstallPattern.containsMatchIn(cmd)) {
-            if (dnfInstallWithoutCleanPattern.containsMatchIn(cmd)) {
+        if (dnfInstallPattern.containsMatchIn(command)) {
+            if (dnfInstallWithoutCleanPattern.containsMatchIn(command)) {
                 return false
             }
         }
-
         return true
     }
 }
