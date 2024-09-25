@@ -4,8 +4,8 @@
 
 ## [Unreleased]
 
-## [1.0.0] - 2024-15-09
+## [1.0.1] - 2024-15-09
 
 ### Changed
 
-- Added base test and common inspection
+- Added 23 docker inspections with actionable quick fixes

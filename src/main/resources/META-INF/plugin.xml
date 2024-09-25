@@ -10,28 +10,6 @@
     <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
     <vendor email="tech@protsenko.dev" url="https://protsenko.dev">Dmitry Protsenko</vendor>
 
-    <!-- Description of the plugin displayed on the Plugin Page and IDE Plugin Manager.
-         Simple HTML elements (text formatting, paragraphs, and lists) can be added inside of <![CDATA[ ]]> tag.
-         Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
-    <description><![CDATA[
-<h2>Infrastructure Security Plugin</h2>
-
-<p>Our plugin provides an easy and effective way to identify security issues (misconfigurations) and adhere to best practices for Infrastructure as Code (IaC) files.</p>
-
-<h3>Features</h3>
-<ul>
-  <li><strong>Dockerfile Analysis</strong>: Includes 23 inspections aimed at detecting vulnerabilities and optimizing Docker images.</li>
-</ul>
-
-<h3>Planned Features</h3>
-<ul>
-  <li><strong>Quick Fixes</strong>: Providing quick fixes to resolve problems faster.</li>
-  <li><strong>Docker Compose</strong>: Checking <code>docker-compose</code> configuration files to ensure security and efficiency.</li>
-  <li><strong>Kubernetes Files</strong>: Analyzing Kubernetes YAML files to comply with best practices and security standards.</li>
-  <li><strong>And More</strong>: Expanding support for other IaC tools and formats to comprehensively protect and optimize your infrastructure configurations.</li>
-</ul>
-]]></description>
-
     <!-- Product and plugin compatibility requirements.
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
     <depends>com.intellij.modules.platform</depends>
