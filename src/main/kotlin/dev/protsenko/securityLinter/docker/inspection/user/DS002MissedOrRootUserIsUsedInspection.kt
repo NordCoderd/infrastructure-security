@@ -7,7 +7,7 @@ import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.codeInspection.util.IntentionFamilyName
 import com.intellij.docker.dockerFile.parser.psi.DockerFileFromCommand
 import com.intellij.docker.dockerFile.parser.psi.DockerFileUserCommand
-import com.intellij.openapi.application.ReadAction
+import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiElementVisitor
 import com.intellij.psi.PsiFile
@@ -74,13 +74,13 @@ class DS002MissedOrRootUserIsUsedInspection : LocalInspectionTool() {
 
         override fun applyFix(project: Project, descriptor: ProblemDescriptor) {
             val nobodyElement = PsiElementGenerator.fromText<DockerFileUserCommand>(project, USER_NOBODY) ?: return
-            ReadAction.run<Exception> {
+            ApplicationManager.getApplication().runWriteAction {
                 if (replace) {
                     descriptor.psiElement.replace(nobodyElement)
                 } else {
-                    val newLine = PsiElementGenerator.newLine(project) ?: return@run
+                    val newLine = PsiElementGenerator.newLine(project) ?: return@runWriteAction
                     val targetElement = descriptor.psiElement
-                    val parentElement = targetElement.parent ?: return@run
+                    val parentElement = targetElement.parent ?: return@runWriteAction
                     parentElement.add(newLine)
                     parentElement.add(nobodyElement)
                 }

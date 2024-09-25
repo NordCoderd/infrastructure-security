@@ -9,7 +9,8 @@ import com.intellij.docker.agent.DockerRepoTag
 import com.intellij.docker.dockerFile.parser.psi.DockerFileFromCommand
 import com.intellij.notification.NotificationGroupManager
 import com.intellij.notification.NotificationType
-import com.intellij.openapi.application.ReadAction
+import com.intellij.openapi.application.ApplicationManager
+import com.intellij.openapi.command.WriteCommandAction
 import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiElementVisitor
 import dev.protsenko.securityLinter.core.DockerVisitor
@@ -61,16 +62,23 @@ class DS001LatestTagIsUsedInspection : LocalInspectionTool() {
         override fun applyFix(project: Project, descriptor: ProblemDescriptor) {
             val fromToReplace = descriptor.psiElement
 
-            try {
-                ReadAction.run<Exception> {
-                    val digest = DockerImageDigestFetcher.fetchDigest(imageName).get()
-                    val dockerFileFromCommand = PsiElementGenerator.getDockerFileFromCommand(project, imageName, digest)
-                        ?: return@run
-                    fromToReplace.replace(dockerFileFromCommand)
+            DockerImageDigestFetcher.fetchDigest(imageName)
+                .thenAccept { digest ->
+                    ApplicationManager.getApplication().invokeLater {
+                        WriteCommandAction.runWriteCommandAction(project) {
+                            val dockerFileFromCommand =
+                                PsiElementGenerator.getDockerFileFromCommand(project, imageName, digest)
+                                    ?: return@runWriteCommandAction
+                            fromToReplace.replace(dockerFileFromCommand)
+                        }
+                    }
                 }
-            } catch (e: Exception) {
-                notifyError(project, "Failed to fetch digest for image '$imageName': ${e.message}")
-            }
+                .exceptionally { throwable ->
+                    ApplicationManager.getApplication().invokeLater {
+                        notifyError(project, "Failed to fetch digest for image '$imageName': ${throwable.message}")
+                    }
+                    null
+                }
         }
 
         fun notifyError(project: Project, content: String) {
