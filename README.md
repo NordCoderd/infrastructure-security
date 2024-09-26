@@ -14,9 +14,12 @@ Plugin for JetBrains IDEs provides an easy and effective way to identify securit
 
 ## Planned Features
 
+- **Extended support Dockerfile**
 - **Docker Compose**: Checking `docker-compose` configuration files to ensure security and efficiency.
 - **Kubernetes Files**: Analyzing Kubernetes YAML files to comply with best practices and security standards.
 - **and more**: Expanding support for other IaC tools and formats to comprehensively protect and optimize your infrastructure configurations.
+
+Detailed list of features are available on [GitHub issues](https://github.com/NordCoderd/infrastructure-security/labels/enhancement)
 
 ## Thanks
 - [Trivy-checks](https://github.com/aquasecurity/trivy-checks/tree/main) for providing a good starting point by porting their Dockerfile rules.
