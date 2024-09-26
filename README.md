@@ -1,8 +1,8 @@
 # Infrastructure Security Plugin
 
 [![CI](https://github.com/NordCoderd/infrastructure-security/actions/workflows/gradle.yml/badge.svg)](https://github.com/NordCoderd/infrastructure-security/actions/workflows/gradle.yml)
-![JetBrains Plugin Version](https://img.shields.io/jetbrains/plugin/v/dev.protsenko.security-linter)
-![JetBrains Plugin Downloads](https://img.shields.io/jetbrains/plugin/d/dev.protsenko.security-linter)
+![JetBrains Plugin Version](https://img.shields.io/jetbrains/plugin/v/dev.protsenko.security-linter?link=https%3A%2F%2Fplugins.jetbrains.com%2Fplugin%2F25413-infrastructure-security)
+![JetBrains Plugin Downloads](https://img.shields.io/jetbrains/plugin/d/dev.protsenko.security-linter?link=https%3A%2F%2Fplugins.jetbrains.com%2Fplugin%2F25413-infrastructure-security)
 
 <!-- Plugin description -->
 Plugin for JetBrains IDEs provides an easy and effective way to identify security issues (misconfigurations) and adhere to best practices for Infrastructure as Code (IaC) files.
