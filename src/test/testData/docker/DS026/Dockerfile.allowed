@@ -1,0 +1,2 @@
+ENV TEST = 1
+FROM ubuntu:21

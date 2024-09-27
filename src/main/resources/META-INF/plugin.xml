@@ -128,6 +128,21 @@
                 displayName="'apt-get dist-upgrade' used"
                 groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
                 enabledByDefault="true"/>
+        <localInspection
+                implementationClass="dev.protsenko.securityLinter.docker.inspection.env.DS026PotentialSecretInEnvFoundInspection"
+                displayName="Potential secret in ENV"
+                groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
+                enabledByDefault="true"/>
+        <localInspection
+                implementationClass="dev.protsenko.securityLinter.docker.inspection.run.DS027CurlBashingInspection"
+                displayName="Curl bashing"
+                groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
+                enabledByDefault="true"/>
+        <localInspection
+                implementationClass="dev.protsenko.securityLinter.docker.inspection.run.DS028ArgInRunCommandInspection"
+                displayName="Unsafe ARG in RUN"
+                groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
+                enabledByDefault="true"/>
 
         <notificationGroup id="dev.protsenko.securityLinter"
                            displayType="BALLOON"

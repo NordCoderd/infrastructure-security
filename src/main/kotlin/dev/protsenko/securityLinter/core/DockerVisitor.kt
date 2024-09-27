@@ -4,6 +4,7 @@ import com.intellij.docker.dockerFile.parser.psi.DockerFileAddOrCopyCommand
 import com.intellij.docker.dockerFile.parser.psi.DockerFileArgCommand
 import com.intellij.docker.dockerFile.parser.psi.DockerFileCmdCommand
 import com.intellij.docker.dockerFile.parser.psi.DockerFileEntrypointCommand
+import com.intellij.docker.dockerFile.parser.psi.DockerFileEnvCommand
 import com.intellij.docker.dockerFile.parser.psi.DockerFileExposeCommand
 import com.intellij.docker.dockerFile.parser.psi.DockerFileFromCommand
 import com.intellij.docker.dockerFile.parser.psi.DockerFileHealthCheckCommand
@@ -39,6 +40,7 @@ open class DockerVisitor(private val saveArguments: Boolean = false) : PsiElemen
             is DockerFileMaintainerCommand -> visitDockerFileMaintainerCommand(element)
             is DockerFileHealthCheckCommand -> visitDockerFileHealthCheckCommand(element)
             is DockerFileArgCommand -> visitDockerFileArgCommand(element)
+            is DockerFileEnvCommand -> visitDockerFileEnvCommand(element)
         }
         super.visitElement(element)
     }
@@ -61,6 +63,7 @@ open class DockerVisitor(private val saveArguments: Boolean = false) : PsiElemen
     open fun visitDockerFileCmdCommand(element: DockerFileCmdCommand) {}
     open fun visitDockerFileMaintainerCommand(element: DockerFileMaintainerCommand) {}
     open fun visitDockerFileHealthCheckCommand(element: DockerFileHealthCheckCommand) {}
+    open fun visitDockerFileEnvCommand(element: DockerFileEnvCommand) {}
 
     open fun visitingIsFinished(file: PsiFile) {}
 }
