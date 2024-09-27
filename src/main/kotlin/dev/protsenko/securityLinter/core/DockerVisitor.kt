@@ -1,6 +1,7 @@
 package dev.protsenko.securityLinter.core
 
 import com.intellij.docker.dockerFile.parser.psi.DockerFileAddOrCopyCommand
+import com.intellij.docker.dockerFile.parser.psi.DockerFileArgCommand
 import com.intellij.docker.dockerFile.parser.psi.DockerFileCmdCommand
 import com.intellij.docker.dockerFile.parser.psi.DockerFileEntrypointCommand
 import com.intellij.docker.dockerFile.parser.psi.DockerFileExposeCommand
@@ -13,8 +14,10 @@ import com.intellij.docker.dockerFile.parser.psi.DockerFileWorkdirCommand
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiElementVisitor
 import com.intellij.psi.PsiFile
+import com.jetbrains.rd.util.concurrentMapOf
 
-open class DockerVisitor : PsiElementVisitor() {
+open class DockerVisitor(private val saveArguments: Boolean = false) : PsiElementVisitor() {
+    val resolvedVariables = concurrentMapOf<String, String>()
 
     override fun visitFile(file: PsiFile) {
         if (file.name == "Dockerfile") {
@@ -35,8 +38,17 @@ open class DockerVisitor : PsiElementVisitor() {
             is DockerFileCmdCommand -> visitDockerFileCmdCommand(element)
             is DockerFileMaintainerCommand -> visitDockerFileMaintainerCommand(element)
             is DockerFileHealthCheckCommand -> visitDockerFileHealthCheckCommand(element)
+            is DockerFileArgCommand -> visitDockerFileArgCommand(element)
         }
         super.visitElement(element)
+    }
+
+    open fun visitDockerFileArgCommand(element: DockerFileArgCommand) {
+        if (!saveArguments) return
+        val argDeclaration = element.argDeclaration ?: return
+        val key = argDeclaration.declaredName.text ?: return
+        val value = argDeclaration.anyValue?.text ?: return
+        resolvedVariables[key] = value
     }
 
     open fun visitDockerFileFromCommand(element: DockerFileFromCommand) {}
@@ -44,10 +56,11 @@ open class DockerVisitor : PsiElementVisitor() {
     open fun visitDockerFileExposeCommand(element: DockerFileExposeCommand) {}
     open fun visitDockerFileAddOrCopyCommand(element: DockerFileAddOrCopyCommand) {}
     open fun visitDockerFileEntrypointCommand(element: DockerFileEntrypointCommand) {}
-    open fun visitDockerFileWorkdirCommand(element: DockerFileWorkdirCommand){}
-    open fun visitDockerFileRunCommand(element: DockerFileRunCommand){}
-    open fun visitDockerFileCmdCommand(element: DockerFileCmdCommand){}
-    open fun visitDockerFileMaintainerCommand(element: DockerFileMaintainerCommand){}
-    open fun visitDockerFileHealthCheckCommand(element: DockerFileHealthCheckCommand){}
+    open fun visitDockerFileWorkdirCommand(element: DockerFileWorkdirCommand) {}
+    open fun visitDockerFileRunCommand(element: DockerFileRunCommand) {}
+    open fun visitDockerFileCmdCommand(element: DockerFileCmdCommand) {}
+    open fun visitDockerFileMaintainerCommand(element: DockerFileMaintainerCommand) {}
+    open fun visitDockerFileHealthCheckCommand(element: DockerFileHealthCheckCommand) {}
+
     open fun visitingIsFinished(file: PsiFile) {}
 }

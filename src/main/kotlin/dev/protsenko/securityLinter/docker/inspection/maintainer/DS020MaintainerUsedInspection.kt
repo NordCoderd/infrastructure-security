@@ -3,6 +3,7 @@ package dev.protsenko.securityLinter.docker.inspection.maintainer
 import com.intellij.codeInspection.LocalInspectionTool
 import com.intellij.codeInspection.LocalQuickFix
 import com.intellij.codeInspection.ProblemDescriptor
+import com.intellij.codeInspection.ProblemHighlightType
 import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.codeInspection.util.IntentionFamilyName
 import com.intellij.docker.dockerFile.parser.psi.DockerFileLabelCommand
@@ -21,6 +22,7 @@ class DS020MaintainerUsedInspection : LocalInspectionTool() {
                 holder.registerProblem(
                     element,
                     SecurityPluginBundle.message("ds020.no-maintainer"),
+                    ProblemHighlightType.LIKE_DEPRECATED,
                     ReplaceMaintainerWithLabel()
                 )
             }

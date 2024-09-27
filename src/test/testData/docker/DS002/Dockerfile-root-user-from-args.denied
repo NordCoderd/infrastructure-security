@@ -1,0 +1,5 @@
+ARG user=root
+ARG port
+FROM ubuntu@sha256:dfc10878be8d8fc9c61cbff33166cb1d1fe44391539243703c72766894fa834a
+<warning descr="Image user should not be 'root'
+Running containers with 'root' user can lead to a container escape situation."><warning descr="User should be static. Dynamic user assignment can be overridden to root, risking container escape.">USER $user</warning></warning>

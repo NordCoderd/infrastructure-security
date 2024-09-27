@@ -1,7 +1,7 @@
 FROM golang:1.7.3
 USER mike
-<warning descr="Multiple CMD instructions listed
-There can only be one CMD instruction in a Dockerfile. If you list more than one CMD then only the last CMD will take effect.">CMD ./app</warning>
+<error descr="Multiple CMD instructions listed
+There can only be one CMD instruction in a Dockerfile. If you list more than one CMD then only the last CMD will take effect.">CMD ./app</error>
 CMD ./apps
 FROM alpine:3.13
 CMD ./app

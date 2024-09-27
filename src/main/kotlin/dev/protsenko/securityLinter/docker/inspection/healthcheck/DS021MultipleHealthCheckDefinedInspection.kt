@@ -1,6 +1,7 @@
 package dev.protsenko.securityLinter.docker.inspection.healthcheck
 
 import com.intellij.codeInspection.LocalInspectionTool
+import com.intellij.codeInspection.ProblemHighlightType
 import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.docker.dockerFile.parser.psi.DockerFileFromCommand
 import com.intellij.docker.dockerFile.parser.psi.DockerFileHealthCheckCommand
@@ -9,7 +10,6 @@ import com.intellij.psi.PsiFile
 import dev.protsenko.securityLinter.core.DockerVisitor
 import dev.protsenko.securityLinter.core.SecurityPluginBundle
 import dev.protsenko.securityLinter.core.quickFix.DeletePsiElementQuickFix
-import java.util.concurrent.atomic.AtomicInteger
 
 class DS021MultipleHealthCheckDefinedInspection: LocalInspectionTool() {
     override fun buildVisitor(holder: ProblemsHolder, isOnTheFly: Boolean): PsiElementVisitor {
@@ -34,6 +34,7 @@ class DS021MultipleHealthCheckDefinedInspection: LocalInspectionTool() {
                         holder.registerProblem(
                             command,
                             SecurityPluginBundle.message("ds021.only-one-healthcheck"),
+                            ProblemHighlightType.WARNING,
                             DeletePsiElementQuickFix(SecurityPluginBundle.message("ds021.remove-redundant-healthcheck"))
                         )
                     }

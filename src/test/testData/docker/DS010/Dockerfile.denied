@@ -1,4 +1,4 @@
 FROM alpine:3.13
 USER mike
-<warning descr="COPY with more than two arguments not ending with slash
-When a COPY command has more than two arguments, the last one should end with a slash.">COPY ["package.json", "yarn.lock", "myapp"]</warning>
+<error descr="COPY with more than two arguments not ending with slash
+When a COPY command has more than two arguments, the last one should end with a slash.">COPY ["package.json", "yarn.lock", "myapp"]</error>

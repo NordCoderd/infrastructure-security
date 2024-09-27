@@ -3,6 +3,7 @@ package dev.protsenko.securityLinter.docker.inspection.from
 import com.intellij.codeInspection.LocalInspectionTool
 import com.intellij.codeInspection.LocalQuickFix
 import com.intellij.codeInspection.ProblemDescriptor
+import com.intellij.codeInspection.ProblemHighlightType
 import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.codeInspection.util.IntentionFamilyName
 import com.intellij.docker.agent.DockerRepoTag
@@ -28,6 +29,7 @@ class DS001LatestTagIsUsedInspection : LocalInspectionTool() {
     override fun buildVisitor(holder: ProblemsHolder, isOnTheFly: Boolean): PsiElementVisitor {
         return object : DockerVisitor() {
             override fun visitDockerFileFromCommand(element: DockerFileFromCommand) {
+                //FIXME: Couldn't parse name with slashes properly
                 val children = element.nameChainList
                 val imageName = children.firstOrNull()?.text ?: return
                 when (children.size) {
@@ -35,6 +37,7 @@ class DS001LatestTagIsUsedInspection : LocalInspectionTool() {
                         holder.registerProblem(
                             element,
                             SecurityPluginBundle.message("ds001.missing-version-tag"),
+                            ProblemHighlightType.ERROR,
                             ReplaceTagWithDigestQuickFix(imageName)
                         )
                     }
@@ -45,7 +48,8 @@ class DS001LatestTagIsUsedInspection : LocalInspectionTool() {
                             holder.registerProblem(
                                 element,
                                 SecurityPluginBundle.message("ds001.latest-tag"),
-                                ReplaceTagWithDigestQuickFix(imageName)
+                                ProblemHighlightType.ERROR,
+                                ReplaceTagWithDigestQuickFix(imageName),
                             )
                         }
                     }

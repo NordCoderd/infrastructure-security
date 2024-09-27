@@ -1,13 +1,14 @@
 package dev.protsenko.securityLinter.docker.inspection.expose
 
 import com.intellij.codeInspection.LocalInspectionTool
+import com.intellij.codeInspection.ProblemHighlightType
 import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.docker.dockerFile.parser.psi.DockerFileExposeCommand
 import com.intellij.psi.PsiElementVisitor
-import dev.protsenko.securityLinter.utils.DockerPsiAnalyzer
 import dev.protsenko.securityLinter.core.DockerVisitor
 import dev.protsenko.securityLinter.core.SecurityPluginBundle
 import dev.protsenko.securityLinter.core.quickFix.DeletePsiElementQuickFix
+import dev.protsenko.securityLinter.utils.DockerPsiAnalyzer
 
 class DS007ExposedPortOutOfRangeInspection : LocalInspectionTool() {
     companion object {
@@ -37,6 +38,7 @@ class DS007ExposedPortOutOfRangeInspection : LocalInspectionTool() {
                         holder.registerProblem(
                             element,
                             SecurityPluginBundle.message("ds007.port-out-of-range", port.toString()),
+                            ProblemHighlightType.ERROR,
                             DeletePsiElementQuickFix(SecurityPluginBundle.message("ds007.remove-broken-port"))
                         )
                     }

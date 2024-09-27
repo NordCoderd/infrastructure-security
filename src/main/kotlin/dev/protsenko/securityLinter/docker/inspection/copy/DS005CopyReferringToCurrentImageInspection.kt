@@ -1,6 +1,7 @@
 package dev.protsenko.securityLinter.docker.inspection.copy
 
 import com.intellij.codeInspection.LocalInspectionTool
+import com.intellij.codeInspection.ProblemHighlightType
 import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.docker.dockerFile.parser.psi.DockerFileAddOrCopyCommand
 import com.intellij.docker.dockerFile.parser.psi.DockerFileFromCommand
@@ -33,7 +34,11 @@ class DS005CopyReferringToCurrentImageInspection: LocalInspectionTool() {
                 val step = copyFromOption.regularValue?.text ?: return
 
                 if (step == currentStep){
-                    holder.registerProblem(copyFromOption, SecurityPluginBundle.message("ds005.copy-referring-to-the-current-image"))
+                    holder.registerProblem(
+                        copyFromOption,
+                        SecurityPluginBundle.message("ds005.copy-referring-to-the-current-image"),
+                        ProblemHighlightType.ERROR,
+                    )
                 }
             }
         }

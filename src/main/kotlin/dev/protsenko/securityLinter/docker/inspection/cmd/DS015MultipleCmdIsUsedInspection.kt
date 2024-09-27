@@ -1,6 +1,7 @@
 package dev.protsenko.securityLinter.docker.inspection.cmd
 
 import com.intellij.codeInspection.LocalInspectionTool
+import com.intellij.codeInspection.ProblemHighlightType
 import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.docker.dockerFile.parser.psi.DockerFileCmdCommand
 import com.intellij.docker.dockerFile.parser.psi.DockerFileFromCommand
@@ -31,9 +32,12 @@ class DS015MultipleCmdIsUsedInspection: LocalInspectionTool() {
             private fun detectProblemAndDropCounters(){
                 if (commands.size > 1){
                     for (command in commands.dropLast(1)) {
-                        holder.registerProblem(command,
+                        holder.registerProblem(
+                            command,
                             SecurityPluginBundle.message("ds015.only-one-cmd"),
-                            DeletePsiElementQuickFix(SecurityPluginBundle.message("ds015.remove-redundant-cmd")))
+                            ProblemHighlightType.ERROR,
+                            DeletePsiElementQuickFix(SecurityPluginBundle.message("ds015.remove-redundant-cmd"))
+                        )
                     }
                 }
                 commands.clear()

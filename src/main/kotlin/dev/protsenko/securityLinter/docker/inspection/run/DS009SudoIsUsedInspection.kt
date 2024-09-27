@@ -1,6 +1,7 @@
 package dev.protsenko.securityLinter.docker.inspection.run
 
 import com.intellij.codeInspection.LocalInspectionTool
+import com.intellij.codeInspection.ProblemHighlightType
 import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.docker.dockerFile.parser.psi.DockerFileRunCommand
 import com.intellij.psi.PsiElementVisitor
@@ -13,7 +14,11 @@ class DS009SudoIsUsedInspection: LocalInspectionTool() {
         return object : DockerVisitor(){
             override fun visitDockerFileRunCommand(element: DockerFileRunCommand) {
                 if (SudoChecker.containsSudo(element.text)){
-                    holder.registerProblem(element, SecurityPluginBundle.message("ds009.run-using-sudo"))
+                    holder.registerProblem(
+                        element,
+                        SecurityPluginBundle.message("ds009.run-using-sudo"),
+                        ProblemHighlightType.WARNING
+                    )
                 }
             }
         }

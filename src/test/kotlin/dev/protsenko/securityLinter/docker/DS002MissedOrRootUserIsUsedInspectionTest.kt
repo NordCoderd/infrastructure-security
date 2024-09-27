@@ -9,7 +9,9 @@ class DS002MissedOrRootUserIsUsedInspectionTest(
     override val customDockerFiles: Set<String> = setOf(
         "Dockerfile-root-declared.denied",
         "Dockerfile-multistage.denied",
-        "Dockerfile-multistage-2.denied"
+        "Dockerfile-multistage-2.denied",
+        "Dockerfile-root-user-from-args.denied",
+        "Dockerfile-user-from-args.denied"
     ),
     override val targetInspection: LocalInspectionTool = DS002MissedOrRootUserIsUsedInspection()
 ) : DockerHighlightingBaseTest()

@@ -1,6 +1,7 @@
 package dev.protsenko.securityLinter.docker.inspection.entrypoint
 
 import com.intellij.codeInspection.LocalInspectionTool
+import com.intellij.codeInspection.ProblemHighlightType
 import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.docker.dockerFile.parser.psi.DockerFileEntrypointCommand
 import com.intellij.docker.dockerFile.parser.psi.DockerFileFromCommand
@@ -33,6 +34,7 @@ class DS006MultipleEntrypointInspection : LocalInspectionTool() {
                         holder.registerProblem(
                             command,
                             SecurityPluginBundle.message("ds006.multiple-entrypoint"),
+                            ProblemHighlightType.WARNING,
                             DeletePsiElementQuickFix(SecurityPluginBundle.message("ds006.remove-redundant-entrypoint"))
                         )
                     }

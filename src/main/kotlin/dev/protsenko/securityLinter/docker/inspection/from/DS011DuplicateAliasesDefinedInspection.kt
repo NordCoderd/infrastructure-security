@@ -1,6 +1,7 @@
 package dev.protsenko.securityLinter.docker.inspection.from
 
 import com.intellij.codeInspection.LocalInspectionTool
+import com.intellij.codeInspection.ProblemHighlightType
 import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.docker.dockerFile.parser.psi.DockerFileFromCommand
 import com.intellij.psi.PsiElementVisitor
@@ -21,6 +22,7 @@ class DS011DuplicateAliasesDefinedInspection : LocalInspectionTool() {
                     holder.registerProblem(
                         stageDeclaration,
                         SecurityPluginBundle.message("ds011.no-duplicate-alias"),
+                        ProblemHighlightType.WARNING,
                         DeletePsiElementQuickFix(SecurityPluginBundle.message("ds011.remove-duplicated-alias"))
                     )
                 } else {

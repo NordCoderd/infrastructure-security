@@ -1,6 +1,7 @@
 package dev.protsenko.securityLinter.docker.inspection.run
 
 import com.intellij.codeInspection.LocalInspectionTool
+import com.intellij.codeInspection.ProblemHighlightType
 import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.docker.dockerFile.parser.psi.DockerFileRunCommand
 import com.intellij.psi.PsiElementVisitor
@@ -13,7 +14,11 @@ class DS014YumInstallWithoutCleanInspection: LocalInspectionTool() {
             override fun visitDockerFileRunCommand(element: DockerFileRunCommand) {
                 val runCommand = element.text
                 if (runCommand.contains("yum install") && !runCommand.contains("yum clean all")){
-                    holder.registerProblem(element, SecurityPluginBundle.message("ds014.purge-yum-package-cache"))
+                    holder.registerProblem(
+                        element,
+                        SecurityPluginBundle.message("ds014.purge-yum-package-cache"),
+                        ProblemHighlightType.WARNING
+                    )
                 }
             }
         }

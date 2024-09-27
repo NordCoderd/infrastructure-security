@@ -1,6 +1,7 @@
 package dev.protsenko.securityLinter.docker.inspection.run
 
 import com.intellij.codeInspection.LocalInspectionTool
+import com.intellij.codeInspection.ProblemHighlightType
 import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.docker.dockerFile.parser.psi.DockerFileRunCommand
 import com.intellij.psi.PsiElementVisitor
@@ -14,7 +15,11 @@ class DS016PackageManagerUpdateWithoutInstallInspection : LocalInspectionTool() 
         return object : DockerVisitor() {
             override fun visitDockerFileRunCommand(element: DockerFileRunCommand) {
                 if (!UpdateWithoutInstallChecker.isValid(element.text)) {
-                    holder.registerProblem(element, SecurityPluginBundle.message("ds016.no-orphan-package-update"))
+                    holder.registerProblem(
+                        element,
+                        SecurityPluginBundle.message("ds016.no-orphan-package-update"),
+                        ProblemHighlightType.WARNING
+                    )
                 }
             }
         }

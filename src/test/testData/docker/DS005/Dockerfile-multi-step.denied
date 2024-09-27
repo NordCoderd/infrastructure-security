@@ -1,12 +1,12 @@
 FROM golang:1.7.3 as step1
-COPY <warning descr="COPY '--from' referring to the current image
-COPY '--from' should not mention the current FROM alias, since it is impossible to copy from itself.">--from=step1</warning> /binary /
+COPY <error descr="COPY '--from' referring to the current image
+COPY '--from' should not mention the current FROM alias, since it is impossible to copy from itself.">--from=step1</error> /binary /
 
 FROM alpine:3.13
 USER mike
 
 FROM golang:1.7.3 as step2
-COPY <warning descr="COPY '--from' referring to the current image
-COPY '--from' should not mention the current FROM alias, since it is impossible to copy from itself.">--from=step2</warning> /binary /
+COPY <error descr="COPY '--from' referring to the current image
+COPY '--from' should not mention the current FROM alias, since it is impossible to copy from itself.">--from=step2</error> /binary /
 
 ENTRYPOINT [ "/opt/app/run.sh --port 8080" ]

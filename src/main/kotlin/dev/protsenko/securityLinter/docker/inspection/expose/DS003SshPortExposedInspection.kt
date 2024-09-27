@@ -1,14 +1,15 @@
 package dev.protsenko.securityLinter.docker.inspection.expose
 
 import com.intellij.codeInspection.LocalInspectionTool
+import com.intellij.codeInspection.ProblemHighlightType
 import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.docker.dockerFile.parser.psi.DockerFileExposeCommand
 import com.intellij.psi.PsiElementVisitor
 import dev.protsenko.securityLinter.core.DockerFileConstants.PROHIBITED_PORTS
-import dev.protsenko.securityLinter.utils.DockerPsiAnalyzer
 import dev.protsenko.securityLinter.core.DockerVisitor
 import dev.protsenko.securityLinter.core.SecurityPluginBundle
 import dev.protsenko.securityLinter.core.quickFix.DeletePsiElementQuickFix
+import dev.protsenko.securityLinter.utils.DockerPsiAnalyzer
 
 class DS003SshPortExposedInspection : LocalInspectionTool() {
     override fun buildVisitor(holder: ProblemsHolder, isOnTheFly: Boolean): PsiElementVisitor {
@@ -23,6 +24,7 @@ class DS003SshPortExposedInspection : LocalInspectionTool() {
                     holder.registerProblem(
                         element,
                         SecurityPluginBundle.message("ds003.ssh-port-exposed"),
+                        ProblemHighlightType.ERROR,
                         DeletePsiElementQuickFix(SecurityPluginBundle.message("ds003.remove-dangerous-port-exposed"))
                     )
                 }

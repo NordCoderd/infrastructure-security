@@ -1,12 +1,12 @@
 FROM alpine:3.13
 USER mike
 ADD "/target/resources.tar.gz" "resources.jar"
-<warning descr="ADD instead of COPY
-You should use COPY instead of ADD unless you want to extract a tar file.">ADD "/target/app.jar" "app.jar"</warning>
+<error descr="ADD instead of COPY
+You should use COPY instead of ADD unless you want to extract a tar file.">ADD "/target/app.jar" "app.jar"</error>
 COPY target.zip target-1.zip
-<warning descr="ADD instead of COPY
-You should use COPY instead of ADD unless you want to extract a tar file.">ADD "/target/app.jar" "/target/app2.jar" "app/"</warning>
-<warning descr="ADD instead of COPY
-You should use COPY instead of ADD unless you want to extract a tar file.">ADD ["/target/app.jar","/target/app3.jar","app/"]</warning>
-<warning descr="ADD instead of COPY
-You should use COPY instead of ADD unless you want to extract a tar file.">ADD ["/target/app.jar","app/"]</warning>
+<error descr="ADD instead of COPY
+You should use COPY instead of ADD unless you want to extract a tar file.">ADD "/target/app.jar" "/target/app2.jar" "app/"</error>
+<error descr="ADD instead of COPY
+You should use COPY instead of ADD unless you want to extract a tar file.">ADD ["/target/app.jar","/target/app3.jar","app/"]</error>
+<error descr="ADD instead of COPY
+You should use COPY instead of ADD unless you want to extract a tar file.">ADD ["/target/app.jar","app/"]</error>

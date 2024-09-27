@@ -1,6 +1,7 @@
 package dev.protsenko.securityLinter.docker.inspection.workdir
 
 import com.intellij.codeInspection.LocalInspectionTool
+import com.intellij.codeInspection.ProblemHighlightType
 import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.docker.dockerFile.parser.psi.DockerFileWorkdirCommand
 import com.intellij.psi.PsiElementVisitor
@@ -15,7 +16,11 @@ class DS008WorkdirPathNotAbsoluteInspection: LocalInspectionTool() {
                 val workdirPath = element.fileOrUrlList.firstOrNull()?.text ?: return
 
                 if (!AbsolutePathResolver.isAbsolutePath(workdirPath)){
-                    holder.registerProblem(element, SecurityPluginBundle.message("ds008.workdir-path-not-absolute"))
+                    holder.registerProblem(
+                        element,
+                        SecurityPluginBundle.message("ds008.workdir-path-not-absolute"),
+                        ProblemHighlightType.WARNING
+                    )
                 }
 
                 super.visitDockerFileWorkdirCommand(element)

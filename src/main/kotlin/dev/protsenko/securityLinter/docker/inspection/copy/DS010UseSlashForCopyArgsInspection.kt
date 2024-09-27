@@ -1,6 +1,7 @@
 package dev.protsenko.securityLinter.docker.inspection.copy
 
 import com.intellij.codeInspection.LocalInspectionTool
+import com.intellij.codeInspection.ProblemHighlightType
 import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.docker.dockerFile.parser.psi.DockerFileAddOrCopyCommand
 import com.intellij.psi.PsiElementVisitor
@@ -28,7 +29,11 @@ class DS010UseSlashForCopyArgsInspection : LocalInspectionTool() {
 
                 val lastElement = lastCopyArgument.text?.removeQuotes() ?: return
                 if (!lastElement.endsWith("/") && ! lastElement.endsWith("\\")) {
-                    holder.registerProblem(element, SecurityPluginBundle.message("ds010.use-slash-for-copy-args"))
+                    holder.registerProblem(
+                        element,
+                        SecurityPluginBundle.message("ds010.use-slash-for-copy-args"),
+                        ProblemHighlightType.ERROR
+                    )
                 }
             }
         }

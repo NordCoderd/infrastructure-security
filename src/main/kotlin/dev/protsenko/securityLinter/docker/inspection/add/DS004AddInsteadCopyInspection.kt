@@ -3,6 +3,7 @@ package dev.protsenko.securityLinter.docker.inspection.add
 import com.intellij.codeInspection.LocalInspectionTool
 import com.intellij.codeInspection.LocalQuickFix
 import com.intellij.codeInspection.ProblemDescriptor
+import com.intellij.codeInspection.ProblemHighlightType
 import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.codeInspection.util.IntentionFamilyName
 import com.intellij.docker.dockerFile.parser.psi.DockerFileAddOrCopyCommand
@@ -44,6 +45,7 @@ class DS004AddInsteadCopyInspection : LocalInspectionTool() {
                         holder.registerProblem(
                             element,
                             SecurityPluginBundle.message("ds004.add-instead-copy"),
+                            ProblemHighlightType.ERROR,
                             ReplaceAddWithCopyQuickFix()
                         )
                         return

@@ -1,8 +1,8 @@
 FROM alpine:3.13
 USER mike
-<warning descr="Exposed port 65536 out of range
-UNIX ports outside the range 0-65535 are exposed."><warning descr="Exposed port 65539 out of range
-UNIX ports outside the range 0-65535 are exposed.">EXPOSE 65536/tcp 65539/tcp</warning></warning>
-<warning descr="Exposed port 65537 out of range
-UNIX ports outside the range 0-65535 are exposed."><warning descr="Exposed port 65539 out of range
-UNIX ports outside the range 0-65535 are exposed.">EXPOSE 65537/udp 65539/udp</warning></warning>
+<error descr="Exposed port 65536 out of range
+UNIX ports outside the range 0-65535 are exposed."><error descr="Exposed port 65539 out of range
+UNIX ports outside the range 0-65535 are exposed.">EXPOSE 65536/tcp 65539/tcp</error></error>
+<error descr="Exposed port 65537 out of range
+UNIX ports outside the range 0-65535 are exposed."><error descr="Exposed port 65539 out of range
+UNIX ports outside the range 0-65535 are exposed.">EXPOSE 65537/udp 65539/udp</error></error>

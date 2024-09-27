@@ -1,13 +1,14 @@
 package dev.protsenko.securityLinter.docker.inspection.run
 
 import com.intellij.codeInspection.LocalInspectionTool
+import com.intellij.codeInspection.ProblemHighlightType
 import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.docker.dockerFile.parser.psi.DockerFileRunCommand
 import com.intellij.psi.PsiElementVisitor
 import com.intellij.psi.PsiFile
-import dev.protsenko.securityLinter.utils.DockerPsiAnalyzer
 import dev.protsenko.securityLinter.core.DockerVisitor
 import dev.protsenko.securityLinter.core.SecurityPluginBundle
+import dev.protsenko.securityLinter.utils.DockerPsiAnalyzer
 import java.util.concurrent.atomic.AtomicBoolean
 
 class DS013UsingWgetAndCurlBothInspection: LocalInspectionTool() {
@@ -33,7 +34,11 @@ class DS013UsingWgetAndCurlBothInspection: LocalInspectionTool() {
 
             override fun visitingIsFinished(file: PsiFile) {
                 if (isContainCurl.get() && isContainWget.get()){
-                    holder.registerProblem(file, SecurityPluginBundle.message("ds013.standardise-remote-get"))
+                    holder.registerProblem(
+                        file,
+                        SecurityPluginBundle.message("ds013.standardise-remote-get"),
+                        ProblemHighlightType.WARNING
+                    )
                 }
             }
         }
