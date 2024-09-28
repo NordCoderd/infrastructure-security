@@ -1,0 +1,2 @@
+FROM ubuntu:9
+<warning descr="Use --no-install-recommends with apt-get to avoid installing unnecessary packages and reduce image size.">RUN apt-get install -y python</warning>

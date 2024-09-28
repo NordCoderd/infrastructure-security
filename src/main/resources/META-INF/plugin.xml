@@ -107,6 +107,7 @@
 
     <extensions defaultExtensionNs="dev.protsenko.security-linter">
         <dockerFileRunAnalyzer implementation="dev.protsenko.securityLinter.docker.inspection.run.impl.AptGetInstallWithoutAutoConfirmAnalyzer"/>
+        <dockerFileRunAnalyzer implementation="dev.protsenko.securityLinter.docker.inspection.run.impl.AptGetNoInstallRecommendsAnalyzer"/>
         <dockerFileRunAnalyzer implementation="dev.protsenko.securityLinter.docker.inspection.run.impl.ArgumentsInRunCommandAnalyzer"/>
         <dockerFileRunAnalyzer implementation="dev.protsenko.securityLinter.docker.inspection.run.impl.CurlBashingAnalyzer"/>
         <dockerFileRunAnalyzer implementation="dev.protsenko.securityLinter.docker.inspection.run.impl.DistUpgradeAnalyzer"/>

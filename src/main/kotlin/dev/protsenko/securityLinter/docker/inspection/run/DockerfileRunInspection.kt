@@ -7,6 +7,7 @@ import com.intellij.openapi.extensions.ExtensionPointName
 import com.intellij.psi.PsiElementVisitor
 import dev.protsenko.securityLinter.core.DockerVisitor
 import dev.protsenko.securityLinter.docker.inspection.run.core.DockerfileRunAnalyzerEP
+import dev.protsenko.securityLinter.utils.toStringDockerCommand
 
 class DockerfileRunInspection : LocalInspectionTool() {
     val extensionPointName =
@@ -17,7 +18,13 @@ class DockerfileRunInspection : LocalInspectionTool() {
 
         return object : DockerVisitor() {
             override fun visitDockerFileRunCommand(element: DockerFileRunCommand) {
-                val runCommand = element.text
+                val execForm = element.parametersInJsonForm?.toStringDockerCommand("RUN ")
+
+                val runCommand = if (execForm != null) {
+                    execForm
+                } else {
+                    element.text
+                }
                 for (extension in extensions) {
                     extension.handle(runCommand, element, holder)
                 }

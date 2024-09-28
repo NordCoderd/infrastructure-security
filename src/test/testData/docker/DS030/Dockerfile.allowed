@@ -1,0 +1,2 @@
+FROM ubuntu:9
+RUN apt-get install -y python --no-install-recommends
