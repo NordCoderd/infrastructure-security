@@ -1,0 +1,37 @@
+<html>
+<body>
+<p>Detects various issues in Dockerfiles that could lead to security vulnerabilities, package management inefficiencies,
+    and bloated image sizes. Addressing these issues enhances the security, maintainability, and efficiency of Docker
+    images.</p>
+<ul>
+    <li><strong>Unsafe ARG in RUN</strong>: Using ARG variables in RUN commands can be overridden by users, leading to
+        unintended behaviors or security risks.
+    </li>
+    <li><strong>Curl Bashing</strong>: Detects the use of curl or wget with pipes or redirections to execute scripts
+        from untrusted sources, preventing the execution of potentially harmful scripts.
+    </li>
+    <li><strong>'apt-get dist-upgrade' Used</strong>: Avoids using 'apt-get dist-upgrade' in Dockerfiles, as it performs
+        major version upgrades which are inappropriate for Docker images.
+    </li>
+    <li><strong>'apt-get' Missing '-y'</strong>: Ensures 'apt-get' commands include the '-y' flag to avoid manual user
+        input during package installations.
+    </li>
+    <li><strong>'zypper clean' Missing</strong>: Ensures that cached package data is cleaned after using zypper to
+        reduce image size.
+    </li>
+    <li><strong>RUN Package-Manager Update Alone</strong>: Ensures that 'RUN &lt;package-manager&gt; update'
+        instructions are not used alone and are followed by install commands in the same RUN statement to prevent
+        orphaned packages.
+    </li>
+    <li><strong>Missing dnf Clean</strong>: Ensures 'dnf clean all' is used after 'dnf install' commands to clean
+        package caches and reduce image size.
+    </li>
+    <li><strong>'yum clean all' Missing</strong>: Ensures 'yum clean all' is used after 'yum install' commands to clean
+        package caches and reduce image size.
+    </li>
+    <li><strong>RUN cd ...</strong>: Encourages the use of WORKDIR instead of 'RUN cd ...' commands to change
+        directories, improving readability and maintainability.
+    </li>
+</ul>
+</body>
+</html>

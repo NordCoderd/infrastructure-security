@@ -1,6 +1,8 @@
 package dev.protsenko.securityLinter.docker.checker
 
-object DnfCleanAllChecker {
+import dev.protsenko.securityLinter.docker.checker.core.RunCommandValidator
+
+object DnfCleanAllValidator: RunCommandValidator {
     private val installCommands = listOf(
         "install",
         "in",
@@ -19,7 +21,7 @@ object DnfCleanAllChecker {
         options = setOf(RegexOption.IGNORE_CASE)
     )
 
-    fun isValid(command: String): Boolean {
+    override fun isValid(command: String): Boolean {
         if (dnfInstallPattern.containsMatchIn(command)) {
             if (dnfInstallWithoutCleanPattern.containsMatchIn(command)) {
                 return false

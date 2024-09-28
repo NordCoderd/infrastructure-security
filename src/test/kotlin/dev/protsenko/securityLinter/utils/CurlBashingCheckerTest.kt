@@ -1,6 +1,6 @@
 package dev.protsenko.securityLinter.utils
 
-import dev.protsenko.securityLinter.docker.checker.CurlBashingChecker
+import dev.protsenko.securityLinter.docker.checker.CurlBashingValidator
 import junit.framework.TestCase
 
 class CurlBashingCheckerTest : TestCase() {
@@ -15,7 +15,7 @@ class CurlBashingCheckerTest : TestCase() {
         for (command in commands) {
             assertFalse(
                 "Command '$command' should be invalid for curl bashing",
-                CurlBashingChecker.isValid(command)
+                CurlBashingValidator.isValid(command)
             )
         }
     }
@@ -30,7 +30,7 @@ class CurlBashingCheckerTest : TestCase() {
         for (command in commands) {
             assertTrue(
                 "Command '$command' should be valid for curl bashing",
-                CurlBashingChecker.isValid(command)
+                CurlBashingValidator.isValid(command)
             )
         }
     }

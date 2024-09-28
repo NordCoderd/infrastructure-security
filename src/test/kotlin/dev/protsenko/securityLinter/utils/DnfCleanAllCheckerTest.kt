@@ -1,6 +1,6 @@
 package dev.protsenko.securityLinter.utils
 
-import dev.protsenko.securityLinter.docker.checker.DnfCleanAllChecker
+import dev.protsenko.securityLinter.docker.checker.DnfCleanAllValidator
 import junit.framework.TestCase
 
 class DnfCleanAllCheckerTest : TestCase() {
@@ -22,7 +22,7 @@ class DnfCleanAllCheckerTest : TestCase() {
         )
         for (command in commands) {
             assertTrue(
-                "Command '$command' should be valid", DnfCleanAllChecker.isValid(command)
+                "Command '$command' should be valid", DnfCleanAllValidator.isValid(command)
             )
         }
     }
@@ -41,7 +41,7 @@ class DnfCleanAllCheckerTest : TestCase() {
         )
         for (command in commands) {
             assertFalse(
-                "Command '$command' should be invalid", DnfCleanAllChecker.isValid(command)
+                "Command '$command' should be invalid", DnfCleanAllValidator.isValid(command)
             )
         }
     }

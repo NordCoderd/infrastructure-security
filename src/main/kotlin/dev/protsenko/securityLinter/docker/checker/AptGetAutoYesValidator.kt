@@ -1,7 +1,9 @@
 package dev.protsenko.securityLinter.docker.checker
 
+import dev.protsenko.securityLinter.docker.checker.core.RunCommandValidator
 
-object AptGetAutoYesChecker {
+
+object AptGetAutoYesValidator: RunCommandValidator {
     private val separators = Regex("""\s*(?:&&|;|\n)\s*""")
 
     private val assumeYesFlagsPattern = Regex(
@@ -14,7 +16,7 @@ object AptGetAutoYesChecker {
         options = setOf(RegexOption.IGNORE_CASE)
     )
 
-    fun isValid(command: String): Boolean {
+    override fun isValid(command: String): Boolean {
         if (!command.contains("apt-get")) return true
         val cmd = command.removePrefix("RUN").trim()
         val individualCommands = cmd.split(separators)

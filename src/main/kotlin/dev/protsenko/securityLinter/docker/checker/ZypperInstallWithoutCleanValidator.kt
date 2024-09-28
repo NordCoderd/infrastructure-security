@@ -1,6 +1,8 @@
 package dev.protsenko.securityLinter.docker.checker
 
-object ZypperCleanChecker {
+import dev.protsenko.securityLinter.docker.checker.core.RunCommandValidator
+
+object ZypperInstallWithoutCleanValidator: RunCommandValidator {
     private val installCommands = listOf(
         "install",
         "in",
@@ -18,6 +20,5 @@ object ZypperCleanChecker {
         options = setOf(RegexOption.IGNORE_CASE, RegexOption.DOT_MATCHES_ALL)
     )
 
-    fun isValid(command: String) = !pattern.matches(command)
-
+    override fun isValid(command: String) = !pattern.matches(command)
 }

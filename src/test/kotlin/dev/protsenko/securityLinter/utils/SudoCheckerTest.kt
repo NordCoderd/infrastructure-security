@@ -1,29 +1,29 @@
 package dev.protsenko.securityLinter.utils
 
-import dev.protsenko.securityLinter.docker.checker.SudoChecker
+import dev.protsenko.securityLinter.docker.checker.SudoIsUsedValidator
 import junit.framework.TestCase
 
 class SudoCheckerTest : TestCase() {
 
-    fun testContainsSudo() {
+    fun testisValid() {
         // Test cases where 'sudo' should be detected
-        assertTrue(SudoChecker.containsSudo("sudo apt-get update"))
-        assertTrue(SudoChecker.containsSudo("RUN sudo pip install --upgrade pip"))
-        assertTrue(SudoChecker.containsSudo("apt-get update && sudo apt-get install -y package"))
-        assertTrue(SudoChecker.containsSudo("bash -c 'sudo do_something'"))
-        assertTrue(SudoChecker.containsSudo("sudo"))
-        assertTrue(SudoChecker.containsSudo("   sudo   "))
-        assertTrue(SudoChecker.containsSudo("command && sudo other_command"))
+        assertFalse(SudoIsUsedValidator.isValid("sudo apt-get update"))
+        assertFalse(SudoIsUsedValidator.isValid("RUN sudo pip install --upgrade pip"))
+        assertFalse(SudoIsUsedValidator.isValid("apt-get update && sudo apt-get install -y package"))
+        assertFalse(SudoIsUsedValidator.isValid("bash -c 'sudo do_something'"))
+        assertFalse(SudoIsUsedValidator.isValid("sudo"))
+        assertFalse(SudoIsUsedValidator.isValid("   sudo   "))
+        assertFalse(SudoIsUsedValidator.isValid("command && sudo other_command"))
     }
 
     fun testDoesNotContainSudo() {
         // Test cases where 'sudo' should not be detected
-        assertFalse(SudoChecker.containsSudo("apt-get update"))
-        assertFalse(SudoChecker.containsSudo("RUN apt-get install package"))
-        assertFalse(SudoChecker.containsSudo("echo 'This is a test'"))
-        assertFalse(SudoChecker.containsSudo("useradd sudoroot"))
-        assertFalse(SudoChecker.containsSudo("RUN echo sudoer"))
-        assertFalse(SudoChecker.containsSudo("command_sudo"))
-        assertFalse(SudoChecker.containsSudo("sudo_command"))
+        assertTrue(SudoIsUsedValidator.isValid("apt-get update"))
+        assertTrue(SudoIsUsedValidator.isValid("RUN apt-get install package"))
+        assertTrue(SudoIsUsedValidator.isValid("echo 'This is a test'"))
+        assertTrue(SudoIsUsedValidator.isValid("useradd sudoroot"))
+        assertTrue(SudoIsUsedValidator.isValid("RUN echo sudoer"))
+        assertTrue(SudoIsUsedValidator.isValid("command_sudo"))
+        assertTrue(SudoIsUsedValidator.isValid("sudo_command"))
     }
 }

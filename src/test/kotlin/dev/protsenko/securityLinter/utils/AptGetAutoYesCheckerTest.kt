@@ -1,6 +1,6 @@
 package dev.protsenko.securityLinter.utils
 
-import dev.protsenko.securityLinter.docker.checker.AptGetAutoYesChecker
+import dev.protsenko.securityLinter.docker.checker.AptGetAutoYesValidator
 import junit.framework.TestCase
 
 
@@ -28,7 +28,7 @@ class AptGetAutoYesCheckerTest : TestCase() {
         for (command in commands) {
             assertTrue(
                 "Command '$command' should be valid",
-                AptGetAutoYesChecker.isValid(command)
+                AptGetAutoYesValidator.isValid(command)
             )
         }
     }
@@ -52,7 +52,7 @@ class AptGetAutoYesCheckerTest : TestCase() {
         for (command in commands) {
             assertFalse(
                 "Command '$command' should be invalid",
-                AptGetAutoYesChecker.isValid(command)
+                AptGetAutoYesValidator.isValid(command)
             )
         }
     }

@@ -1,6 +1,6 @@
 package dev.protsenko.securityLinter.utils
 
-import dev.protsenko.securityLinter.docker.checker.ZypperCleanChecker
+import dev.protsenko.securityLinter.docker.checker.ZypperInstallWithoutCleanValidator
 import junit.framework.TestCase
 
 class ZypperCleanCheckerTest : TestCase() {
@@ -21,7 +21,7 @@ class ZypperCleanCheckerTest : TestCase() {
         for (command in commands) {
             assertTrue(
                 "Command '$command' should be valid",
-                ZypperCleanChecker.isValid(command)
+                ZypperInstallWithoutCleanValidator.isValid(command)
             )
         }
     }
@@ -42,7 +42,7 @@ class ZypperCleanCheckerTest : TestCase() {
         for (command in commands) {
             assertFalse(
                 "Command '$command' should be invalid",
-                ZypperCleanChecker.isValid(command)
+                ZypperInstallWithoutCleanValidator.isValid(command)
             )
         }
     }

@@ -1,6 +1,6 @@
 package dev.protsenko.securityLinter.utils
 
-import dev.protsenko.securityLinter.docker.checker.AptGetDistUpgradeChecker
+import dev.protsenko.securityLinter.docker.checker.AptGetDistUpgradeValidator
 import junit.framework.TestCase
 
 class AptGetDistUpgradeCheckerTest : TestCase() {
@@ -15,7 +15,7 @@ class AptGetDistUpgradeCheckerTest : TestCase() {
         for (command in commands) {
             assertTrue(
                 "Command '$command' should be valid",
-                AptGetDistUpgradeChecker.isValid(command)
+                AptGetDistUpgradeValidator.isValid(command)
             )
         }
     }
@@ -31,7 +31,7 @@ class AptGetDistUpgradeCheckerTest : TestCase() {
         for (command in commands) {
             assertFalse(
                 "Command '$command' should be invalid",
-                AptGetDistUpgradeChecker.isValid(command)
+                AptGetDistUpgradeValidator.isValid(command)
             )
         }
     }

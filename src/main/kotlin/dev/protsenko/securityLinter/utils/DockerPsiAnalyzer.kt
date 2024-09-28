@@ -12,11 +12,11 @@ object DockerPsiAnalyzer {
      * returns: value in lowercase
      */
     fun splitCommand(dockerElement: DockerPsiCommand): List<String> {
-        return dockerElement
-            .text
-            .trim()
-            .split(" ")
-            .map { it.trim() }
+        return splitCommand(dockerElement.text)
+    }
+
+    fun splitCommand(text: String): List<String> {
+        return text.trim().split(" ").map { it.trim() }
     }
 
 }

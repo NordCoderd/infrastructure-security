@@ -1,6 +1,8 @@
 package dev.protsenko.securityLinter.docker.checker
 
-object UpdateWithoutInstallChecker {
+import dev.protsenko.securityLinter.docker.checker.core.RunCommandValidator
+
+object UpdateWithoutInstallValidator: RunCommandValidator {
     val UPDATE_COMMANDS = setOf("update", "up")
     val INSTALL_COMMANDS = setOf(
         "upgrade", "install", "source-install", "reinstall", "groupinstall", "localinstall", "add"
@@ -20,10 +22,7 @@ object UpdateWithoutInstallChecker {
         options = setOf(RegexOption.DOT_MATCHES_ALL, RegexOption.MULTILINE)
     )
 
-    fun isValid(command: String): Boolean {
-        // Remove comments from the command
-        val commandWithoutComments = command.split("#")[0]
-        // Check if the pattern matches
-        return !pattern.containsMatchIn(commandWithoutComments)
+    override fun isValid(command: String): Boolean {
+        return !pattern.containsMatchIn(command)
     }
 }

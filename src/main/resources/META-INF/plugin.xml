@@ -59,11 +59,6 @@
                 groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
                 enabledByDefault="true"/>
         <localInspection
-                implementationClass="dev.protsenko.securityLinter.docker.inspection.run.DS009SudoIsUsedInspection"
-                displayName="RUN using 'sudo'"
-                groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
-                enabledByDefault="true"/>
-        <localInspection
                 implementationClass="dev.protsenko.securityLinter.docker.inspection.copy.DS010UseSlashForCopyArgsInspection"
                 displayName="COPY with more than two arguments not ending with slash"
                 groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
@@ -74,43 +69,13 @@
                 groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
                 enabledByDefault="true"/>
         <localInspection
-                implementationClass="dev.protsenko.securityLinter.docker.inspection.run.DS012UsingCdToChangeDirectoryInspection"
-                displayName="'RUN cd ...' to change directory"
-                groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
-                enabledByDefault="true"/>
-        <localInspection
                 implementationClass="dev.protsenko.securityLinter.docker.inspection.run.DS013UsingWgetAndCurlBothInspection"
                 displayName="RUN using 'wget' and 'curl'"
                 groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
                 enabledByDefault="true"/>
         <localInspection
-                implementationClass="dev.protsenko.securityLinter.docker.inspection.run.DS014YumInstallWithoutCleanInspection"
-                displayName="'yum clean all' missing"
-                groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
-                enabledByDefault="true"/>
-        <localInspection
                 implementationClass="dev.protsenko.securityLinter.docker.inspection.cmd.DS015MultipleCmdIsUsedInspection"
                 displayName="Multiple CMD instructions listed"
-                groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
-                enabledByDefault="true"/>
-        <localInspection
-                implementationClass="dev.protsenko.securityLinter.docker.inspection.run.DS016PackageManagerUpdateWithoutInstallInspection"
-                displayName="RUN package-manager update instruction alone"
-                groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
-                enabledByDefault="true"/>
-        <localInspection
-                implementationClass="dev.protsenko.securityLinter.docker.inspection.run.DS017MissingDnfCleanInspection"
-                displayName="RUN package-manager update instruction alone"
-                groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
-                enabledByDefault="true"/>
-        <localInspection
-                implementationClass="dev.protsenko.securityLinter.docker.inspection.run.DS018ZypperInstallWithoutCleanInspection"
-                displayName="'zypper clean' missing"
-                groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
-                enabledByDefault="true"/>
-        <localInspection
-                implementationClass="dev.protsenko.securityLinter.docker.inspection.run.DS019AptGetInstallWithoutAutoConfirmInspection"
-                displayName="'apt-get' missing '-y' to avoid manual input"
                 groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
                 enabledByDefault="true"/>
         <localInspection
@@ -124,28 +89,38 @@
                 groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
                 enabledByDefault="true"/>
         <localInspection
-                implementationClass="dev.protsenko.securityLinter.docker.inspection.run.DS022DistUpgradeInspection"
-                displayName="'apt-get dist-upgrade' used"
-                groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
-                enabledByDefault="true"/>
-        <localInspection
                 implementationClass="dev.protsenko.securityLinter.docker.inspection.env.DS026PotentialSecretInEnvFoundInspection"
                 displayName="Potential secret in ENV"
-                groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
-                enabledByDefault="true"/>
-        <localInspection
-                implementationClass="dev.protsenko.securityLinter.docker.inspection.run.DS027CurlBashingInspection"
-                displayName="Curl bashing"
-                groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
-                enabledByDefault="true"/>
-        <localInspection
-                implementationClass="dev.protsenko.securityLinter.docker.inspection.run.DS028ArgInRunCommandInspection"
-                displayName="Unsafe ARG in RUN"
                 groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
                 enabledByDefault="true"/>
 
         <notificationGroup id="dev.protsenko.securityLinter"
                            displayType="BALLOON"
                            key="common.notification-group"/>
+
+        <localInspection
+                implementationClass="dev.protsenko.securityLinter.docker.inspection.run.DockerfileRunInspection"
+                displayName="Misconfigurations in RUN command"
+                groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
+                enabledByDefault="true"/>
     </extensions>
+
+    <extensions defaultExtensionNs="dev.protsenko.security-linter">
+        <dockerFileRunAnalyzer implementation="dev.protsenko.securityLinter.docker.inspection.run.impl.AptGetInstallWithoutAutoConfirmAnalyzer"/>
+        <dockerFileRunAnalyzer implementation="dev.protsenko.securityLinter.docker.inspection.run.impl.ArgumentsInRunCommandAnalyzer"/>
+        <dockerFileRunAnalyzer implementation="dev.protsenko.securityLinter.docker.inspection.run.impl.CurlBashingAnalyzer"/>
+        <dockerFileRunAnalyzer implementation="dev.protsenko.securityLinter.docker.inspection.run.impl.DistUpgradeAnalyzer"/>
+        <dockerFileRunAnalyzer implementation="dev.protsenko.securityLinter.docker.inspection.run.impl.MissingDnfCleanAnalyzer"/>
+        <dockerFileRunAnalyzer implementation="dev.protsenko.securityLinter.docker.inspection.run.impl.PackageManagerUpdateWithoutInstallAnalyzer"/>
+        <dockerFileRunAnalyzer implementation="dev.protsenko.securityLinter.docker.inspection.run.impl.SudoIsUsedAnalyzer"/>
+        <dockerFileRunAnalyzer implementation="dev.protsenko.securityLinter.docker.inspection.run.impl.UsingCdToChangeDirectoryAnalyzer"/>
+        <dockerFileRunAnalyzer implementation="dev.protsenko.securityLinter.docker.inspection.run.impl.YumInstallWithoutCleanAnalyzer"/>
+        <dockerFileRunAnalyzer implementation="dev.protsenko.securityLinter.docker.inspection.run.impl.ZypperInstallWithoutCleanAnalyzer"/>
+    </extensions>
+
+    <extensionPoints>
+        <extensionPoint name="dockerFileRunAnalyzer"
+                        interface="dev.protsenko.securityLinter.docker.inspection.run.core.DockerfileRunAnalyzerEP"/>
+    </extensionPoints>
+
 </idea-plugin>

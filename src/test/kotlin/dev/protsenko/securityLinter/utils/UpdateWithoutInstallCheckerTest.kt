@@ -1,6 +1,6 @@
 package dev.protsenko.securityLinter.utils
 
-import dev.protsenko.securityLinter.docker.checker.UpdateWithoutInstallChecker
+import dev.protsenko.securityLinter.docker.checker.UpdateWithoutInstallValidator
 import junit.framework.TestCase
 
 class UpdateWithoutInstallCheckerTest : TestCase() {
@@ -22,7 +22,7 @@ class UpdateWithoutInstallCheckerTest : TestCase() {
         for (command in commands) {
             assertTrue(
                 "Command '$command' should be valid (contains update and install)",
-                UpdateWithoutInstallChecker.isValid(command)
+                UpdateWithoutInstallValidator.isValid(command)
             )
         }
     }
@@ -46,7 +46,7 @@ class UpdateWithoutInstallCheckerTest : TestCase() {
         for (command in commands) {
             assertFalse(
                 "Command '$command' should be invalid (contains update without install)",
-                UpdateWithoutInstallChecker.isValid(command)
+                UpdateWithoutInstallValidator.isValid(command)
             )
         }
     }
@@ -60,10 +60,9 @@ class UpdateWithoutInstallCheckerTest : TestCase() {
             "RUN zypper update && apk add package"
         )
         for (command in commands) {
-            // These should be invalid because install is with a different package manager
             assertFalse(
                 "Command '$command' should be invalid (install with different package manager)",
-                UpdateWithoutInstallChecker.isValid(command)
+                UpdateWithoutInstallValidator.isValid(command)
             )
         }
     }
@@ -73,11 +72,11 @@ class UpdateWithoutInstallCheckerTest : TestCase() {
             "RUN apt-get update && echo 'Updating' && apt-get install package",
             "RUN yum update && sleep 5 && yum install package",
             "RUN apk up && echo 'Upgrading' && apk add package",
-            "RUN dnf update && echo 'No install command'" // Should be invalid
+            "RUN dnf update && echo 'No install command'"
         )
         val expectedResults = listOf(true, true, true, false)
         for ((command, expected) in commands.zip(expectedResults)) {
-            val result = UpdateWithoutInstallChecker.isValid(command)
+            val result = UpdateWithoutInstallValidator.isValid(command)
             assertEquals(
                 "Command '$command' should be ${if (expected) "valid" else "invalid"}",
                 expected,
@@ -96,10 +95,9 @@ class UpdateWithoutInstallCheckerTest : TestCase() {
             "RUN zypper localinstall package"
         )
         for (command in commands) {
-            // These should be valid as they do not start with an update command
             assertTrue(
                 "Command '$command' should be valid (no update command)",
-                UpdateWithoutInstallChecker.isValid(command)
+                UpdateWithoutInstallValidator.isValid(command)
             )
         }
     }
@@ -113,28 +111,9 @@ class UpdateWithoutInstallCheckerTest : TestCase() {
             "RUN zypper update-manager"
         )
         for (command in commands) {
-            // Should be valid as they do not match 'update' or 'up' exactly
             assertTrue(
                 "Command '$command' should be valid (partial match should not trigger)",
-                UpdateWithoutInstallChecker.isValid(command)
-            )
-        }
-    }
-
-    fun testCommandsWithComments() {
-        val commands = listOf(
-            "RUN apt-get update && # apt-get install package",
-            "RUN yum update && echo 'Update done' # yum install package", // Should be invalid
-            "RUN apk update && apk add package # Install package", // Should be valid
-            "RUN dnf update # && dnf install package" // Should be invalid
-        )
-        val expectedResults = listOf(false, false, true, false)
-        for ((command, expected) in commands.zip(expectedResults)) {
-            val result = UpdateWithoutInstallChecker.isValid(command)
-            assertEquals(
-                "Command '$command' should be ${if (expected) "valid" else "invalid"}",
-                expected,
-                result
+                UpdateWithoutInstallValidator.isValid(command)
             )
         }
     }
@@ -150,20 +129,20 @@ class UpdateWithoutInstallCheckerTest : TestCase() {
         for (command in commands) {
             assertTrue(
                 "Command '$command' should be valid (complex command with install)",
-                UpdateWithoutInstallChecker.isValid(command)
+                UpdateWithoutInstallValidator.isValid(command)
             )
         }
     }
 
     fun testInvalidUpdateCommands() {
         val commands = listOf(
-            "apt-get upgrade", // 'upgrade' is an install command, so should be valid
-            "yum update && apt-get install package", // Install with different manager
-            "apk up && apk" // Missing install command
+            "apt-get upgrade",
+            "yum update && apt-get install package",
+            "apk up && apk"
         )
         val expectedResults = listOf(true, false, false)
         for ((command, expected) in commands.zip(expectedResults)) {
-            val result = UpdateWithoutInstallChecker.isValid(command)
+            val result = UpdateWithoutInstallValidator.isValid(command)
             assertEquals(
                 "Command '$command' should be ${if (expected) "valid" else "invalid"}",
                 expected,
@@ -193,7 +172,7 @@ class UpdateWithoutInstallCheckerTest : TestCase() {
         for (command in commands) {
             assertTrue(
                 "Command '$command' should be valid (no package manager commands)",
-                UpdateWithoutInstallChecker.isValid(command)
+                UpdateWithoutInstallValidator.isValid(command)
             )
         }
     }
