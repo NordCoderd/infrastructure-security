@@ -17,44 +17,30 @@ import com.intellij.psi.PsiElementVisitor
 import dev.protsenko.securityLinter.core.DockerVisitor
 import dev.protsenko.securityLinter.core.SecurityPluginBundle
 import dev.protsenko.securityLinter.utils.DockerImageDigestFetcher
+import dev.protsenko.securityLinter.utils.FromImageNameResolver
 import dev.protsenko.securityLinter.utils.PsiElementGenerator
 
 class DS001LatestTagIsUsedInspection : LocalInspectionTool() {
 
-    companion object {
-        const val ONLY_DOCKER_IMAGE_NAME = 1
-        const val DOCKER_IMAGE_NAME_WITH_VERSION = 2
-    }
-
     override fun buildVisitor(holder: ProblemsHolder, isOnTheFly: Boolean): PsiElementVisitor {
         return object : DockerVisitor() {
             override fun visitDockerFileFromCommand(element: DockerFileFromCommand) {
-                //FIXME: Couldn't parse name with slashes properly
-                val children = element.nameChainList
-                val imageName = children.firstOrNull()?.text ?: return
-                when (children.size) {
-                    ONLY_DOCKER_IMAGE_NAME -> {
-                        holder.registerProblem(
-                            element,
-                            SecurityPluginBundle.message("ds001.missing-version-tag"),
-                            ProblemHighlightType.ERROR,
-                            ReplaceTagWithDigestQuickFix(imageName)
-                        )
-                    }
-
-                    DOCKER_IMAGE_NAME_WITH_VERSION -> {
-                        val tag = children.last()
-                        if (tag.textMatches(DockerRepoTag.DEFAULT_TAG)) {
-                            holder.registerProblem(
-                                element,
-                                SecurityPluginBundle.message("ds001.latest-tag"),
-                                ProblemHighlightType.ERROR,
-                                ReplaceTagWithDigestQuickFix(imageName),
-                            )
-                        }
-                    }
+                val imageDefinition = FromImageNameResolver.parseImageDefinition(element) ?: return
+                if (imageDefinition.version == null) {
+                    holder.registerProblem(
+                        element,
+                        SecurityPluginBundle.message("ds001.missing-version-tag"),
+                        ProblemHighlightType.ERROR,
+                        ReplaceTagWithDigestQuickFix(imageDefinition.imageName)
+                    )
+                } else if (imageDefinition.version == DockerRepoTag.DEFAULT_TAG) {
+                    holder.registerProblem(
+                        element,
+                        SecurityPluginBundle.message("ds001.latest-tag"),
+                        ProblemHighlightType.ERROR,
+                        ReplaceTagWithDigestQuickFix(imageDefinition.imageName),
+                    )
                 }
-                return
             }
         }
     }
@@ -89,7 +75,7 @@ class DS001LatestTagIsUsedInspection : LocalInspectionTool() {
             NotificationGroupManager.getInstance()
                 .getNotificationGroup("dev.protsenko.securityLinter")
                 .createNotification(content, NotificationType.ERROR)
-                .notify(project);
+                .notify(project)
         }
     }
 }

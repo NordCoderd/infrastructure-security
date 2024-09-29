@@ -1,0 +1,4 @@
+# It should works with args, but it doesn't now
+ARG image=ubuntu/apache2
+ARG version=latest
+FROM $image:$version

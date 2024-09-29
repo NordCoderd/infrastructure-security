@@ -20,6 +20,7 @@
 - User tracking now checks ARGS variables
 - Updated highlighting types
 - Higher supported IDE version now is 243
+- Improved FROM parser
 
 ## [1.0.1] - 2024-15-09
 
