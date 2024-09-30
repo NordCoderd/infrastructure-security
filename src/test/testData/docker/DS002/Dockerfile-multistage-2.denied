@@ -15,5 +15,5 @@ FROM debian:15 as d15
 COPY --from=d9 test test
 FROM ubuntu@sha256:9b448de897d211c9e0ec635a485650aed6e28d4eca1efbc34940560a480b3f1f
 FROM debian@sha256:b8084b1a576c5504a031936e1132574f4ce1d6cc7130bbcc25a28f074539ae6b
-<warning descr="User should be declared, often by default it is root
-Running containers with 'root' user can lead to a container escape situation.">FROM debian</warning>
+<error descr="User should be declared, often by default it is root
+Running containers with 'root' user can lead to a container escape situation.">FROM debian</error>

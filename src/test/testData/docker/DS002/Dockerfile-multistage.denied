@@ -1,4 +1,4 @@
 FROM ubuntu
 USER nobody
-<warning descr="User should be declared, often by default it is root
-Running containers with 'root' user can lead to a container escape situation.">FROM debian</warning>
+<error descr="User should be declared, often by default it is root
+Running containers with 'root' user can lead to a container escape situation.">FROM debian</error>

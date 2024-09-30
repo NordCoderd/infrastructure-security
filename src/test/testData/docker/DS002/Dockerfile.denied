@@ -1,3 +1,3 @@
-<warning descr="User should be declared, often by default it is root
-Running containers with 'root' user can lead to a container escape situation.">FROM debian:9</warning>
+<error descr="User should be declared, often by default it is root
+Running containers with 'root' user can lead to a container escape situation.">FROM debian:9</error>
 RUN apt-get update && apt-get -y install vim && apt-get clean

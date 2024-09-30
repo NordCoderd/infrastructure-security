@@ -1,4 +1,4 @@
 FROM alpine:3.13
-<warning descr="RUN using 'sudo'
-Avoid using 'RUN' with 'sudo' commands, as it can lead to unpredictable behavior.">RUN  sudo pip install --upgrade pip</warning>
+<error descr="RUN using 'sudo'
+Avoid using 'RUN' with 'sudo' commands, as it can lead to unpredictable behavior.">RUN  sudo pip install --upgrade pip</error>
 USER mike
