@@ -5,7 +5,7 @@
 [![JetBrains Plugin Downloads](https://img.shields.io/jetbrains/plugin/d/dev.protsenko.security-linter)](https://plugins.jetbrains.com/plugin/25413-infrastructure-security)
 
 <!-- Plugin description -->
-Infrastructure Security Linter Plugin for JetBrains IDEs (e.g., IntelliJ IDEA, PyCharm, and more).
+Infrastructure Security Linter for JetBrains IDEs (e.g., IntelliJ IDEA, PyCharm, and more).
 
 Scan Docker and Infrastructure as Code (IaC) files for security vulnerabilities and misconfigurations directly in your JetBrains IDE.
 
@@ -13,14 +13,6 @@ Scan Docker and Infrastructure as Code (IaC) files for security vulnerabilities 
 
 - **Dockerfile Analysis**: Detect security vulnerabilities and optimize Docker images with over 30 checks.
 - **Quick Fixes**: Resolve issues faster using built-in quick fixes.
-
-## How to use / install
-1. Go to Settings - Plugins - Infrastructure Security Linter in your IDE.
-2. Install it.
-3. ???
-4. Problems will be highlighted. Just open your Dockerfile's.
-
-Make sure you have installed Docker plugin from JetBrains as it in dependencies.
 
 ## Planned Features
 
