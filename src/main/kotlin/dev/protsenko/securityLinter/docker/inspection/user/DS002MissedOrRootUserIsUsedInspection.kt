@@ -1,9 +1,9 @@
 package dev.protsenko.securityLinter.docker.inspection.user
 
 import com.intellij.codeInspection.LocalInspectionTool
-import com.intellij.codeInspection.LocalInspectionToolSession
 import com.intellij.codeInspection.LocalQuickFix
 import com.intellij.codeInspection.ProblemDescriptor
+import com.intellij.codeInspection.ProblemHighlightType
 import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.codeInspection.util.IntentionFamilyName
 import com.intellij.docker.dockerFile.parser.psi.DockerFileFromCommand
@@ -32,6 +32,7 @@ class DS002MissedOrRootUserIsUsedInspection : LocalInspectionTool() {
                     holder.registerProblem(
                         element,
                         SecurityPluginBundle.message("ds025.arg-in-user"),
+                        ProblemHighlightType.ERROR,
                         ReplaceOrAddUserQuickFix(replace = true)
                     )
                     isHighlighted = true
@@ -59,12 +60,14 @@ class DS002MissedOrRootUserIsUsedInspection : LocalInspectionTool() {
                     holder.registerProblem(
                         lastStage!!,
                         SecurityPluginBundle.message("ds002.missing-user"),
+                        ProblemHighlightType.ERROR,
                         ReplaceOrAddUserQuickFix(replace = false)
                     )
                 } else if (lastUser != null && prohibitedPorts.contains(lastUser)) {
                     holder.registerProblem(
                         lastUserCommand!!,
                         SecurityPluginBundle.message("ds002.root-user-is-used"),
+                        ProblemHighlightType.ERROR,
                         ReplaceOrAddUserQuickFix(replace = true)
                     )
                 }
@@ -73,10 +76,6 @@ class DS002MissedOrRootUserIsUsedInspection : LocalInspectionTool() {
                 lastStage = null
             }
         }
-    }
-
-    override fun inspectionFinished(session: LocalInspectionToolSession, problemsHolder: ProblemsHolder) {
-        super.inspectionFinished(session, problemsHolder)
     }
 
     private class ReplaceOrAddUserQuickFix(private val replace: Boolean) : LocalQuickFix {
