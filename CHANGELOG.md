@@ -1,10 +1,9 @@
 <!-- Keep a Changelog guide -> https://keepachangelog.com -->
 
-# IntelliJ Platform Plugin Template Changelog
+# Infrastructure Security Linter Changelog
 
-## [Unreleased]
 
-## [1.0.2]
+## [1.0.2] - 01-10-2024
 
 ### Added
 
@@ -17,12 +16,12 @@
 ### Changed
 
 - Most of RUN inspections were merge to one and moved to extensions
-- User tracking now checks ARGS variables
+- USER command now tracking ARGS variables
 - Updated highlighting types
 - Higher supported IDE version now is 243
-- Improved FROM parser
+- Improved FROM parser for supporting image names with slash
 
-## [1.0.1] - 2024-15-09
+## [1.0.1] - 15-09-2024
 
 ### Changed
 
