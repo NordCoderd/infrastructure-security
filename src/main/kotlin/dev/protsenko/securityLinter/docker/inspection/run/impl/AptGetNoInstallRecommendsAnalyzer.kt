@@ -5,9 +5,9 @@ import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.psi.PsiElement
 import dev.protsenko.securityLinter.core.SecurityPluginBundle
 import dev.protsenko.securityLinter.docker.checker.AptGetNoInstallRecommendsValidator
-import dev.protsenko.securityLinter.docker.inspection.run.core.DockerfileRunAnalyzerEP
+import dev.protsenko.securityLinter.docker.inspection.run.core.DockerfileRunAnalyzer
 
-class AptGetNoInstallRecommendsAnalyzer:DockerfileRunAnalyzerEP {
+class AptGetNoInstallRecommendsAnalyzer:DockerfileRunAnalyzer {
     override fun handle(runCommand: String, psiElement: PsiElement, holder: ProblemsHolder) {
         if (!AptGetNoInstallRecommendsValidator.isValid(runCommand)){
             holder.registerProblem(

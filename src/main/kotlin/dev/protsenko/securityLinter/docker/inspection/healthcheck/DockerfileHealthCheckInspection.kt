@@ -11,7 +11,7 @@ import dev.protsenko.securityLinter.core.DockerVisitor
 import dev.protsenko.securityLinter.core.SecurityPluginBundle
 import dev.protsenko.securityLinter.core.quickFix.DeletePsiElementQuickFix
 
-class DS021MultipleHealthCheckDefinedInspection: LocalInspectionTool() {
+class DockerfileHealthCheckInspection: LocalInspectionTool() {
     override fun buildVisitor(holder: ProblemsHolder, isOnTheFly: Boolean): PsiElementVisitor {
         return object : DockerVisitor(){
             val healthChecks = mutableListOf<DockerFileHealthCheckCommand>()

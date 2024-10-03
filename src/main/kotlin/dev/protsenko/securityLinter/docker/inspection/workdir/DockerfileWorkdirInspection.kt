@@ -9,7 +9,7 @@ import dev.protsenko.securityLinter.core.DockerVisitor
 import dev.protsenko.securityLinter.core.SecurityPluginBundle
 import dev.protsenko.securityLinter.utils.AbsolutePathResolver
 
-class DS008WorkdirPathNotAbsoluteInspection: LocalInspectionTool() {
+class DockerfileWorkdirInspection: LocalInspectionTool() {
     override fun buildVisitor(holder: ProblemsHolder, isOnTheFly: Boolean): PsiElementVisitor {
         return object : DockerVisitor(){
             override fun visitDockerFileWorkdirCommand(element: DockerFileWorkdirCommand) {

@@ -5,9 +5,9 @@ import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.docker.dockerFile.parser.psi.DockerFileRunCommand
 import com.intellij.psi.PsiElement
 import dev.protsenko.securityLinter.core.SecurityPluginBundle
-import dev.protsenko.securityLinter.docker.inspection.run.core.DockerfileRunAnalyzerEP
+import dev.protsenko.securityLinter.docker.inspection.run.core.DockerfileRunAnalyzer
 
-class ArgumentsInRunCommandAnalyzer: DockerfileRunAnalyzerEP {
+class ArgumentsInRunCommandAnalyzer: DockerfileRunAnalyzer {
     override fun handle(runCommand: String, psiElement: PsiElement, holder: ProblemsHolder) {
         if (psiElement !is DockerFileRunCommand) return
         if (psiElement.variableRefSimpleList.isNotEmpty()){

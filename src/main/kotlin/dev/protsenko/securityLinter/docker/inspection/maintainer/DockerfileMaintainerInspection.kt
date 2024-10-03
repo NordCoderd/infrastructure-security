@@ -15,7 +15,7 @@ import dev.protsenko.securityLinter.core.DockerVisitor
 import dev.protsenko.securityLinter.core.SecurityPluginBundle
 import dev.protsenko.securityLinter.utils.PsiElementGenerator
 
-class DS020MaintainerUsedInspection : LocalInspectionTool() {
+class DockerfileMaintainerInspection : LocalInspectionTool() {
     override fun buildVisitor(holder: ProblemsHolder, isOnTheFly: Boolean): PsiElementVisitor {
         return object : DockerVisitor() {
             override fun visitDockerFileMaintainerCommand(element: DockerFileMaintainerCommand) {

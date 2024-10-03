@@ -4,10 +4,10 @@ import com.intellij.codeInspection.ProblemHighlightType
 import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.psi.PsiElement
 import dev.protsenko.securityLinter.core.SecurityPluginBundle
-import dev.protsenko.securityLinter.docker.inspection.run.core.DockerfileRunAnalyzerEP
+import dev.protsenko.securityLinter.docker.inspection.run.core.DockerfileRunAnalyzer
 import dev.protsenko.securityLinter.utils.DockerPsiAnalyzer
 
-class UsingCdToChangeDirectoryAnalyzer : DockerfileRunAnalyzerEP {
+class UsingCdToChangeDirectoryAnalyzer : DockerfileRunAnalyzer {
     override fun handle(runCommand: String, psiElement: PsiElement, holder: ProblemsHolder) {
         if (!runCommand.contains("cd")) return
         val commandParts = DockerPsiAnalyzer.splitCommand(runCommand)

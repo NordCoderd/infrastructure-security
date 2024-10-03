@@ -16,7 +16,7 @@ import dev.protsenko.securityLinter.core.SecurityPluginBundle
 import dev.protsenko.securityLinter.utils.DockerPsiAnalyzer
 import dev.protsenko.securityLinter.utils.PsiElementGenerator
 
-class DS002MissedOrRootUserIsUsedInspection : LocalInspectionTool() {
+class DockerfileUserInspection : LocalInspectionTool() {
     val prohibitedPorts = setOf("root", "0")
 
     override fun buildVisitor(holder: ProblemsHolder, isOnTheFly: Boolean): DockerVisitor {

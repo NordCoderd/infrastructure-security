@@ -2,7 +2,7 @@ package dev.protsenko.securityLinter.docker
 
 import com.intellij.codeInspection.LocalInspectionTool
 import dev.protsenko.securityLinter.core.DockerHighlightingBaseTest
-import dev.protsenko.securityLinter.docker.inspection.expose.DS007ExposedPortOutOfRangeInspection
+import dev.protsenko.securityLinter.docker.inspection.expose.DockerfileExposeInspection
 
 class DS007ExposedPortOfRangeInspectionTest(
     override val dockerRuleFolder: String = "DS007",
@@ -10,5 +10,5 @@ class DS007ExposedPortOfRangeInspectionTest(
         "Dockerfile-multiple-invalid-ports-with-postfixes.denied",
         "Dockerfile-multiple-invalid-ports.denied",
     ),
-    override val targetInspection: LocalInspectionTool = DS007ExposedPortOutOfRangeInspection()
+    override val targetInspection: LocalInspectionTool = DockerfileExposeInspection()
 ) : DockerHighlightingBaseTest()

@@ -24,22 +24,17 @@
                 groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
                 enabledByDefault="true"/>
         <localInspection
-                implementationClass="dev.protsenko.securityLinter.docker.inspection.user.DS002MissedOrRootUserIsUsedInspection"
+                implementationClass="dev.protsenko.securityLinter.docker.inspection.user.DockerfileUserInspection"
                 displayName="Missing user or root is used"
                 groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
                 enabledByDefault="true"/>
         <localInspection
-                implementationClass="dev.protsenko.securityLinter.docker.inspection.expose.DS003SshPortExposedInspection"
+                implementationClass="dev.protsenko.securityLinter.docker.inspection.expose.DockerfileExposeInspection"
                 displayName="SSH port exposed"
                 groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
                 enabledByDefault="true"/>
         <localInspection
-                implementationClass="dev.protsenko.securityLinter.docker.inspection.add.DockerfileAddInspection"
-                displayName="ADD instead of copy"
-                groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
-                enabledByDefault="true"/>
-        <localInspection
-                implementationClass="dev.protsenko.securityLinter.docker.inspection.copy.DS005CopyReferringToCurrentImageInspection"
+                implementationClass="dev.protsenko.securityLinter.docker.inspection.copy_or_add.DockerfileCopyOrAddInspection"
                 displayName="COPY '--from' referring to the current image"
                 groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
                 enabledByDefault="true"/>
@@ -49,18 +44,8 @@
                 groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
                 enabledByDefault="true"/>
         <localInspection
-                implementationClass="dev.protsenko.securityLinter.docker.inspection.expose.DS007ExposedPortOutOfRangeInspection"
-                displayName="Exposed port out of range"
-                groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
-                enabledByDefault="true"/>
-        <localInspection
-                implementationClass="dev.protsenko.securityLinter.docker.inspection.workdir.DS008WorkdirPathNotAbsoluteInspection"
+                implementationClass="dev.protsenko.securityLinter.docker.inspection.workdir.DockerfileWorkdirInspection"
                 displayName="WORKDIR path not absolute"
-                groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
-                enabledByDefault="true"/>
-        <localInspection
-                implementationClass="dev.protsenko.securityLinter.docker.inspection.copy.DS010UseSlashForCopyArgsInspection"
-                displayName="COPY with more than two arguments not ending with slash"
                 groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
                 enabledByDefault="true"/>
         <localInspection
@@ -79,12 +64,12 @@
                 groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
                 enabledByDefault="true"/>
         <localInspection
-                implementationClass="dev.protsenko.securityLinter.docker.inspection.maintainer.DS020MaintainerUsedInspection"
+                implementationClass="dev.protsenko.securityLinter.docker.inspection.maintainer.DockerfileMaintainerInspection"
                 displayName="Deprecated MAINTAINER used"
                 groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
                 enabledByDefault="true"/>
         <localInspection
-                implementationClass="dev.protsenko.securityLinter.docker.inspection.healthcheck.DS021MultipleHealthCheckDefinedInspection"
+                implementationClass="dev.protsenko.securityLinter.docker.inspection.healthcheck.DockerfileHealthCheckInspection"
                 displayName="Multiple HEALTHCHECK defined"
                 groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
                 enabledByDefault="true"/>
@@ -117,11 +102,24 @@
         <dockerFileRunAnalyzer implementation="dev.protsenko.securityLinter.docker.inspection.run.impl.UsingCdToChangeDirectoryAnalyzer"/>
         <dockerFileRunAnalyzer implementation="dev.protsenko.securityLinter.docker.inspection.run.impl.YumInstallWithoutCleanAnalyzer"/>
         <dockerFileRunAnalyzer implementation="dev.protsenko.securityLinter.docker.inspection.run.impl.ZypperInstallWithoutCleanAnalyzer"/>
+
+        <dockerFileExposeAnalyzer implementation="dev.protsenko.securityLinter.docker.inspection.expose.impl.SshPortExposedAnalyzer"/>
+        <dockerFileExposeAnalyzer implementation="dev.protsenko.securityLinter.docker.inspection.expose.impl.ExposedPortOutOfRangeAnalyzer"/>
+
+        <dockerFileCopyOrAddAnalyzer implementation="dev.protsenko.securityLinter.docker.inspection.copy_or_add.impl.CopyReferringToCurrentImageAnalyzer"/>
+        <dockerFileCopyOrAddAnalyzer implementation="dev.protsenko.securityLinter.docker.inspection.copy_or_add.impl.UseSlashForCopyArgsAnalyzer"/>
+        <dockerFileCopyOrAddAnalyzer implementation="dev.protsenko.securityLinter.docker.inspection.copy_or_add.impl.DockerfileAddInspection"/>
     </extensions>
 
     <extensionPoints>
         <extensionPoint name="dockerFileRunAnalyzer"
-                        interface="dev.protsenko.securityLinter.docker.inspection.run.core.DockerfileRunAnalyzerEP"/>
+                        interface="dev.protsenko.securityLinter.docker.inspection.run.core.DockerfileRunAnalyzer"/>
+        <extensionPoint name="dockerFileExposeAnalyzer"
+                        interface="dev.protsenko.securityLinter.docker.inspection.expose.core.DockerfileExposeAnalyzer"/>
+        <extensionPoint name="dockerFileCopyOrAddAnalyzer"
+                        interface="dev.protsenko.securityLinter.docker.inspection.copy_or_add.core.DockerfileCopyOrAddAnalyzer"/>
+        <extensionPoint name="dockerFileFromAnalyzer"
+                        interface="dev.protsenko.securityLinter.docker.inspection.from.core.DockerfileFromAnalyzer"/>
     </extensionPoints>
 
 </idea-plugin>

@@ -5,9 +5,9 @@ import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.psi.PsiElement
 import dev.protsenko.securityLinter.core.SecurityPluginBundle
 import dev.protsenko.securityLinter.docker.checker.UpdateWithoutInstallValidator
-import dev.protsenko.securityLinter.docker.inspection.run.core.DockerfileRunAnalyzerEP
+import dev.protsenko.securityLinter.docker.inspection.run.core.DockerfileRunAnalyzer
 
-class PackageManagerUpdateWithoutInstallAnalyzer : DockerfileRunAnalyzerEP {
+class PackageManagerUpdateWithoutInstallAnalyzer : DockerfileRunAnalyzer {
     override fun handle(runCommand: String, psiElement: PsiElement, holder: ProblemsHolder) {
         if (!UpdateWithoutInstallValidator.isValid(runCommand)) {
             holder.registerProblem(

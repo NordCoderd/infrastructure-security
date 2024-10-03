@@ -6,12 +6,12 @@ import com.intellij.docker.dockerFile.parser.psi.DockerFileRunCommand
 import com.intellij.openapi.extensions.ExtensionPointName
 import com.intellij.psi.PsiElementVisitor
 import dev.protsenko.securityLinter.core.DockerVisitor
-import dev.protsenko.securityLinter.docker.inspection.run.core.DockerfileRunAnalyzerEP
+import dev.protsenko.securityLinter.docker.inspection.run.core.DockerfileRunAnalyzer
 import dev.protsenko.securityLinter.utils.toStringDockerCommand
 
 class DockerfileRunInspection : LocalInspectionTool() {
     val extensionPointName =
-        ExtensionPointName.create<DockerfileRunAnalyzerEP>("dev.protsenko.security-linter.dockerFileRunAnalyzer")
+        ExtensionPointName.create<DockerfileRunAnalyzer>("dev.protsenko.security-linter.dockerFileRunAnalyzer")
 
     override fun buildVisitor(holder: ProblemsHolder, isOnTheFly: Boolean): PsiElementVisitor {
         val extensions = extensionPointName.extensions

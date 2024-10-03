@@ -19,6 +19,7 @@ import com.jetbrains.rd.util.concurrentMapOf
 
 open class DockerVisitor(private val saveArguments: Boolean = false) : PsiElementVisitor() {
     val resolvedVariables = concurrentMapOf<String, String>()
+    var currentStep: String? = null
 
     override fun visitFile(file: PsiFile) {
         if (file.name == "Dockerfile") {
@@ -53,7 +54,11 @@ open class DockerVisitor(private val saveArguments: Boolean = false) : PsiElemen
         resolvedVariables[key] = value
     }
 
-    open fun visitDockerFileFromCommand(element: DockerFileFromCommand) {}
+    open fun visitDockerFileFromCommand(element: DockerFileFromCommand) {
+        val declaredStepName = element.fromStageDeclaration?.declaredName
+        currentStep = declaredStepName?.text
+    }
+
     open fun visitDockerFileUserCommand(element: DockerFileUserCommand) {}
     open fun visitDockerFileExposeCommand(element: DockerFileExposeCommand) {}
     open fun visitDockerFileAddOrCopyCommand(element: DockerFileAddOrCopyCommand) {}
