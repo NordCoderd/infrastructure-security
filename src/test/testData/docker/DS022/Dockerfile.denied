@@ -1,5 +1,5 @@
 FROM debian:9.13
-<warning descr="'apt-get dist-upgrade' used
-'apt-get dist-upgrade' upgrades a major version so it doesn't make more sense in Dockerfile.">RUN apt-get dist-upgrade && apt-get -y install curl && apt-get clean</warning>
+<warning descr="Package manager `dist-upgrade' used
+Package manager 'dist-upgrade' upgrades a major version so it doesn't make more sense in Dockerfile.">RUN apt-get dist-upgrade && apt-get -y install curl && apt-get clean</warning>
 USER mike
 CMD python /usr/src/app/app.py

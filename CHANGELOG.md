@@ -2,6 +2,16 @@
 
 # Infrastructure Security Linter Changelog
 
+## [Unreleased]
+
+## [1.0.3] - 01-10-2024
+
+### Changed
+
+- Improved tracking image name specified by arguments
+- Added zypper, dnf, yum auto confirm checks
+- Zypper dist-upgrade checks
+- Use arguments JSON notation for CMD and ENTRYPOINT arguments
 
 ## [1.0.2] - 01-10-2024
 

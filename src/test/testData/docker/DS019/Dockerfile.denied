@@ -1,4 +1,4 @@
 FROM node:12
 USER mike
-<warning descr="'apt-get' missing '-y' to avoid manual input
-'apt-get' calls should use the flag '-y' to avoid manual user input.">RUN apt-get install apt-utils --no-install-recommends && apt-get clean</warning>
+<warning descr="Package manager with missing '-y' to avoid manual input
+Package manager calls should use the flag '-y' to avoid manual user input.">RUN apt-get install apt-utils --no-install-recommends && apt-get clean</warning>

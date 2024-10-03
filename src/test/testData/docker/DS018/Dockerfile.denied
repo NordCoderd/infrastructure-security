@@ -1,6 +1,6 @@
 FROM alpine:3.5
 <warning descr="'zypper clean' missing
-The layer and image size should be reduced by deleting unneeded caches after running zypper.">RUN zypper install bash</warning>
+The layer and image size should be reduced by deleting unneeded caches after running zypper.">RUN zypper install -y bash</warning>
 RUN pip install --no-cache-dir -r /usr/src/app/requirements.txt
 USER mike
 CMD python /usr/src/app/app.py

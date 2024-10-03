@@ -34,7 +34,7 @@
                 groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
                 enabledByDefault="true"/>
         <localInspection
-                implementationClass="dev.protsenko.securityLinter.docker.inspection.add.DS004AddInsteadCopyInspection"
+                implementationClass="dev.protsenko.securityLinter.docker.inspection.add.DockerfileAddInspection"
                 displayName="ADD instead of copy"
                 groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
                 enabledByDefault="true"/>
@@ -44,7 +44,7 @@
                 groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
                 enabledByDefault="true"/>
         <localInspection
-                implementationClass="dev.protsenko.securityLinter.docker.inspection.entrypoint.DS006MultipleEntrypointInspection"
+                implementationClass="dev.protsenko.securityLinter.docker.inspection.entrypoint.DockerFileEntrypointInspection"
                 displayName="Multiple ENTRYPOINT instructions listed"
                 groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
                 enabledByDefault="true"/>
@@ -74,7 +74,7 @@
                 groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
                 enabledByDefault="true"/>
         <localInspection
-                implementationClass="dev.protsenko.securityLinter.docker.inspection.cmd.DS015MultipleCmdIsUsedInspection"
+                implementationClass="dev.protsenko.securityLinter.docker.inspection.cmd.DockerFileCmdInspection"
                 displayName="Multiple CMD instructions listed"
                 groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
                 enabledByDefault="true"/>
@@ -89,7 +89,7 @@
                 groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
                 enabledByDefault="true"/>
         <localInspection
-                implementationClass="dev.protsenko.securityLinter.docker.inspection.env.DS026PotentialSecretInEnvFoundInspection"
+                implementationClass="dev.protsenko.securityLinter.docker.inspection.env.DockerFileEnvInspection"
                 displayName="Potential secret in ENV"
                 groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
                 enabledByDefault="true"/>
@@ -106,7 +106,7 @@
     </extensions>
 
     <extensions defaultExtensionNs="dev.protsenko.security-linter">
-        <dockerFileRunAnalyzer implementation="dev.protsenko.securityLinter.docker.inspection.run.impl.AptGetInstallWithoutAutoConfirmAnalyzer"/>
+        <dockerFileRunAnalyzer implementation="dev.protsenko.securityLinter.docker.inspection.run.impl.PackageManagerAutoYesAnalyzer"/>
         <dockerFileRunAnalyzer implementation="dev.protsenko.securityLinter.docker.inspection.run.impl.AptGetNoInstallRecommendsAnalyzer"/>
         <dockerFileRunAnalyzer implementation="dev.protsenko.securityLinter.docker.inspection.run.impl.ArgumentsInRunCommandAnalyzer"/>
         <dockerFileRunAnalyzer implementation="dev.protsenko.securityLinter.docker.inspection.run.impl.CurlBashingAnalyzer"/>

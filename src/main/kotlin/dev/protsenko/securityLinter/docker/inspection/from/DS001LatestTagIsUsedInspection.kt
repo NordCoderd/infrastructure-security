@@ -23,9 +23,9 @@ import dev.protsenko.securityLinter.utils.PsiElementGenerator
 class DS001LatestTagIsUsedInspection : LocalInspectionTool() {
 
     override fun buildVisitor(holder: ProblemsHolder, isOnTheFly: Boolean): PsiElementVisitor {
-        return object : DockerVisitor() {
+        return object : DockerVisitor(saveArguments = true) {
             override fun visitDockerFileFromCommand(element: DockerFileFromCommand) {
-                val imageDefinition = FromImageNameResolver.parseImageDefinition(element) ?: return
+                val imageDefinition = FromImageNameResolver.parseImageDefinition(element, resolvedVariables) ?: return
                 if (imageDefinition.version == null) {
                     holder.registerProblem(
                         element,

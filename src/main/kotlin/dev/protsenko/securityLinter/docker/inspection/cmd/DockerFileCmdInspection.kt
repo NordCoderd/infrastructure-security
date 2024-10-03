@@ -10,8 +10,9 @@ import com.intellij.psi.PsiFile
 import dev.protsenko.securityLinter.core.DockerVisitor
 import dev.protsenko.securityLinter.core.SecurityPluginBundle
 import dev.protsenko.securityLinter.core.quickFix.DeletePsiElementQuickFix
+import dev.protsenko.securityLinter.core.quickFix.ReplaceWithJsonNotationQuickFix
 
-class DS015MultipleCmdIsUsedInspection: LocalInspectionTool() {
+class DockerFileCmdInspection: LocalInspectionTool() {
 
     override fun buildVisitor(holder: ProblemsHolder, isOnTheFly: Boolean): PsiElementVisitor {
         return object: DockerVisitor(){
@@ -19,6 +20,14 @@ class DS015MultipleCmdIsUsedInspection: LocalInspectionTool() {
 
             override fun visitDockerFileCmdCommand(element: DockerFileCmdCommand) {
                 commands.add(element)
+                if (element.parametersInJsonForm == null){
+                    holder.registerProblem(
+                        element,
+                        SecurityPluginBundle.message("ds031.use-json-notation"),
+                        ProblemHighlightType.WARNING,
+                        ReplaceWithJsonNotationQuickFix()
+                    )
+                }
             }
 
             override fun visitingIsFinished(file: PsiFile) {
@@ -44,4 +53,6 @@ class DS015MultipleCmdIsUsedInspection: LocalInspectionTool() {
             }
         }
     }
+
+
 }

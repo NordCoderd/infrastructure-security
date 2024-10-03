@@ -10,14 +10,23 @@ import com.intellij.psi.PsiFile
 import dev.protsenko.securityLinter.core.DockerVisitor
 import dev.protsenko.securityLinter.core.SecurityPluginBundle
 import dev.protsenko.securityLinter.core.quickFix.DeletePsiElementQuickFix
+import dev.protsenko.securityLinter.core.quickFix.ReplaceWithJsonNotationQuickFix
 
-class DS006MultipleEntrypointInspection : LocalInspectionTool() {
+class DockerFileEntrypointInspection : LocalInspectionTool() {
     override fun buildVisitor(holder: ProblemsHolder, isOnTheFly: Boolean): PsiElementVisitor {
         return object : DockerVisitor() {
             val entryPoints = mutableListOf<DockerFileEntrypointCommand>()
 
             override fun visitDockerFileEntrypointCommand(element: DockerFileEntrypointCommand) {
                 entryPoints.add(element)
+                if (element.parametersInJsonForm == null){
+                    holder.registerProblem(
+                        element,
+                        SecurityPluginBundle.message("ds031.use-json-notation"),
+                        ProblemHighlightType.WARNING,
+                        ReplaceWithJsonNotationQuickFix()
+                    )
+                }
             }
 
             override fun visitDockerFileFromCommand(element: DockerFileFromCommand) {

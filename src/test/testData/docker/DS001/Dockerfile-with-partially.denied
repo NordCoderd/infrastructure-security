@@ -1,0 +1,2 @@
+ARG image=ubuntu/apache2
+FROM $image:$version

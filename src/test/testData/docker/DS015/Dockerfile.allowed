@@ -1,5 +1,5 @@
 FROM golang:1.7.3
 USER mike
-CMD ./apps
+CMD ["./apps"]
 FROM alpine:3.13
-CMD ./app
+CMD ["./app"]

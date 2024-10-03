@@ -16,7 +16,7 @@ import dev.protsenko.securityLinter.utils.PsiElementGenerator
 import dev.protsenko.securityLinter.utils.extension
 import dev.protsenko.securityLinter.utils.removeQuotes
 
-class DS004AddInsteadCopyInspection : LocalInspectionTool() {
+class DockerfileAddInspection : LocalInspectionTool() {
     companion object {
         const val GZ_FILE_EXTENSION = "gz"
         const val ADD_KEYWORD = "ADD"

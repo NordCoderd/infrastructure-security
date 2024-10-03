@@ -4,7 +4,7 @@ import com.intellij.docker.dockerFile.parser.psi.DockerFileFromCommand
 
 object FromImageNameResolver {
 
-    fun parseImageDefinition(fromCommand: DockerFileFromCommand): ImageDefinition? {
+    fun parseImageDefinition(fromCommand: DockerFileFromCommand, resolvedVariables: Map<String, String>): ImageDefinition? {
         val fromCommandText = fromCommand.text
         val nameChainList = fromCommand.nameChainList.map { it.text }
         if (nameChainList.isEmpty()) return null
@@ -23,10 +23,16 @@ object FromImageNameResolver {
         val splitSymbol = if ("@" in fullImageName) "@" else ":"
 
         val imageNameWithVersion = fullImageName.split(splitSymbol)
-        if (imageNameWithVersion.size == 1) return ImageDefinition(imageNameWithVersion.first(), null)
-        if (imageNameWithVersion.size == 2) return ImageDefinition(imageNameWithVersion.first(), imageNameWithVersion.last())
+        val (rawImageName, rawVersion) = when (imageNameWithVersion.size) {
+            1 -> imageNameWithVersion.first() to null
+            2 -> imageNameWithVersion.first() to imageNameWithVersion.last()
+            else -> return ImageDefinition(fullImageName, null)
+        }
 
-        return ImageDefinition(fullImageName, null)
+        val imageName = resolvedVariables[rawImageName.substringAfter("$")] ?: rawImageName
+        val version = rawVersion?.let { resolvedVariables[it.substringAfter("$")] ?: it }
+
+        return ImageDefinition(imageName, version)
     }
 
     data class ImageDefinition(

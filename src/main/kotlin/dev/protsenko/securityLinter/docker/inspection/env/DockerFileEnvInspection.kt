@@ -9,7 +9,7 @@ import dev.protsenko.securityLinter.core.DockerVisitor
 import dev.protsenko.securityLinter.core.SecurityPluginBundle
 import dev.protsenko.securityLinter.core.quickFix.DeletePsiElementQuickFix
 
-class DS026PotentialSecretInEnvFoundInspection : LocalInspectionTool() {
+class DockerFileEnvInspection : LocalInspectionTool() {
     companion object {
         val potentialSecretsName = setOf<String>(
             "PASSWD",
