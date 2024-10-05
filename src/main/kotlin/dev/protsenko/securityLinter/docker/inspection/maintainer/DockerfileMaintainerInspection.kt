@@ -11,13 +11,13 @@ import com.intellij.docker.dockerFile.parser.psi.DockerFileMaintainerCommand
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiElementVisitor
-import dev.protsenko.securityLinter.core.DockerVisitor
+import dev.protsenko.securityLinter.core.DockerfileVisitor
 import dev.protsenko.securityLinter.core.SecurityPluginBundle
 import dev.protsenko.securityLinter.utils.PsiElementGenerator
 
 class DockerfileMaintainerInspection : LocalInspectionTool() {
     override fun buildVisitor(holder: ProblemsHolder, isOnTheFly: Boolean): PsiElementVisitor {
-        return object : DockerVisitor() {
+        return object : DockerfileVisitor() {
             override fun visitDockerFileMaintainerCommand(element: DockerFileMaintainerCommand) {
                 holder.registerProblem(
                     element,

@@ -12,7 +12,7 @@ import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiElementVisitor
 import com.intellij.psi.PsiFile
-import dev.protsenko.securityLinter.core.DockerVisitor
+import dev.protsenko.securityLinter.core.DockerfileVisitor
 import dev.protsenko.securityLinter.core.SecurityPluginBundle
 import dev.protsenko.securityLinter.utils.DockerPsiAnalyzer
 import dev.protsenko.securityLinter.utils.DockerfileConstants.PROHIBITED_USERS
@@ -23,7 +23,7 @@ class DockerfileUserInspection : LocalInspectionTool() {
     override fun buildVisitor(holder: ProblemsHolder, isOnTheFly: Boolean, session: LocalInspectionToolSession): PsiElementVisitor {
         val resolvedUsers = mutableMapOf<Int, DockerFileUserCommand>()
 
-        return object : DockerVisitor(trackStages = true) {
+        return object : DockerfileVisitor(trackStages = true) {
             override fun visitDockerFileUserCommand(element: DockerFileUserCommand) {
                 resolvedUsers[element.textOffset] = element
             }

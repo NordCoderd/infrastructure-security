@@ -15,10 +15,10 @@ import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiElementVisitor
 import com.intellij.psi.PsiFile
 
-open class DockerVisitor(
-    private val trackStages: Boolean = false
-) : PsiElementVisitor() {
-    val buildStages = mutableMapOf<Int, DockerFileFromCommand>()
+open class DockerfileVisitor(private val trackStages: Boolean = false) : PsiElementVisitor() {
+    val buildStages: MutableMap<Int, DockerFileFromCommand> by lazy {
+        mutableMapOf<Int, DockerFileFromCommand>()
+    }
     var currentStep: String? = null
 
     override fun visitFile(file: PsiFile) {
@@ -63,6 +63,5 @@ open class DockerVisitor(
     open fun visitDockerFileMaintainerCommand(element: DockerFileMaintainerCommand) {}
     open fun visitDockerFileHealthCheckCommand(element: DockerFileHealthCheckCommand) {}
     open fun visitDockerFileEnvCommand(element: DockerFileEnvCommand) {}
-
     open fun visitingIsFinished(file: PsiFile) {}
 }

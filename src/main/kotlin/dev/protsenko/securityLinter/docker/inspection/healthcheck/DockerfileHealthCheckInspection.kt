@@ -6,13 +6,13 @@ import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.docker.dockerFile.parser.psi.DockerFileHealthCheckCommand
 import com.intellij.psi.PsiElementVisitor
 import com.intellij.psi.PsiFile
-import dev.protsenko.securityLinter.core.DockerVisitor
+import dev.protsenko.securityLinter.core.DockerfileVisitor
 import dev.protsenko.securityLinter.core.SecurityPluginBundle
 import dev.protsenko.securityLinter.core.quickFix.DeletePsiElementQuickFix
 
 class DockerfileHealthCheckInspection: LocalInspectionTool() {
     override fun buildVisitor(holder: ProblemsHolder, isOnTheFly: Boolean): PsiElementVisitor {
-        return object : DockerVisitor(trackStages = true){
+        return object : DockerfileVisitor(trackStages = true){
             val healthChecks = mutableListOf<DockerFileHealthCheckCommand>()
 
             override fun visitDockerFileHealthCheckCommand(element: DockerFileHealthCheckCommand) {

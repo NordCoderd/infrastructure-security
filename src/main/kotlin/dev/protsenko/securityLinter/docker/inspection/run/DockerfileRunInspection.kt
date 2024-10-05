@@ -7,7 +7,7 @@ import com.intellij.docker.dockerFile.parser.psi.DockerFileRunCommand
 import com.intellij.openapi.extensions.ExtensionPointName
 import com.intellij.psi.PsiElementVisitor
 import com.intellij.psi.PsiFile
-import dev.protsenko.securityLinter.core.DockerVisitor
+import dev.protsenko.securityLinter.core.DockerfileVisitor
 import dev.protsenko.securityLinter.core.SecurityPluginBundle
 import dev.protsenko.securityLinter.docker.inspection.run.core.DockerfileRunAnalyzer
 import dev.protsenko.securityLinter.utils.toStringDockerCommand
@@ -20,7 +20,7 @@ class DockerfileRunInspection : LocalInspectionTool() {
     override fun buildVisitor(holder: ProblemsHolder, isOnTheFly: Boolean): PsiElementVisitor {
         val extensions = extensionPointName.extensions
 
-        return object : DockerVisitor() {
+        return object : DockerfileVisitor() {
             val isContainCurl = AtomicBoolean()
             val isContainWget = AtomicBoolean()
 
