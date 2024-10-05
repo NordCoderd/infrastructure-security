@@ -1,5 +1,7 @@
 package dev.protsenko.securityLinter.utils
 
+import com.intellij.docker.dockerFile.parser.psi.DockerFileArgDeclaration
+import com.intellij.docker.dockerFile.parser.psi.DockerFileVariableRefSimple
 import com.intellij.docker.dockerFile.parser.psi.DockerPsiCommand
 
 object DockerPsiAnalyzer {
@@ -19,4 +21,9 @@ object DockerPsiAnalyzer {
         return text.trim().split(" ").map { it.trim() }
     }
 
+}
+
+fun DockerFileVariableRefSimple.resolveVariable(): String? {
+    val resolvedElement = this.resolve() as? DockerFileArgDeclaration ?: return null
+    return resolvedElement.anyValue?.text
 }
