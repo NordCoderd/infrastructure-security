@@ -7,7 +7,6 @@ import com.intellij.codeInspection.ProblemDescriptor
 import com.intellij.codeInspection.ProblemHighlightType
 import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.codeInspection.util.IntentionFamilyName
-import com.intellij.docker.dockerFile.parser.psi.DockerFileFromCommand
 import com.intellij.docker.dockerFile.parser.psi.DockerFileUserCommand
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.project.Project
@@ -23,15 +22,10 @@ import dev.protsenko.securityLinter.utils.resolveVariable
 class DockerfileUserInspection : LocalInspectionTool() {
     override fun buildVisitor(holder: ProblemsHolder, isOnTheFly: Boolean, session: LocalInspectionToolSession): PsiElementVisitor {
         val resolvedUsers = mutableMapOf<Int, DockerFileUserCommand>()
-        val buildStages = mutableMapOf<Int, DockerFileFromCommand>()
 
-        return object : DockerVisitor(saveArguments = true) {
+        return object : DockerVisitor(trackStages = true) {
             override fun visitDockerFileUserCommand(element: DockerFileUserCommand) {
                 resolvedUsers[element.textOffset] = element
-            }
-
-            override fun visitDockerFileFromCommand(element: DockerFileFromCommand) {
-                buildStages[element.textOffset] = element
             }
 
             override fun visitingIsFinished(file: PsiFile) {

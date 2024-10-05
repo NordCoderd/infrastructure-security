@@ -1,9 +1,5 @@
-FROM golang:1.7.3 as dep
-COPY dep /binary /
-<warning descr="Multiple ENTRYPOINT instructions listed
-There can only be one ENTRYPOINT instruction in a Dockerfile.">ENTRYPOINT [ "/opt/app/run.sh --port 8080" ]</warning>
-ENTRYPOINT [ "/opt/app/run.sh --port 8080" ]
-
 FROM alpine:3.13
 USER mike
+<error descr="Multiple CMD or ENTRYPOINT instructions listed
+There can only be one CMD and ENTRYPOINT instruction in a Dockerfile. If you list more than one instruction then only the last one will take effect.">ENTRYPOINT [ "/opt/app/run.sh --port 8080" ]</error>
 ENTRYPOINT [ "/opt/app/run.sh --port 8080" ]

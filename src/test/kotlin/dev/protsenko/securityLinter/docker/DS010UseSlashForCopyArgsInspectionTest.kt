@@ -2,7 +2,7 @@ package dev.protsenko.securityLinter.docker
 
 import com.intellij.codeInspection.LocalInspectionTool
 import dev.protsenko.securityLinter.core.DockerHighlightingBaseTest
-import dev.protsenko.securityLinter.docker.inspection.copy_or_add.DockerfileCopyOrAddInspection
+import dev.protsenko.securityLinter.docker.inspection.copy_and_add.DockerfileCopyAndAddInspection
 
 class DS010UseSlashForCopyArgsInspectionTest(
     override val dockerRuleFolder: String = "DS010",
@@ -13,5 +13,5 @@ class DS010UseSlashForCopyArgsInspectionTest(
         "Dockerfile-common.allowed",
         "Dockerfile-json-common.allowed"
     ),
-    override val targetInspection: LocalInspectionTool = DockerfileCopyOrAddInspection()
+    override val targetInspection: LocalInspectionTool = DockerfileCopyAndAddInspection()
 ) : DockerHighlightingBaseTest()

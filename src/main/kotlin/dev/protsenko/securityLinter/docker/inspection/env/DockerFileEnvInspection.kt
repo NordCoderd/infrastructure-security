@@ -8,29 +8,15 @@ import com.intellij.psi.PsiElementVisitor
 import dev.protsenko.securityLinter.core.DockerVisitor
 import dev.protsenko.securityLinter.core.SecurityPluginBundle
 import dev.protsenko.securityLinter.core.quickFix.DeletePsiElementQuickFix
+import dev.protsenko.securityLinter.utils.DockerfileConstants.POTENTIAL_SECRETS_NAME
 
 class DockerFileEnvInspection : LocalInspectionTool() {
-    companion object {
-        val potentialSecretsName = setOf<String>(
-            "PASSWD",
-            "PASSWORD",
-            "PASS",
-            "SECRET",
-            "KEY",
-            "ACCESS",
-            "API_KEY",
-            "APIKEY",
-            "TOKEN",
-            "TKN"
-        )
-    }
-
     override fun buildVisitor(holder: ProblemsHolder, isOnTheFly: Boolean): PsiElementVisitor {
         return object : DockerVisitor() {
             override fun visitDockerFileEnvCommand(element: DockerFileEnvCommand) {
                 element.envRegularDeclarationList.forEach {
                     val declaredName = it.declaredName.text.uppercase()
-                    if (!potentialSecretsName.contains(declaredName)) return@forEach
+                    if (!POTENTIAL_SECRETS_NAME.contains(declaredName)) return@forEach
                     holder.registerProblem(
                         it,
                         SecurityPluginBundle.message("ds026.possible-secrets-in-env", declaredName),
@@ -41,5 +27,4 @@ class DockerFileEnvInspection : LocalInspectionTool() {
             }
         }
     }
-
 }

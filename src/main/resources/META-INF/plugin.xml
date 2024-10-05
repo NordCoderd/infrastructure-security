@@ -19,75 +19,67 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <localInspection
-                implementationClass="dev.protsenko.securityLinter.docker.inspection.from.DS001LatestTagIsUsedInspection"
-                displayName="Docker latest tag is used"
+                implementationClass="dev.protsenko.securityLinter.docker.inspection.cmd_and_entrypoint.DockerfileCmdAndEntrypointInspection"
+                displayName="CMD and ENTRYPOINT best practices"
                 groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
                 enabledByDefault="true"/>
+
         <localInspection
-                implementationClass="dev.protsenko.securityLinter.docker.inspection.user.DockerfileUserInspection"
-                displayName="Missing user or root is used"
+                implementationClass="dev.protsenko.securityLinter.docker.inspection.copy_and_add.DockerfileCopyAndAddInspection"
+                displayName="COPY and ADD best practices"
                 groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
                 enabledByDefault="true"/>
+
+        <localInspection
+                implementationClass="dev.protsenko.securityLinter.docker.inspection.env.DockerFileEnvInspection"
+                displayName="ENV best practices"
+                groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
+                enabledByDefault="true"/>
+
         <localInspection
                 implementationClass="dev.protsenko.securityLinter.docker.inspection.expose.DockerfileExposeInspection"
-                displayName="SSH port exposed"
+                displayName="EXPOSE best practices"
                 groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
                 enabledByDefault="true"/>
+
         <localInspection
-                implementationClass="dev.protsenko.securityLinter.docker.inspection.copy_or_add.DockerfileCopyOrAddInspection"
-                displayName="COPY '--from' referring to the current image"
+                implementationClass="dev.protsenko.securityLinter.docker.inspection.from.DockerfileFromInspection"
+                displayName="FROM best practices"
                 groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
                 enabledByDefault="true"/>
+
         <localInspection
-                implementationClass="dev.protsenko.securityLinter.docker.inspection.entrypoint.DockerFileEntrypointInspection"
-                displayName="Multiple ENTRYPOINT instructions listed"
+                implementationClass="dev.protsenko.securityLinter.docker.inspection.healthcheck.DockerfileHealthCheckInspection"
+                displayName="HEALTHCHECK best practices"
                 groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
                 enabledByDefault="true"/>
-        <localInspection
-                implementationClass="dev.protsenko.securityLinter.docker.inspection.workdir.DockerfileWorkdirInspection"
-                displayName="WORKDIR path not absolute"
-                groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
-                enabledByDefault="true"/>
-        <localInspection
-                implementationClass="dev.protsenko.securityLinter.docker.inspection.from.DS011DuplicateAliasesDefinedInspection"
-                displayName="Duplicate aliases defined in different FROMs"
-                groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
-                enabledByDefault="true"/>
-        <localInspection
-                implementationClass="dev.protsenko.securityLinter.docker.inspection.run.DS013UsingWgetAndCurlBothInspection"
-                displayName="RUN using 'wget' and 'curl'"
-                groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
-                enabledByDefault="true"/>
-        <localInspection
-                implementationClass="dev.protsenko.securityLinter.docker.inspection.cmd.DockerFileCmdInspection"
-                displayName="Multiple CMD instructions listed"
-                groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
-                enabledByDefault="true"/>
+
         <localInspection
                 implementationClass="dev.protsenko.securityLinter.docker.inspection.maintainer.DockerfileMaintainerInspection"
                 displayName="Deprecated MAINTAINER used"
                 groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
                 enabledByDefault="true"/>
-        <localInspection
-                implementationClass="dev.protsenko.securityLinter.docker.inspection.healthcheck.DockerfileHealthCheckInspection"
-                displayName="Multiple HEALTHCHECK defined"
-                groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
-                enabledByDefault="true"/>
-        <localInspection
-                implementationClass="dev.protsenko.securityLinter.docker.inspection.env.DockerFileEnvInspection"
-                displayName="Potential secret in ENV"
-                groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
-                enabledByDefault="true"/>
-
-        <notificationGroup id="dev.protsenko.securityLinter"
-                           displayType="BALLOON"
-                           key="common.notification-group"/>
 
         <localInspection
                 implementationClass="dev.protsenko.securityLinter.docker.inspection.run.DockerfileRunInspection"
-                displayName="Misconfigurations in RUN command"
+                displayName="RUN best practices"
                 groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
                 enabledByDefault="true"/>
+
+        <localInspection
+                implementationClass="dev.protsenko.securityLinter.docker.inspection.user.DockerfileUserInspection"
+                displayName="USER best practices"
+                groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
+                enabledByDefault="true"/>
+
+        <localInspection
+                implementationClass="dev.protsenko.securityLinter.docker.inspection.workdir.DockerfileWorkdirInspection"
+                displayName="WORKDIR best practices"
+                groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
+                enabledByDefault="true"/>
+
+
+        <notificationGroup id="dev.protsenko.securityLinter" displayType="BALLOON" key="common.notification-group"/>
     </extensions>
 
     <extensions defaultExtensionNs="dev.protsenko.security-linter">
@@ -106,20 +98,18 @@
         <dockerFileExposeAnalyzer implementation="dev.protsenko.securityLinter.docker.inspection.expose.impl.SshPortExposedAnalyzer"/>
         <dockerFileExposeAnalyzer implementation="dev.protsenko.securityLinter.docker.inspection.expose.impl.ExposedPortOutOfRangeAnalyzer"/>
 
-        <dockerFileCopyOrAddAnalyzer implementation="dev.protsenko.securityLinter.docker.inspection.copy_or_add.impl.CopyReferringToCurrentImageAnalyzer"/>
-        <dockerFileCopyOrAddAnalyzer implementation="dev.protsenko.securityLinter.docker.inspection.copy_or_add.impl.UseSlashForCopyArgsAnalyzer"/>
-        <dockerFileCopyOrAddAnalyzer implementation="dev.protsenko.securityLinter.docker.inspection.copy_or_add.impl.DockerfileAddInspection"/>
+        <dockerFileCopyOrAddAnalyzer implementation="dev.protsenko.securityLinter.docker.inspection.copy_and_add.impl.CopyReferringToCurrentImageAnalyzer"/>
+        <dockerFileCopyOrAddAnalyzer implementation="dev.protsenko.securityLinter.docker.inspection.copy_and_add.impl.UseSlashForCopyArgsAnalyzer"/>
+        <dockerFileCopyOrAddAnalyzer implementation="dev.protsenko.securityLinter.docker.inspection.copy_and_add.impl.DockerfileAddInspection"/>
     </extensions>
 
     <extensionPoints>
-        <extensionPoint name="dockerFileRunAnalyzer"
+        <extensionPoint name="dockerFileRunAnalyzer" dynamic="true"
                         interface="dev.protsenko.securityLinter.docker.inspection.run.core.DockerfileRunAnalyzer"/>
-        <extensionPoint name="dockerFileExposeAnalyzer"
+        <extensionPoint name="dockerFileExposeAnalyzer" dynamic="true"
                         interface="dev.protsenko.securityLinter.docker.inspection.expose.core.DockerfileExposeAnalyzer"/>
-        <extensionPoint name="dockerFileCopyOrAddAnalyzer"
-                        interface="dev.protsenko.securityLinter.docker.inspection.copy_or_add.core.DockerfileCopyOrAddAnalyzer"/>
-        <extensionPoint name="dockerFileFromAnalyzer"
-                        interface="dev.protsenko.securityLinter.docker.inspection.from.core.DockerfileFromAnalyzer"/>
+        <extensionPoint name="dockerFileCopyOrAddAnalyzer" dynamic="true"
+                        interface="dev.protsenko.securityLinter.docker.inspection.copy_and_add.core.DockerfileCopyOrAddAnalyzer"/>
     </extensionPoints>
 
 </idea-plugin>

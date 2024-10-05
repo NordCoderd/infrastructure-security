@@ -1,0 +1,10 @@
+<html>
+<body>
+<p>Detects unfollowing of best practices for COPY and ADD instructions.</p>
+<ul>
+    <li>Use COPY instead of ADD unless you need to extract a tar file.</li>
+    <li>Ensure COPY '--from' does not refer to the current FROM alias.</li>
+    <li>Ensure COPY commands with more than two arguments end with a slash.</li>
+</ul>
+</body>
+</html>

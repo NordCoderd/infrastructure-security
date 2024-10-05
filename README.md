@@ -11,7 +11,7 @@ Scan Docker and Infrastructure as Code (IaC) files for security vulnerabilities 
 
 ## Features
 
-- **Dockerfile Analysis**: Detect security vulnerabilities and optimize Docker images with over 30 checks.
+- **Dockerfile Analysis**: Detect security vulnerabilities and optimize Docker images with over 40 checks.
 - **Quick Fixes**: Resolve issues faster using built-in quick fixes.
 
 ## Planned Features

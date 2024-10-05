@@ -4,9 +4,20 @@ import com.intellij.docker.dockerFile.parser.psi.DockerFileFromCommand
 
 object FromImageNameResolver {
 
-    fun parseImageDefinition(fromCommand: DockerFileFromCommand, resolvedVariables: Map<String, String>): ImageDefinition? {
+    fun parseImageDefinition(fromCommand: DockerFileFromCommand): ImageDefinition? {
         val fromCommandText = fromCommand.text
         val nameChainList = fromCommand.nameChainList.map { it.text }
+        val resolvedVariables = fromCommand.nameChainList
+            .flatMap { name ->
+                name.variableRefSimpleList.mapNotNull {
+                    variableReference ->
+                    val variableReferenceName = variableReference.referencedName?.text ?: return@mapNotNull null
+                    val resolvedVariable = variableReference.resolveVariable() ?: return@mapNotNull null
+                    variableReferenceName to resolvedVariable
+                }
+            }
+            .toMap()
+
         if (nameChainList.isEmpty()) return null
 
         // Looking for the first and last element of name

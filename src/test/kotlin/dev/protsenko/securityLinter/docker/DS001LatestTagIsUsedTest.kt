@@ -2,7 +2,7 @@ package dev.protsenko.securityLinter.docker
 
 import com.intellij.codeInspection.LocalInspectionTool
 import dev.protsenko.securityLinter.core.DockerHighlightingBaseTest
-import dev.protsenko.securityLinter.docker.inspection.from.DS001LatestTagIsUsedInspection
+import dev.protsenko.securityLinter.docker.inspection.from.DockerfileFromInspection
 
 class DS001LatestTagIsUsedTest(
     override val dockerRuleFolder: String = "DS001",
@@ -11,5 +11,5 @@ class DS001LatestTagIsUsedTest(
         "Dockerfile-with-slash.denied",
         "Dockerfile-with-args.denied"
     ),
-    override val targetInspection: LocalInspectionTool = DS001LatestTagIsUsedInspection()
+    override val targetInspection: LocalInspectionTool = DockerfileFromInspection()
 ) : DockerHighlightingBaseTest()

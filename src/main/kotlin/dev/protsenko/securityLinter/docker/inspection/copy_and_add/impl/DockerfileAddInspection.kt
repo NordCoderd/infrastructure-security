@@ -1,4 +1,4 @@
-package dev.protsenko.securityLinter.docker.inspection.copy_or_add.impl
+package dev.protsenko.securityLinter.docker.inspection.copy_and_add.impl
 
 import com.intellij.codeInspection.LocalQuickFix
 import com.intellij.codeInspection.ProblemDescriptor
@@ -9,7 +9,7 @@ import com.intellij.docker.dockerFile.parser.psi.DockerFileAddOrCopyCommand
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.project.Project
 import dev.protsenko.securityLinter.core.SecurityPluginBundle
-import dev.protsenko.securityLinter.docker.inspection.copy_or_add.core.DockerfileCopyOrAddAnalyzer
+import dev.protsenko.securityLinter.docker.inspection.copy_and_add.core.DockerfileCopyOrAddAnalyzer
 import dev.protsenko.securityLinter.utils.PsiElementGenerator
 import dev.protsenko.securityLinter.utils.extension
 import dev.protsenko.securityLinter.utils.removeQuotes

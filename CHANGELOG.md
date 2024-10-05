@@ -9,9 +9,11 @@
 ### Changed
 
 - Improved tracking image name specified by arguments
-- Added zypper, dnf, yum auto confirm checks
-- Zypper dist-upgrade checks
+- Added zypper, dnf, yum auto-confirm checks
+- Added additional zypper dist-upgrade check
 - Use arguments JSON notation for CMD and ENTRYPOINT arguments
+- Inspections merged by Dockerfile instructions
+- Improved thread-safety for complex checks
 
 ## [1.0.2] - 01-10-2024
 

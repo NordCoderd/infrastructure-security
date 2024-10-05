@@ -3,7 +3,6 @@ package dev.protsenko.securityLinter.docker.inspection.healthcheck
 import com.intellij.codeInspection.LocalInspectionTool
 import com.intellij.codeInspection.ProblemHighlightType
 import com.intellij.codeInspection.ProblemsHolder
-import com.intellij.docker.dockerFile.parser.psi.DockerFileFromCommand
 import com.intellij.docker.dockerFile.parser.psi.DockerFileHealthCheckCommand
 import com.intellij.psi.PsiElementVisitor
 import com.intellij.psi.PsiFile
@@ -13,33 +12,28 @@ import dev.protsenko.securityLinter.core.quickFix.DeletePsiElementQuickFix
 
 class DockerfileHealthCheckInspection: LocalInspectionTool() {
     override fun buildVisitor(holder: ProblemsHolder, isOnTheFly: Boolean): PsiElementVisitor {
-        return object : DockerVisitor(){
+        return object : DockerVisitor(trackStages = true){
             val healthChecks = mutableListOf<DockerFileHealthCheckCommand>()
 
             override fun visitDockerFileHealthCheckCommand(element: DockerFileHealthCheckCommand) {
                 healthChecks.add(element)
             }
 
-            override fun visitDockerFileFromCommand(element: DockerFileFromCommand) {
-                detectProblemAndDropCounters()
-            }
-
             override fun visitingIsFinished(file: PsiFile) {
-                detectProblemAndDropCounters()
-            }
-
-            private fun detectProblemAndDropCounters() {
-                if (healthChecks.size > 1) {
-                    for (command in healthChecks.dropLast(1)) {
+                val lastStage = buildStages.keys.maxOrNull() ?: return
+                val lastInstructions = healthChecks.filter {
+                    it.textOffset > lastStage
+                }
+                if (lastInstructions.size > 1){
+                    for (instruction in lastInstructions.dropLast(1)) {
                         holder.registerProblem(
-                            command,
+                            instruction,
                             SecurityPluginBundle.message("ds021.only-one-healthcheck"),
-                            ProblemHighlightType.WARNING,
+                            ProblemHighlightType.ERROR,
                             DeletePsiElementQuickFix(SecurityPluginBundle.message("ds021.remove-redundant-healthcheck"))
                         )
                     }
                 }
-                healthChecks.clear()
             }
         }
     }

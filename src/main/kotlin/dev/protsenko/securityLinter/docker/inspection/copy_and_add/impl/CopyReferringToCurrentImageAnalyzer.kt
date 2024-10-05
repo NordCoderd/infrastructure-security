@@ -1,10 +1,10 @@
-package dev.protsenko.securityLinter.docker.inspection.copy_or_add.impl
+package dev.protsenko.securityLinter.docker.inspection.copy_and_add.impl
 
 import com.intellij.codeInspection.ProblemHighlightType
 import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.docker.dockerFile.parser.psi.DockerFileAddOrCopyCommand
 import dev.protsenko.securityLinter.core.SecurityPluginBundle
-import dev.protsenko.securityLinter.docker.inspection.copy_or_add.core.DockerfileCopyOrAddAnalyzer
+import dev.protsenko.securityLinter.docker.inspection.copy_and_add.core.DockerfileCopyOrAddAnalyzer
 
 class CopyReferringToCurrentImageAnalyzer : DockerfileCopyOrAddAnalyzer {
     companion object {

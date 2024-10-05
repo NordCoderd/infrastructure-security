@@ -1,4 +1,4 @@
-package dev.protsenko.securityLinter.docker.inspection.copy_or_add
+package dev.protsenko.securityLinter.docker.inspection.copy_and_add
 
 import com.intellij.codeInspection.LocalInspectionTool
 import com.intellij.codeInspection.ProblemsHolder
@@ -6,9 +6,9 @@ import com.intellij.docker.dockerFile.parser.psi.DockerFileAddOrCopyCommand
 import com.intellij.openapi.extensions.ExtensionPointName
 import com.intellij.psi.PsiElementVisitor
 import dev.protsenko.securityLinter.core.DockerVisitor
-import dev.protsenko.securityLinter.docker.inspection.copy_or_add.core.DockerfileCopyOrAddAnalyzer
+import dev.protsenko.securityLinter.docker.inspection.copy_and_add.core.DockerfileCopyOrAddAnalyzer
 
-class DockerfileCopyOrAddInspection: LocalInspectionTool() {
+class DockerfileCopyAndAddInspection: LocalInspectionTool() {
     val extensionPointName =
         ExtensionPointName.create<DockerfileCopyOrAddAnalyzer>("dev.protsenko.security-linter.dockerFileCopyOrAddAnalyzer")
 

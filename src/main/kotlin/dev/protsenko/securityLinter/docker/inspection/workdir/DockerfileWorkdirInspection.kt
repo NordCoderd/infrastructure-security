@@ -22,8 +22,6 @@ class DockerfileWorkdirInspection: LocalInspectionTool() {
                         ProblemHighlightType.WARNING
                     )
                 }
-
-                super.visitDockerFileWorkdirCommand(element)
             }
         }
     }

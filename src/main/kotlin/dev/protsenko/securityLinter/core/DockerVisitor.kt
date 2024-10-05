@@ -1,7 +1,6 @@
 package dev.protsenko.securityLinter.core
 
 import com.intellij.docker.dockerFile.parser.psi.DockerFileAddOrCopyCommand
-import com.intellij.docker.dockerFile.parser.psi.DockerFileArgCommand
 import com.intellij.docker.dockerFile.parser.psi.DockerFileCmdCommand
 import com.intellij.docker.dockerFile.parser.psi.DockerFileEntrypointCommand
 import com.intellij.docker.dockerFile.parser.psi.DockerFileEnvCommand
@@ -15,10 +14,11 @@ import com.intellij.docker.dockerFile.parser.psi.DockerFileWorkdirCommand
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiElementVisitor
 import com.intellij.psi.PsiFile
-import com.jetbrains.rd.util.concurrentMapOf
 
-open class DockerVisitor(private val saveArguments: Boolean = false) : PsiElementVisitor() {
-    val resolvedVariables = concurrentMapOf<String, String>()
+open class DockerVisitor(
+    private val trackStages: Boolean = false
+) : PsiElementVisitor() {
+    val buildStages = mutableMapOf<Int, DockerFileFromCommand>()
     var currentStep: String? = null
 
     override fun visitFile(file: PsiFile) {
@@ -40,23 +40,17 @@ open class DockerVisitor(private val saveArguments: Boolean = false) : PsiElemen
             is DockerFileCmdCommand -> visitDockerFileCmdCommand(element)
             is DockerFileMaintainerCommand -> visitDockerFileMaintainerCommand(element)
             is DockerFileHealthCheckCommand -> visitDockerFileHealthCheckCommand(element)
-            is DockerFileArgCommand -> visitDockerFileArgCommand(element)
             is DockerFileEnvCommand -> visitDockerFileEnvCommand(element)
         }
         super.visitElement(element)
     }
 
-    open fun visitDockerFileArgCommand(element: DockerFileArgCommand) {
-        if (!saveArguments) return
-        val argDeclaration = element.argDeclaration ?: return
-        val key = argDeclaration.declaredName.text ?: return
-        val value = argDeclaration.anyValue?.text ?: return
-        resolvedVariables[key] = value
-    }
-
     open fun visitDockerFileFromCommand(element: DockerFileFromCommand) {
         val declaredStepName = element.fromStageDeclaration?.declaredName
         currentStep = declaredStepName?.text
+        if (trackStages){
+            buildStages[element.textOffset] = element
+        }
     }
 
     open fun visitDockerFileUserCommand(element: DockerFileUserCommand) {}
