@@ -2,18 +2,18 @@
 
 # Infrastructure Security Linter Changelog
 
-## [Unreleased]
+## [1.0.3] 06-10-2024
 
-## [1.0.3] - 01-10-2024
+### Added
+- Added zypper, dnf, yum auto-confirm checks
+- Added additional zypper dist-upgrade check
+- Use arguments JSON notation for CMD and ENTRYPOINT arguments
 
 ### Changed
 
 - Improved tracking image name specified by arguments
-- Added zypper, dnf, yum auto-confirm checks
-- Added additional zypper dist-upgrade check
-- Use arguments JSON notation for CMD and ENTRYPOINT arguments
 - Inspections merged by Dockerfile instructions
-- Improved thread-safety for complex checks
+- Improved thread-safety for complex inspections
 
 ## [1.0.2] - 01-10-2024
 
