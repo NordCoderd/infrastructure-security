@@ -14,6 +14,7 @@
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
     <depends>com.intellij.modules.platform</depends>
     <depends>Docker</depends>
+    <depends>org.jetbrains.plugins.yaml</depends>
 
     <resource-bundle>messages.SecurityPluginBundle</resource-bundle>
 
@@ -78,6 +79,11 @@
                 groupPathKey="common.group-key" groupKey="common.docker-group-key" language="Dockerfile"
                 enabledByDefault="true"/>
 
+        <localInspection
+                implementationClass="dev.protsenko.securityLinter.docker_compose.DockerComposeInspection"
+                displayName="Basic docker-compose inspection"
+                groupPathKey="common.group-key" groupKey="common.docker-compose-group-key"
+                enabledByDefault="true"/>
 
         <notificationGroup id="dev.protsenko.securityLinter" displayType="BALLOON" key="common.notification-group"/>
     </extensions>

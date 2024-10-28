@@ -2,6 +2,11 @@
 
 # Infrastructure Security Linter Changelog
 
+## [1.0.4] 28-10-2024
+
+### Added
+- docker-compose support: using unsafe images
+
 ## [1.0.3] 06-10-2024
 
 ### Added
