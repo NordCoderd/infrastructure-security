@@ -5,8 +5,8 @@ import dev.protsenko.securityLinter.core.DockerHighlightingBaseTest
 import dev.protsenko.securityLinter.docker.inspection.copy_and_add.DockerfileCopyAndAddInspection
 
 class DS004AddInsteadCopyInspectionTest(
-    override val dockerRuleFolder: String = "DS004",
-    override val customDockerFiles: Set<String> = setOf<String>(
+    override val ruleFolderName: String = "DS004",
+    override val customFiles: Set<String> = setOf<String>(
         "Dockerfile-brackets.denied",
         "Dockerfile-empty-add.allowed"
     ),

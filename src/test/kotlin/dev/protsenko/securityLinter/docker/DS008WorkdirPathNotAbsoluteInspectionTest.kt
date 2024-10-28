@@ -5,7 +5,7 @@ import dev.protsenko.securityLinter.core.DockerHighlightingBaseTest
 import dev.protsenko.securityLinter.docker.inspection.workdir.DockerfileWorkdirInspection
 
 class DS008WorkdirPathNotAbsoluteInspectionTest(
-    override val dockerRuleFolder: String = "DS008",
-    override val customDockerFiles: Set<String> = emptySet(),
+    override val ruleFolderName: String = "DS008",
+    override val customFiles: Set<String> = emptySet(),
     override val targetInspection: LocalInspectionTool = DockerfileWorkdirInspection()
 ) : DockerHighlightingBaseTest()

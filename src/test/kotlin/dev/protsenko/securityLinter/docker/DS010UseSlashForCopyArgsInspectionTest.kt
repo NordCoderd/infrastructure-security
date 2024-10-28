@@ -5,8 +5,8 @@ import dev.protsenko.securityLinter.core.DockerHighlightingBaseTest
 import dev.protsenko.securityLinter.docker.inspection.copy_and_add.DockerfileCopyAndAddInspection
 
 class DS010UseSlashForCopyArgsInspectionTest(
-    override val dockerRuleFolder: String = "DS010",
-    override val customDockerFiles: Set<String> = setOf<String>(
+    override val ruleFolderName: String = "DS010",
+    override val customFiles: Set<String> = setOf<String>(
         "Dockerfile-multiply-without-brackets.denied",
         "Dockerfile-multiply-without-brackets.allowed",
         "Dockerfile-copy-with-arguments.allowed",

@@ -5,8 +5,8 @@ import dev.protsenko.securityLinter.core.DockerHighlightingBaseTest
 import dev.protsenko.securityLinter.docker.inspection.expose.DockerfileExposeInspection
 
 class DS007ExposedPortOfRangeInspectionTest(
-    override val dockerRuleFolder: String = "DS007",
-    override val customDockerFiles: Set<String> = setOf<String>(
+    override val ruleFolderName: String = "DS007",
+    override val customFiles: Set<String> = setOf<String>(
         "Dockerfile-multiple-invalid-ports-with-postfixes.denied",
         "Dockerfile-multiple-invalid-ports.denied",
     ),

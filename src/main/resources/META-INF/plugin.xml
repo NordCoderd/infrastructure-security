@@ -81,9 +81,9 @@
 
         <localInspection
                 implementationClass="dev.protsenko.securityLinter.docker_compose.DockerComposeInspection"
-                displayName="Basic docker-compose inspection"
+                displayName="Docker Compose best practices"
                 groupPathKey="common.group-key" groupKey="common.docker-compose-group-key"
-                enabledByDefault="true"/>
+                enabledByDefault="true" language="yaml"/>
 
         <notificationGroup id="dev.protsenko.securityLinter" displayType="BALLOON" key="common.notification-group"/>
     </extensions>

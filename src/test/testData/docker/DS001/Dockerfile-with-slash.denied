@@ -1,5 +1,5 @@
 <error descr="Missing version tag
-When using a 'FROM' statement you should use a specific tag to avoid uncontrolled behavior when the image is updated.">FROM ubuntu/apache2</error>
+When using image you should use a specific tag to avoid uncontrolled behavior when the image is updated.">FROM ubuntu/apache2</error>
 <error descr="':latest' tag used
-When using a 'FROM' statement you should use a specific tag to avoid uncontrolled behavior when the image is updated.">FROM ubuntu/apache2:latest</error>
+When using image you should use a specific tag to avoid uncontrolled behavior when the image is updated.">FROM ubuntu/apache2:latest</error>
 FROM ubuntu/apache2@sha256:b8084b1a576c5504a031936e1132574f4ce1d6cc7130bbcc25a28f074539ae6b

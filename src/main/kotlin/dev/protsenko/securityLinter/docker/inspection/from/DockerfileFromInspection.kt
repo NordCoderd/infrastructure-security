@@ -9,17 +9,17 @@ import com.intellij.psi.PsiFile
 import dev.protsenko.securityLinter.core.DockerfileVisitor
 import dev.protsenko.securityLinter.core.SecurityPluginBundle
 import dev.protsenko.securityLinter.core.quickFix.DeletePsiElementQuickFix
-import dev.protsenko.securityLinter.utils.ImageUtils
+import dev.protsenko.securityLinter.utils.image.ImageAnalyzer
+import dev.protsenko.securityLinter.utils.image.ImageDefinitionCreator
 
 class DockerfileFromInspection : LocalInspectionTool() {
 
-    //FIXME: Write tests
     override fun buildVisitor(holder: ProblemsHolder, isOnTheFly: Boolean): PsiElementVisitor {
         return object : DockerfileVisitor(trackStages = true) {
             override fun visitDockerFileFromCommand(element: DockerFileFromCommand) {
                 super.visitDockerFileFromCommand(element)
-                val imageDefinition = ImageUtils.parseImageDefinition(element) ?: return
-                ImageUtils.highlightImageDefinitionProblem(imageDefinition, holder, element)
+                val imageDefinition = ImageDefinitionCreator.fromDockerFileFromCommand(element) ?: return
+                ImageAnalyzer.analyzeAndHighlight(imageDefinition, holder, element)
             }
 
             override fun visitingIsFinished(file: PsiFile) {

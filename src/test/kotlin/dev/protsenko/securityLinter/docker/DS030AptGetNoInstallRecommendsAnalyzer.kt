@@ -5,7 +5,7 @@ import dev.protsenko.securityLinter.core.DockerHighlightingBaseTest
 import dev.protsenko.securityLinter.docker.inspection.run.DockerfileRunInspection
 
 class DS030AptGetNoInstallRecommendsAnalyzer(
-    override val dockerRuleFolder: String = "DS030",
-    override val customDockerFiles: Set<String> = emptySet<String>(),
+    override val ruleFolderName: String = "DS030",
+    override val customFiles: Set<String> = emptySet<String>(),
     override val targetInspection: LocalInspectionTool = DockerfileRunInspection()
 ) : DockerHighlightingBaseTest()

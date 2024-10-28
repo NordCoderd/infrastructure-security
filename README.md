@@ -12,12 +12,13 @@ Scan Docker and Infrastructure as Code (IaC) files for security vulnerabilities 
 ## Features
 
 - **Dockerfile Analysis**: Detect security vulnerabilities and optimize Docker images with over 40 checks.
+- **Docker Compose**: Detect security vulnerabilities and misconfigurations.
 - **Quick Fixes**: Resolve issues faster using built-in quick fixes.
 
 ## Planned Features
 
 - **Extended support Dockerfile**
-- **Docker Compose**: Checking `docker-compose` configuration files to ensure security and efficiency.
+- **Extended support Docker Compose**
 - **Kubernetes Files**: Analyzing Kubernetes YAML files to comply with best practices and security standards.
 - **and more**: Expanding support for other IaC tools and formats to comprehensively protect and optimize your infrastructure configurations.
 

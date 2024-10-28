@@ -5,7 +5,7 @@ import dev.protsenko.securityLinter.core.DockerHighlightingBaseTest
 import dev.protsenko.securityLinter.docker.inspection.maintainer.DockerfileMaintainerInspection
 
 class DS020MaintainerUsedInspectionTest(
-    override val dockerRuleFolder: String = "DS020",
-    override val customDockerFiles: Set<String> = emptySet<String>(),
+    override val ruleFolderName: String = "DS020",
+    override val customFiles: Set<String> = emptySet<String>(),
     override val targetInspection: LocalInspectionTool = DockerfileMaintainerInspection()
 ) : DockerHighlightingBaseTest()

@@ -1,0 +1,9 @@
+version: '3.1'
+
+services:
+  db:
+    <error descr="Missing version tag
+When using image you should use a specific tag to avoid uncontrolled behavior when the image is updated.">image: mysql</error>
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: example

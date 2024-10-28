@@ -9,23 +9,34 @@ import com.intellij.psi.PsiFileFactory
 import com.intellij.psi.util.childrenOfType
 
 object PsiElementGenerator {
-    const val DUMMY_FILE_NAME = "Dockerfile"
+    const val DUMMY_DOCKERFILE_NAME = "Dockerfile"
+    const val DUMMY_FILE_NAME = "dummy"
 
     inline fun <reified T : PsiElement> fromText(project: Project, text: String): T? {
         val fullDockerFileText = "FROM dummy\n$text"
         val factory = PsiFileFactory.getInstance(project)
-        val dockerFile = factory.createFileFromText(DUMMY_FILE_NAME, DockerFileType.DOCKER_FILE_TYPE, fullDockerFileText)
+        val dockerFile = factory.createFileFromText(DUMMY_DOCKERFILE_NAME, DockerFileType.DOCKER_FILE_TYPE, fullDockerFileText)
         return dockerFile.childrenOfType<T>().firstOrNull()
     }
 
     fun getDockerFileFromCommand(project: Project, image: String, digest: String): DockerFileFromCommand? {
         val factory = PsiFileFactory.getInstance(project)
         val dockerFile = factory.createFileFromText(
-            DUMMY_FILE_NAME,
+            DUMMY_DOCKERFILE_NAME,
             DockerFileType.DOCKER_FILE_TYPE,
             "FROM $image@$digest"
         )
         return dockerFile.childrenOfType<DockerFileFromCommand>().firstOrNull()
+    }
+
+    fun rawText(project: Project, value: String): PsiElement? {
+        val factory = PsiFileFactory.getInstance(project)
+        val rawFile = factory.createFileFromText(
+            DUMMY_FILE_NAME,
+            PlainTextFileType.INSTANCE,
+            value
+        )
+        return rawFile.childrenOfType<PsiElement>().firstOrNull()
     }
 
     fun newLine(project: Project): PsiElement? {

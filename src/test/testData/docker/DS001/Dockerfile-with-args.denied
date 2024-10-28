@@ -1,4 +1,4 @@
 ARG image=ubuntu/apache2
 ARG version=latest
 <error descr="':latest' tag used
-When using a 'FROM' statement you should use a specific tag to avoid uncontrolled behavior when the image is updated.">FROM $image:$version</error>
+When using image you should use a specific tag to avoid uncontrolled behavior when the image is updated.">FROM $image:$version</error>
