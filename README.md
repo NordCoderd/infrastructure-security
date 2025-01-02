@@ -25,5 +25,7 @@ Scan Docker and Infrastructure as Code (IaC) files for security vulnerabilities 
 Detailed list of planned features are available on [GitHub issues](https://github.com/NordCoderd/infrastructure-security/labels/enhancement)
 
 ## Thanks
+- My mother, who supported me every step of the way and who is no longer with us.
 - [Trivy-checks](https://github.com/aquasecurity/trivy-checks/tree/main) for good source of rules.
+- [Hadolint](https://github.com/hadolint/hadolint) for one the best Dockerfile linters.
 <!-- Plugin description end -->

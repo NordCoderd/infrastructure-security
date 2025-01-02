@@ -4,11 +4,13 @@ import com.intellij.codeInspection.LocalQuickFix
 import com.intellij.codeInspection.ProblemDescriptor
 import com.intellij.codeInspection.util.IntentionFamilyName
 import com.intellij.docker.dockerFile.parser.psi.DockerFileFromCommand
+import com.intellij.docker.dockerFile.parser.psi.DockerFileFromStageDeclaration
 import com.intellij.notification.NotificationGroupManager
 import com.intellij.notification.NotificationType
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.command.WriteCommandAction
 import com.intellij.openapi.project.Project
+import com.intellij.psi.PsiElement
 import dev.protsenko.securityLinter.core.SecurityPluginBundle
 import dev.protsenko.securityLinter.utils.PsiElementGenerator
 import org.jetbrains.yaml.psi.YAMLKeyValue
@@ -38,8 +40,9 @@ class ReplaceTagWithDigestQuickFix(private val imageName: String) : LocalQuickFi
     private fun replaceImageName(project: Project, descriptor: ProblemDescriptor, digest: String){
         val targetElement = descriptor.psiElement
         if (targetElement is DockerFileFromCommand){
+            val buildStageName = retrieveBuildStageName(targetElement)
             val dockerFileFromCommand =
-                PsiElementGenerator.getDockerFileFromCommand(project, imageName, digest) ?: return
+                PsiElementGenerator.getDockerFileFromCommand(project, imageName, digest, buildStageName) ?: return
             targetElement.replace(dockerFileFromCommand)
         } else if (targetElement is YAMLKeyValue){
             val imageDefinitionWithDigest =
@@ -47,6 +50,16 @@ class ReplaceTagWithDigestQuickFix(private val imageName: String) : LocalQuickFi
             val targetValueElement = targetElement.value ?: return
             targetValueElement.replace(imageDefinitionWithDigest)
         }
+    }
+
+    private fun retrieveBuildStageName(element: PsiElement): String? {
+        if (element !is DockerFileFromCommand) return null
+        return element
+            .children
+            .filterIsInstance<DockerFileFromStageDeclaration>()
+            .firstOrNull()
+            ?.declaredName
+            ?.text
     }
 
     fun notifyError(project: Project, content: String) {

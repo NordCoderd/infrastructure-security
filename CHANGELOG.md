@@ -2,6 +2,12 @@
 
 # Infrastructure Security Linter Changelog
 
+## [1.0.5] 02-01-2025
+
+### Fixed
+- bug with removing stage name after using quick fix
+
+
 ## [1.0.4] 28-10-2024
 
 ### Added

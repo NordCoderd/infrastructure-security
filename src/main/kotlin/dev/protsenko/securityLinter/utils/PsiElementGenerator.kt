@@ -19,12 +19,17 @@ object PsiElementGenerator {
         return dockerFile.childrenOfType<T>().firstOrNull()
     }
 
-    fun getDockerFileFromCommand(project: Project, image: String, digest: String): DockerFileFromCommand? {
+    fun getDockerFileFromCommand(project: Project, image: String, digest: String, stageName: String?): DockerFileFromCommand? {
         val factory = PsiFileFactory.getInstance(project)
+        val fromDefinition = if (stageName!=null) {
+            "FROM $image@$digest as $stageName"
+        } else {
+            "FROM $image@$digest"
+        }
         val dockerFile = factory.createFileFromText(
             DUMMY_DOCKERFILE_NAME,
             DockerFileType.DOCKER_FILE_TYPE,
-            "FROM $image@$digest"
+            fromDefinition
         )
         return dockerFile.childrenOfType<DockerFileFromCommand>().firstOrNull()
     }
