@@ -1,0 +1,3 @@
+<weak_warning descr="Missing HEALTHCHECK instruction">FROM ubuntu:21 as ubuntu
+HEALTHCHECK CMD ping 8.8.8.8
+FROM openjdk:11 as jdk11</weak_warning>

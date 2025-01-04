@@ -1,10 +1,13 @@
 package dev.protsenko.securityLinter.docker_compose
 
 import com.intellij.codeInspection.LocalInspectionTool
+import com.intellij.codeInspection.ProblemHighlightType
 import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiElementVisitor
 import com.intellij.psi.PsiFile
+import dev.protsenko.securityLinter.core.SecurityPluginBundle
+import dev.protsenko.securityLinter.utils.DockerfileConstants
 import dev.protsenko.securityLinter.utils.image.ImageAnalyzer
 import dev.protsenko.securityLinter.utils.image.ImageDefinitionCreator
 import dev.protsenko.securityLinter.utils.isChildOfServiceDefinition
@@ -13,7 +16,8 @@ import org.jetbrains.yaml.psi.YAMLKeyValue
 class DockerComposeInspection: LocalInspectionTool() {
     companion object {
         const val IMAGE_KEY_LITERAL = "image"
-        val supportedAttributes = setOf(IMAGE_KEY_LITERAL)
+        const val USER_KEY_LITERAL = "user"
+        val supportedAttributes = setOf(IMAGE_KEY_LITERAL, USER_KEY_LITERAL)
     }
 
     override fun buildVisitor(holder: ProblemsHolder, isOnTheFly: Boolean): PsiElementVisitor {
@@ -40,6 +44,13 @@ class DockerComposeInspection: LocalInspectionTool() {
                         IMAGE_KEY_LITERAL -> {
                             val imageDefinition = ImageDefinitionCreator.fromString(attributeValue, emptyMap())
                             ImageAnalyzer.analyzeAndHighlight(imageDefinition, holder, element)
+                        }
+                        USER_KEY_LITERAL -> {
+                            if (DockerfileConstants.PROHIBITED_USERS.contains(attributeValue.trim())){
+                                holder.registerProblem(
+                                    element, SecurityPluginBundle.message("ds002.root-user-is-used"), ProblemHighlightType.ERROR
+                                )
+                            }
                         }
                         else -> return
                     }

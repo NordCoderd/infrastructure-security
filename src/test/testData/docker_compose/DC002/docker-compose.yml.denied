@@ -1,0 +1,10 @@
+version: '3.1'
+
+services:
+  db:
+    image: mysql:8.4
+    restart: always
+    <error descr="Image user should not be 'root'
+Running containers with 'root' user can lead to a container escape situation.">user: root</error>
+    environment:
+      MYSQL_ROOT_PASSWORD: example

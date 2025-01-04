@@ -24,7 +24,13 @@ class DockerfileHealthCheckInspection: LocalInspectionTool() {
                 val lastInstructions = healthChecks.filter {
                     it.textOffset > lastStage
                 }
-                if (lastInstructions.size > 1){
+                if (lastInstructions.isEmpty()){
+                    holder.registerProblem(
+                        file,
+                        SecurityPluginBundle.message("ds029.missing-healthcheck"),
+                        ProblemHighlightType.WEAK_WARNING
+                    )
+                } else if (lastInstructions.size > 1){
                     for (instruction in lastInstructions.dropLast(1)) {
                         holder.registerProblem(
                             instruction,

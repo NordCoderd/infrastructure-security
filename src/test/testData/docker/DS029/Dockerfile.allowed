@@ -1,0 +1,3 @@
+FROM ubuntu:21
+RUN touch protsenko.dev
+HEALTHCHECK CMD ping 8.8.8.8

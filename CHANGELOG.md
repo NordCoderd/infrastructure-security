@@ -2,7 +2,12 @@
 
 # Infrastructure Security Linter Changelog
 
-## [1.0.5] 02-01-2025
+## [1.0.5] 04-01-2025
+
+### Added
+- docker-compose support: using root user
+- missing HEALTHCHECK instruction
+- using apt instead apt-get or apt-cache
 
 ### Fixed
 - bug with removing stage name after using quick fix
