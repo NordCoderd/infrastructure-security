@@ -2,6 +2,11 @@
 
 # Infrastructure Security Linter Changelog
 
+## [1.0.6] 11-01-2025
+
+### Added
+- docker-compose support: exposing insecure ports
+
 ## [1.0.5] 04-01-2025
 
 ### Added

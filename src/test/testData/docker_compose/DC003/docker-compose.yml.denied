@@ -1,0 +1,12 @@
+version: '3.1'
+
+services:
+  db:
+    image: mysql:8.4
+    restart: always
+    user: mysql
+    ports:
+      <error descr="Port 22 exposed
+Exposing port 22 might allow users to SSH into the container.">- "22"</error>
+    environment:
+      MYSQL_ROOT_PASSWORD: example

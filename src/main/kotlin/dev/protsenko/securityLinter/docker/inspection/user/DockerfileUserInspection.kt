@@ -12,10 +12,10 @@ import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiElementVisitor
 import com.intellij.psi.PsiFile
+import dev.protsenko.securityLinter.core.DockerFileConstants.PROHIBITED_USERS
 import dev.protsenko.securityLinter.core.DockerfileVisitor
 import dev.protsenko.securityLinter.core.SecurityPluginBundle
 import dev.protsenko.securityLinter.utils.DockerPsiAnalyzer
-import dev.protsenko.securityLinter.utils.DockerfileConstants.PROHIBITED_USERS
 import dev.protsenko.securityLinter.utils.PsiElementGenerator
 import dev.protsenko.securityLinter.utils.resolveVariable
 
