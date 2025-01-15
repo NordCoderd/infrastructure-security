@@ -8,7 +8,7 @@
     <name>Infrastructure Security Linter</name>
 
     <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
-    <vendor email="tech@protsenko.dev" url="https://protsenko.dev">Dmitry Protsenko</vendor>
+    <vendor email="tech@protsenko.dev" url="https://protsenko.dev">Dmitrii Protsenko</vendor>
 
     <!-- Product and plugin compatibility requirements.
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->

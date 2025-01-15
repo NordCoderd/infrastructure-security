@@ -1,0 +1,4 @@
+ENV image=ubuntu/apache2
+ENV version=latest
+<error descr="':latest' tag used
+When using image you should use a specific tag to avoid uncontrolled behavior when the image is updated.">FROM $image:$version</error>

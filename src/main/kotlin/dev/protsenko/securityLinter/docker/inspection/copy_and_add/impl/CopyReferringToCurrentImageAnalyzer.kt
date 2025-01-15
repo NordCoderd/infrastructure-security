@@ -4,6 +4,7 @@ import com.intellij.codeInspection.ProblemHighlightType
 import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.docker.dockerFile.parser.psi.DockerFileAddOrCopyCommand
 import dev.protsenko.securityLinter.core.SecurityPluginBundle
+import dev.protsenko.securityLinter.core.quickFix.DeletePsiElementQuickFix
 import dev.protsenko.securityLinter.docker.inspection.copy_and_add.core.DockerfileCopyOrAddAnalyzer
 
 class CopyReferringToCurrentImageAnalyzer : DockerfileCopyOrAddAnalyzer {
@@ -25,6 +26,9 @@ class CopyReferringToCurrentImageAnalyzer : DockerfileCopyOrAddAnalyzer {
                 copyFromOption,
                 SecurityPluginBundle.message("ds005.copy-referring-to-the-current-image"),
                 ProblemHighlightType.ERROR,
+                DeletePsiElementQuickFix(
+                    SecurityPluginBundle.message("ds005.remove-referring")
+                )
             )
         }
     }

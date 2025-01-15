@@ -1,5 +1,6 @@
 package dev.protsenko.securityLinter.utils.image
 
+import com.intellij.codeInsight.intention.HighPriorityAction
 import com.intellij.codeInspection.LocalQuickFix
 import com.intellij.codeInspection.ProblemDescriptor
 import com.intellij.codeInspection.util.IntentionFamilyName
@@ -15,7 +16,7 @@ import dev.protsenko.securityLinter.core.SecurityPluginBundle
 import dev.protsenko.securityLinter.utils.PsiElementGenerator
 import org.jetbrains.yaml.psi.YAMLKeyValue
 
-class ReplaceTagWithDigestQuickFix(private val imageName: String) : LocalQuickFix {
+class ReplaceTagWithDigestQuickFix(private val imageName: String) : LocalQuickFix, HighPriorityAction {
 
     override fun getFamilyName(): @IntentionFamilyName String =
         SecurityPluginBundle.message("ds001.lookup-for-digest")

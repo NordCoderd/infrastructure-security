@@ -18,7 +18,7 @@ class DockerFileEnvInspection : LocalInspectionTool() {
                     val declaredName = it.declaredName.text.uppercase()
                     if (!POTENTIAL_SECRETS_NAME.contains(declaredName)) return@forEach
                     holder.registerProblem(
-                        it,
+                        element,
                         SecurityPluginBundle.message("ds026.possible-secrets-in-env", declaredName),
                         ProblemHighlightType.ERROR,
                         DeletePsiElementQuickFix(SecurityPluginBundle.message("ds026.remove-env-with-secret"))

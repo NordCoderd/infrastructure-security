@@ -5,6 +5,7 @@ import com.intellij.codeInspection.ProblemHighlightType
 import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.docker.dockerFile.parser.psi.DockerFileCmdCommand
 import com.intellij.docker.dockerFile.parser.psi.DockerFileEntrypointCommand
+import com.intellij.docker.dockerFile.parser.psi.DockerFileHealthCheckCommand
 import com.intellij.docker.dockerFile.parser.psi.DockerPsiExecOrShellCommand
 import com.intellij.psi.PsiElementVisitor
 import com.intellij.psi.PsiFile
@@ -20,7 +21,9 @@ class DockerfileCmdAndEntrypointInspection: LocalInspectionTool() {
             val entryPoints = mutableListOf<DockerFileEntrypointCommand>()
 
             override fun visitDockerFileCmdCommand(element: DockerFileCmdCommand) {
-                commands.add(element)
+                if (element.parent !is DockerFileHealthCheckCommand){
+                    commands.add(element)
+                }
                 if (element.parametersInJsonForm == null) registerJsonNotationProblem(element)
             }
 

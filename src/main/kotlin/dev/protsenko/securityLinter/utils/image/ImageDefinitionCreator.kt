@@ -1,6 +1,8 @@
 package dev.protsenko.securityLinter.utils.image
 
+import com.intellij.docker.dockerFile.parser.psi.DockerFileEnvRegularDeclaration
 import com.intellij.docker.dockerFile.parser.psi.DockerFileFromCommand
+import dev.protsenko.securityLinter.utils.removeQuotes
 import dev.protsenko.securityLinter.utils.resolveVariable
 
 object ImageDefinitionCreator {
@@ -16,7 +18,12 @@ object ImageDefinitionCreator {
                 name.variableRefSimpleList.mapNotNull {
                     variableReference ->
                     val variableReferenceName = variableReference.referencedName?.text ?: return@mapNotNull null
-                    val resolvedVariable = variableReference.resolveVariable() ?: return@mapNotNull null
+                    val resolvedVariable = variableReference.resolveVariable()
+                        ?: ((variableReference.resolve() as DockerFileEnvRegularDeclaration)
+                            .regularValue
+                            ?.text
+                            ?.removeQuotes()) ?: return@mapNotNull null
+
                     variableReferenceName to resolvedVariable
                 }
             }

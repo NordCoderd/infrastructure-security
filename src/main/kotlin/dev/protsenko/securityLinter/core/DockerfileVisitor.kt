@@ -1,5 +1,6 @@
 package dev.protsenko.securityLinter.core
 
+import com.intellij.docker.dockerFile.DockerPsiFile
 import com.intellij.docker.dockerFile.parser.psi.DockerFileAddOrCopyCommand
 import com.intellij.docker.dockerFile.parser.psi.DockerFileCmdCommand
 import com.intellij.docker.dockerFile.parser.psi.DockerFileEntrypointCommand
@@ -22,7 +23,7 @@ open class DockerfileVisitor(private val trackStages: Boolean = false) : PsiElem
     var currentStep: String? = null
 
     override fun visitFile(file: PsiFile) {
-        if (file.name == "Dockerfile") {
+        if (file.name == "Dockerfile" || file is DockerPsiFile) {
             super.visitFile(file)
             visitingIsFinished(file)
         }

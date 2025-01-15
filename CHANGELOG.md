@@ -1,6 +1,17 @@
 <!-- Keep a Changelog guide -> https://keepachangelog.com -->
 
 # Infrastructure Security Linter Changelog
+## [1.0.7] 15-01-2025
+
+### Changed
+- Removing env with secret remove entire line instead only variable
+- Quick action to replace digest shows before quick action with adding user
+- Inspections works with different file names of Dockerfiles 
+- Healthcheck CMD instruction no more conflicting with existed CMD
+
+### Added
+- Quick action for removing referring to the current image
+- Tracking image versions from environment variables
 
 ## [1.0.6] 11-01-2025
 

@@ -1,2 +1,2 @@
-ENV <error descr="Potential secret in ENV key found: PASSWORD">PASSWORD=changeme</error>
+<error descr="Potential secret in ENV key found: PASSWORD">ENV PASSWORD=changeme</error>
 FROM ubuntu:21
