@@ -1,7 +1,8 @@
 <!-- Keep a Changelog guide -> https://keepachangelog.com -->
 
 # Infrastructure Security Linter Changelog
-## [1.0.8] 21-01-2025
+
+## [1.0.8] 26-01-2025
 
 ### Added
 - docker-compose support: using privileged in a service
