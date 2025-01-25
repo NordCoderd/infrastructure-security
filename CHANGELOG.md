@@ -1,6 +1,14 @@
 <!-- Keep a Changelog guide -> https://keepachangelog.com -->
 
 # Infrastructure Security Linter Changelog
+## [1.0.8] 21-01-2025
+
+### Added
+- docker-compose support: using privileged in a service
+
+### Changed
+- docker-compose support: works with any yaml files that starts with docker
+
 ## [1.0.7] 15-01-2025
 
 ### Changed

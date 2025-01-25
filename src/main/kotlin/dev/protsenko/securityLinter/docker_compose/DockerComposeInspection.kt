@@ -11,12 +11,14 @@ import dev.protsenko.securityLinter.core.DockerFileConstants.PROHIBITED_USERS
 import dev.protsenko.securityLinter.core.SecurityPluginBundle
 import dev.protsenko.securityLinter.docker_compose.DockerComposeConstants.IMAGE_KEY_LITERAL
 import dev.protsenko.securityLinter.docker_compose.DockerComposeConstants.PORTS_LITERAL
+import dev.protsenko.securityLinter.docker_compose.DockerComposeConstants.PRIVILEGED_LITERAL
 import dev.protsenko.securityLinter.docker_compose.DockerComposeConstants.USER_KEY_LITERAL
 import dev.protsenko.securityLinter.docker_compose.DockerComposeConstants.supportedAttributes
 import dev.protsenko.securityLinter.utils.PortUtils
 import dev.protsenko.securityLinter.utils.image.ImageAnalyzer
 import dev.protsenko.securityLinter.utils.image.ImageDefinitionCreator
 import dev.protsenko.securityLinter.utils.isChildOfServiceDefinition
+import org.jetbrains.yaml.psi.YAMLFile
 
 import org.jetbrains.yaml.psi.YAMLKeyValue
 import org.jetbrains.yaml.psi.YAMLSequenceItem
@@ -26,7 +28,8 @@ class DockerComposeInspection: LocalInspectionTool() {
     override fun buildVisitor(holder: ProblemsHolder, isOnTheFly: Boolean): PsiElementVisitor {
         return object : PsiElementVisitor(){
             override fun visitFile(file: PsiFile) {
-                if (!file.name.startsWith("docker", ignoreCase = true)){
+                if (file is YAMLFile
+                    || !file.name.startsWith("docker", ignoreCase = true)){
                     return
                 }
                 super.visitFile(file)
@@ -38,7 +41,7 @@ class DockerComposeInspection: LocalInspectionTool() {
             override fun visitElement(element: PsiElement) {
                 if (element is YAMLKeyValue){
                     val attributeName = element.key?.text ?: return
-                    val attributeValue = element.value?.text ?: return
+                    val attributeValue = element.value?.text?.trim() ?: return
                     if (attributeName !in supportedAttributes) return
                     if (!element.isChildOfServiceDefinition()) return
 
@@ -52,6 +55,13 @@ class DockerComposeInspection: LocalInspectionTool() {
                             if (PROHIBITED_USERS.contains(attributeValue.trim())){
                                 holder.registerProblem(
                                     element, SecurityPluginBundle.message("ds002.root-user-is-used"), ProblemHighlightType.ERROR
+                                )
+                            }
+                        }
+                        PRIVILEGED_LITERAL -> {
+                            if (attributeValue == "true"){
+                                holder.registerProblem(
+                                    element, SecurityPluginBundle.message("ds033.using-privileged"), ProblemHighlightType.ERROR
                                 )
                             }
                         }
@@ -87,5 +97,9 @@ object DockerComposeConstants {
     const val IMAGE_KEY_LITERAL = "image"
     const val USER_KEY_LITERAL = "user"
     const val PORTS_LITERAL = "ports"
-    val supportedAttributes = setOf(IMAGE_KEY_LITERAL, USER_KEY_LITERAL, PORTS_LITERAL)
+    const val PRIVILEGED_LITERAL = "privileged"
+    val supportedAttributes = setOf(
+        IMAGE_KEY_LITERAL, USER_KEY_LITERAL,
+        PORTS_LITERAL, PRIVILEGED_LITERAL
+    )
 }
