@@ -1,3 +1,3 @@
 FROM ubuntu:21
 USER nobody
-RUN apt-get -y install curl
+RUN apt-get -y --no-install-recommends install curl
