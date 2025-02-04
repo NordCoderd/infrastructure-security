@@ -10,6 +10,7 @@ class UpdateWithoutInstallCheckerTest : TestCase() {
             "RUN apt-get update && apt-get install -y package",
             "RUN apt update && apt install package",
             "RUN yum update && yum install package",
+            "RUN apt-get update && apt-get -y install wget",
             "RUN apk update && apk add package",
             "RUN dnf update && dnf install package",
             "RUN zypper update && zypper install package",

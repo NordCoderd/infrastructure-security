@@ -2,6 +2,12 @@
 
 # Infrastructure Security Linter Changelog
 
+## [1.0.9] 04-02-2025
+
+### Changed
+- fixed bug with checking --no-recommends for apt-get
+- fixed bug with checking package-manager update instruction without install
+
 ## [1.0.8] 26-01-2025
 
 ### Added

@@ -18,7 +18,8 @@ class AptGetNoInstallRecommendsValidatorTest : TestCase() {
             "RUN apt-get install package | bash",
             "RUN apt-get update && apt-get install package",
             "RUN apt-get clean all && apt-get install package",
-            "RUN apt-get install -y python"
+            "RUN apt-get install -y python",
+            "RUN apt-get update && apt-get -y install wget",
         )
         for (command in commands) {
             assertFalse(
