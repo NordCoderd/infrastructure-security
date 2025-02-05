@@ -2,7 +2,7 @@
 
 # Infrastructure Security Linter Changelog
 
-## [1.0.10] 06-02-2025
+## [1.0.10] 05-02-2025 (not released)
 
 ### Changed
 - Fixed issue(s) with applying quick fix to the PSI elements. Thanks to [boss-chifra](https://github.com/boss-chifra)
