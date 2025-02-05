@@ -9,11 +9,11 @@ import com.intellij.docker.dockerFile.parser.psi.DockerFileFromStageDeclaration
 import com.intellij.notification.NotificationGroupManager
 import com.intellij.notification.NotificationType
 import com.intellij.openapi.application.ApplicationManager
-import com.intellij.openapi.command.WriteCommandAction
 import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiElement
 import dev.protsenko.securityLinter.core.SecurityPluginBundle
 import dev.protsenko.securityLinter.utils.PsiElementGenerator
+import dev.protsenko.securityLinter.utils.modifyPsi
 import org.jetbrains.yaml.psi.YAMLKeyValue
 
 class ReplaceTagWithDigestQuickFix(private val imageName: String) : LocalQuickFix, HighPriorityAction {
@@ -24,10 +24,8 @@ class ReplaceTagWithDigestQuickFix(private val imageName: String) : LocalQuickFi
     override fun applyFix(project: Project, descriptor: ProblemDescriptor) {
         DockerImageDigestFetcher.fetchDigest(imageName)
             .thenAccept { digest ->
-                ApplicationManager.getApplication().invokeLater {
-                    WriteCommandAction.runWriteCommandAction(project) {
-                        replaceImageName(project, descriptor, digest)
-                    }
+                modifyPsi(project) {
+                    replaceImageName(project, descriptor, digest)
                 }
             }
             .exceptionally { throwable ->

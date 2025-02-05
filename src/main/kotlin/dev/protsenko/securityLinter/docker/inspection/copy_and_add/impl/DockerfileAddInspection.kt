@@ -6,12 +6,12 @@ import com.intellij.codeInspection.ProblemHighlightType
 import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.codeInspection.util.IntentionFamilyName
 import com.intellij.docker.dockerFile.parser.psi.DockerFileAddOrCopyCommand
-import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.project.Project
 import dev.protsenko.securityLinter.core.SecurityPluginBundle
 import dev.protsenko.securityLinter.docker.inspection.copy_and_add.core.DockerfileCopyOrAddAnalyzer
 import dev.protsenko.securityLinter.utils.PsiElementGenerator
 import dev.protsenko.securityLinter.utils.extension
+import dev.protsenko.securityLinter.utils.modifyPsi
 import dev.protsenko.securityLinter.utils.removeQuotes
 
 class DockerfileAddInspection : DockerfileCopyOrAddAnalyzer {
@@ -59,10 +59,10 @@ class DockerfileAddInspection : DockerfileCopyOrAddAnalyzer {
             if (!addCommand.startsWith(ADD_KEYWORD)) return
 
             val copyCommand = addCommand.replaceFirst(ADD_KEYWORD, COPY_KEYWORD)
-            ApplicationManager.getApplication().runWriteAction {
+            modifyPsi(project) {
                 val copyPsiElement =
                     PsiElementGenerator.fromText<DockerFileAddOrCopyCommand>(project, copyCommand)
-                        ?: return@runWriteAction
+                        ?: return@modifyPsi
                 problemElement.replace(copyPsiElement)
             }
         }

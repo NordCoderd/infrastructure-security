@@ -8,7 +8,6 @@ import com.intellij.codeInspection.ProblemHighlightType
 import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.codeInspection.util.IntentionFamilyName
 import com.intellij.docker.dockerFile.parser.psi.DockerFileUserCommand
-import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiElementVisitor
 import com.intellij.psi.PsiFile
@@ -17,10 +16,15 @@ import dev.protsenko.securityLinter.core.DockerfileVisitor
 import dev.protsenko.securityLinter.core.SecurityPluginBundle
 import dev.protsenko.securityLinter.utils.DockerPsiAnalyzer
 import dev.protsenko.securityLinter.utils.PsiElementGenerator
+import dev.protsenko.securityLinter.utils.modifyPsi
 import dev.protsenko.securityLinter.utils.resolveVariable
 
 class DockerfileUserInspection : LocalInspectionTool() {
-    override fun buildVisitor(holder: ProblemsHolder, isOnTheFly: Boolean, session: LocalInspectionToolSession): PsiElementVisitor {
+    override fun buildVisitor(
+        holder: ProblemsHolder,
+        isOnTheFly: Boolean,
+        session: LocalInspectionToolSession
+    ): PsiElementVisitor {
         val resolvedUsers = mutableMapOf<Int, DockerFileUserCommand>()
 
         return object : DockerfileVisitor(trackStages = true) {
@@ -86,13 +90,13 @@ class DockerfileUserInspection : LocalInspectionTool() {
 
         override fun applyFix(project: Project, descriptor: ProblemDescriptor) {
             val nobodyElement = PsiElementGenerator.fromText<DockerFileUserCommand>(project, USER_NOBODY) ?: return
-            ApplicationManager.getApplication().runWriteAction {
+            modifyPsi(project){
                 if (replace) {
                     descriptor.psiElement.replace(nobodyElement)
                 } else {
-                    val newLine = PsiElementGenerator.newLine(project) ?: return@runWriteAction
+                    val newLine = PsiElementGenerator.newLine(project) ?: return@modifyPsi
                     val targetElement = descriptor.psiElement
-                    val parentElement = targetElement.parent ?: return@runWriteAction
+                    val parentElement = targetElement.parent ?: return@modifyPsi
                     parentElement.add(newLine)
                     parentElement.add(nobodyElement)
                 }
