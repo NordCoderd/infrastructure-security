@@ -11,7 +11,6 @@ import dev.protsenko.securityLinter.core.SecurityPluginBundle
 import dev.protsenko.securityLinter.docker.inspection.copy_and_add.core.DockerfileCopyOrAddAnalyzer
 import dev.protsenko.securityLinter.utils.PsiElementGenerator
 import dev.protsenko.securityLinter.utils.extension
-import dev.protsenko.securityLinter.utils.modifyPsi
 import dev.protsenko.securityLinter.utils.removeQuotes
 
 class DockerfileAddInspection : DockerfileCopyOrAddAnalyzer {
@@ -59,12 +58,10 @@ class DockerfileAddInspection : DockerfileCopyOrAddAnalyzer {
             if (!addCommand.startsWith(ADD_KEYWORD)) return
 
             val copyCommand = addCommand.replaceFirst(ADD_KEYWORD, COPY_KEYWORD)
-            modifyPsi(project) {
-                val copyPsiElement =
-                    PsiElementGenerator.fromText<DockerFileAddOrCopyCommand>(project, copyCommand)
-                        ?: return@modifyPsi
-                problemElement.replace(copyPsiElement)
-            }
+            val copyPsiElement =
+                PsiElementGenerator.fromText<DockerFileAddOrCopyCommand>(project, copyCommand)
+                    ?: return
+            problemElement.replace(copyPsiElement)
         }
     }
 }

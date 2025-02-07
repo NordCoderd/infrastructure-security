@@ -3,11 +3,13 @@ package dev.protsenko.securityLinter.docker.inspection.cmd_and_entrypoint
 import com.intellij.codeInspection.LocalInspectionTool
 import com.intellij.codeInspection.ProblemHighlightType
 import com.intellij.codeInspection.ProblemsHolder
+import com.intellij.docker.dockerFile.DockerPsiFile
 import com.intellij.docker.dockerFile.parser.psi.DockerFileCmdCommand
 import com.intellij.docker.dockerFile.parser.psi.DockerFileEntrypointCommand
 import com.intellij.docker.dockerFile.parser.psi.DockerFileHealthCheckCommand
 import com.intellij.docker.dockerFile.parser.psi.DockerPsiExecOrShellCommand
 import com.intellij.psi.PsiElementVisitor
+import com.intellij.psi.PsiElementVisitor.EMPTY_VISITOR
 import com.intellij.psi.PsiFile
 import dev.protsenko.securityLinter.core.DockerfileVisitor
 import dev.protsenko.securityLinter.core.SecurityPluginBundle
@@ -16,6 +18,9 @@ import dev.protsenko.securityLinter.core.quickFix.ReplaceWithJsonNotationQuickFi
 
 class DockerfileCmdAndEntrypointInspection: LocalInspectionTool() {
     override fun buildVisitor(holder: ProblemsHolder, isOnTheFly: Boolean): PsiElementVisitor {
+        if (holder.file !is DockerPsiFile){
+            return EMPTY_VISITOR
+        }
         return object: DockerfileVisitor(trackStages = true){
             val commands = mutableListOf<DockerFileCmdCommand>()
             val entryPoints = mutableListOf<DockerFileEntrypointCommand>()

@@ -13,7 +13,6 @@ import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiElement
 import dev.protsenko.securityLinter.core.SecurityPluginBundle
 import dev.protsenko.securityLinter.utils.PsiElementGenerator
-import dev.protsenko.securityLinter.utils.modifyPsi
 import org.jetbrains.yaml.psi.YAMLKeyValue
 
 class ReplaceTagWithDigestQuickFix(private val imageName: String) : LocalQuickFix, HighPriorityAction {
@@ -24,9 +23,7 @@ class ReplaceTagWithDigestQuickFix(private val imageName: String) : LocalQuickFi
     override fun applyFix(project: Project, descriptor: ProblemDescriptor) {
         DockerImageDigestFetcher.fetchDigest(imageName)
             .thenAccept { digest ->
-                modifyPsi(project) {
-                    replaceImageName(project, descriptor, digest)
-                }
+                replaceImageName(project, descriptor, digest)
             }
             .exceptionally { throwable ->
                 ApplicationManager.getApplication().invokeLater {
@@ -36,14 +33,14 @@ class ReplaceTagWithDigestQuickFix(private val imageName: String) : LocalQuickFi
             }
     }
 
-    private fun replaceImageName(project: Project, descriptor: ProblemDescriptor, digest: String){
+    private fun replaceImageName(project: Project, descriptor: ProblemDescriptor, digest: String) {
         val targetElement = descriptor.psiElement
-        if (targetElement is DockerFileFromCommand){
+        if (targetElement is DockerFileFromCommand) {
             val buildStageName = retrieveBuildStageName(targetElement)
             val dockerFileFromCommand =
                 PsiElementGenerator.getDockerFileFromCommand(project, imageName, digest, buildStageName) ?: return
             targetElement.replace(dockerFileFromCommand)
-        } else if (targetElement is YAMLKeyValue){
+        } else if (targetElement is YAMLKeyValue) {
             val imageDefinitionWithDigest =
                 PsiElementGenerator.rawText(project, "$imageName@$digest") ?: return
             val targetValueElement = targetElement.value ?: return

@@ -2,9 +2,11 @@ package dev.protsenko.securityLinter.docker.inspection.expose
 
 import com.intellij.codeInspection.LocalInspectionTool
 import com.intellij.codeInspection.ProblemsHolder
+import com.intellij.docker.dockerFile.DockerPsiFile
 import com.intellij.docker.dockerFile.parser.psi.DockerFileExposeCommand
 import com.intellij.openapi.extensions.ExtensionPointName
 import com.intellij.psi.PsiElementVisitor
+import com.intellij.psi.PsiElementVisitor.EMPTY_VISITOR
 import dev.protsenko.securityLinter.core.DockerfileVisitor
 import dev.protsenko.securityLinter.docker.inspection.expose.core.DockerfileExposeAnalyzer
 import dev.protsenko.securityLinter.utils.DockerPsiAnalyzer
@@ -14,6 +16,9 @@ class DockerfileExposeInspection: LocalInspectionTool() {
         ExtensionPointName.create<DockerfileExposeAnalyzer>("dev.protsenko.security-linter.dockerFileExposeAnalyzer")
 
     override fun buildVisitor(holder: ProblemsHolder, isOnTheFly: Boolean): PsiElementVisitor {
+        if (holder.file !is DockerPsiFile){
+            return EMPTY_VISITOR
+        }
         return object : DockerfileVisitor() {
             val extensions = extensionPointName.extensions
 

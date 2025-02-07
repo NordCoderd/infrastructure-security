@@ -7,16 +7,17 @@ import com.intellij.codeInspection.ProblemDescriptor
 import com.intellij.codeInspection.ProblemHighlightType
 import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.codeInspection.util.IntentionFamilyName
+import com.intellij.docker.dockerFile.DockerPsiFile
 import com.intellij.docker.dockerFile.parser.psi.DockerFileUserCommand
 import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiElementVisitor
+import com.intellij.psi.PsiElementVisitor.EMPTY_VISITOR
 import com.intellij.psi.PsiFile
 import dev.protsenko.securityLinter.core.DockerFileConstants.PROHIBITED_USERS
 import dev.protsenko.securityLinter.core.DockerfileVisitor
 import dev.protsenko.securityLinter.core.SecurityPluginBundle
 import dev.protsenko.securityLinter.utils.DockerPsiAnalyzer
 import dev.protsenko.securityLinter.utils.PsiElementGenerator
-import dev.protsenko.securityLinter.utils.modifyPsi
 import dev.protsenko.securityLinter.utils.resolveVariable
 
 class DockerfileUserInspection : LocalInspectionTool() {
@@ -25,6 +26,9 @@ class DockerfileUserInspection : LocalInspectionTool() {
         isOnTheFly: Boolean,
         session: LocalInspectionToolSession
     ): PsiElementVisitor {
+        if (holder.file !is DockerPsiFile) {
+            return EMPTY_VISITOR
+        }
         val resolvedUsers = mutableMapOf<Int, DockerFileUserCommand>()
 
         return object : DockerfileVisitor(trackStages = true) {
@@ -90,16 +94,14 @@ class DockerfileUserInspection : LocalInspectionTool() {
 
         override fun applyFix(project: Project, descriptor: ProblemDescriptor) {
             val nobodyElement = PsiElementGenerator.fromText<DockerFileUserCommand>(project, USER_NOBODY) ?: return
-            modifyPsi(project){
-                if (replace) {
-                    descriptor.psiElement.replace(nobodyElement)
-                } else {
-                    val newLine = PsiElementGenerator.newLine(project) ?: return@modifyPsi
-                    val targetElement = descriptor.psiElement
-                    val parentElement = targetElement.parent ?: return@modifyPsi
-                    parentElement.add(newLine)
-                    parentElement.add(nobodyElement)
-                }
+            if (replace) {
+                descriptor.psiElement.replace(nobodyElement)
+            } else {
+                val newLine = PsiElementGenerator.newLine(project) ?: return
+                val targetElement = descriptor.psiElement
+                val parentElement = targetElement.parent ?: return
+                parentElement.add(newLine)
+                parentElement.add(nobodyElement)
             }
         }
     }

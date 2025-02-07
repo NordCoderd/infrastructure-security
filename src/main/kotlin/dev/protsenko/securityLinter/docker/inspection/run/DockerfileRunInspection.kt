@@ -3,9 +3,11 @@ package dev.protsenko.securityLinter.docker.inspection.run
 import com.intellij.codeInspection.LocalInspectionTool
 import com.intellij.codeInspection.ProblemHighlightType
 import com.intellij.codeInspection.ProblemsHolder
+import com.intellij.docker.dockerFile.DockerPsiFile
 import com.intellij.docker.dockerFile.parser.psi.DockerFileRunCommand
 import com.intellij.openapi.extensions.ExtensionPointName
 import com.intellij.psi.PsiElementVisitor
+import com.intellij.psi.PsiElementVisitor.EMPTY_VISITOR
 import com.intellij.psi.PsiFile
 import dev.protsenko.securityLinter.core.DockerfileVisitor
 import dev.protsenko.securityLinter.core.SecurityPluginBundle
@@ -18,6 +20,9 @@ class DockerfileRunInspection : LocalInspectionTool() {
         ExtensionPointName.create<DockerfileRunAnalyzer>("dev.protsenko.security-linter.dockerFileRunAnalyzer")
 
     override fun buildVisitor(holder: ProblemsHolder, isOnTheFly: Boolean): PsiElementVisitor {
+        if (holder.file !is DockerPsiFile){
+            return EMPTY_VISITOR
+        }
         val extensions = extensionPointName.extensions
 
         return object : DockerfileVisitor() {

@@ -9,7 +9,6 @@ import com.intellij.docker.dockerFile.parser.psi.DockerPsiExecOrShellCommand
 import com.intellij.openapi.project.Project
 import dev.protsenko.securityLinter.core.SecurityPluginBundle
 import dev.protsenko.securityLinter.utils.PsiElementGenerator
-import dev.protsenko.securityLinter.utils.modifyPsi
 
 class ReplaceWithJsonNotationQuickFix : LocalQuickFix {
     override fun getFamilyName(): @IntentionFamilyName String =
@@ -32,11 +31,8 @@ class ReplaceWithJsonNotationQuickFix : LocalQuickFix {
                 separator = ","
             ) { "\"${it}\"" }
 
-
-        modifyPsi(project) {
             val psiCommand =
-                PsiElementGenerator.fromText<DockerPsiExecOrShellCommand>(project, shellCommand) ?: return@modifyPsi
+                PsiElementGenerator.fromText<DockerPsiExecOrShellCommand>(project, shellCommand) ?: return
             problemDescriptor.psiElement.replace(psiCommand)
-        }
     }
 }

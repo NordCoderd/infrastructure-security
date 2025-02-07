@@ -6,17 +6,21 @@ import com.intellij.codeInspection.ProblemDescriptor
 import com.intellij.codeInspection.ProblemHighlightType
 import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.codeInspection.util.IntentionFamilyName
+import com.intellij.docker.dockerFile.DockerPsiFile
 import com.intellij.docker.dockerFile.parser.psi.DockerFileLabelCommand
 import com.intellij.docker.dockerFile.parser.psi.DockerFileMaintainerCommand
 import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiElementVisitor
+import com.intellij.psi.PsiElementVisitor.EMPTY_VISITOR
 import dev.protsenko.securityLinter.core.DockerfileVisitor
 import dev.protsenko.securityLinter.core.SecurityPluginBundle
 import dev.protsenko.securityLinter.utils.PsiElementGenerator
-import dev.protsenko.securityLinter.utils.modifyPsi
 
 class DockerfileMaintainerInspection : LocalInspectionTool() {
     override fun buildVisitor(holder: ProblemsHolder, isOnTheFly: Boolean): PsiElementVisitor {
+        if (holder.file !is DockerPsiFile) {
+            return EMPTY_VISITOR
+        }
         return object : DockerfileVisitor() {
             override fun visitDockerFileMaintainerCommand(element: DockerFileMaintainerCommand) {
                 holder.registerProblem(
@@ -40,10 +44,9 @@ class DockerfileMaintainerInspection : LocalInspectionTool() {
         override fun applyFix(project: Project, descriptor: ProblemDescriptor) {
             val maintainer = descriptor.psiElement.text
             val authorText = maintainer.replace("MAINTAINER ", AUTHOR_LABEL).trim() + "\""
-            modifyPsi(project){
-                val psiAuthor = PsiElementGenerator.fromText<DockerFileLabelCommand>(project, authorText) ?: return@modifyPsi
-                descriptor.psiElement.replace(psiAuthor)
-            }
+            val psiAuthor =
+                PsiElementGenerator.fromText<DockerFileLabelCommand>(project, authorText) ?: return
+            descriptor.psiElement.replace(psiAuthor)
         }
     }
 }
