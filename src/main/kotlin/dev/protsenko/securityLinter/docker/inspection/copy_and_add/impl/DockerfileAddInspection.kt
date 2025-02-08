@@ -1,5 +1,6 @@
 package dev.protsenko.securityLinter.docker.inspection.copy_and_add.impl
 
+import com.intellij.codeInsight.intention.preview.IntentionPreviewInfo
 import com.intellij.codeInspection.LocalQuickFix
 import com.intellij.codeInspection.ProblemDescriptor
 import com.intellij.codeInspection.ProblemHighlightType
@@ -20,7 +21,7 @@ class DockerfileAddInspection : DockerfileCopyOrAddAnalyzer {
         const val COPY_KEYWORD = "COPY"
     }
 
-    override fun handle(currentStep: String?, element: DockerFileAddOrCopyCommand, holder: ProblemsHolder) {
+    override fun handle(element: DockerFileAddOrCopyCommand, holder: ProblemsHolder) {
         if (element.copyKeyword != null) return
 
         val filesFromJson =
@@ -51,6 +52,9 @@ class DockerfileAddInspection : DockerfileCopyOrAddAnalyzer {
     private class ReplaceAddWithCopyQuickFix : LocalQuickFix {
         override fun getFamilyName(): @IntentionFamilyName String =
             SecurityPluginBundle.message("ds004.replace-add-with-copy")
+
+        override fun generatePreview(project: Project, previewDescriptor: ProblemDescriptor): IntentionPreviewInfo =
+            IntentionPreviewInfo.EMPTY
 
         override fun applyFix(project: Project, problemDescriptor: ProblemDescriptor) {
             val problemElement = problemDescriptor.psiElement

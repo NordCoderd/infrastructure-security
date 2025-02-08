@@ -1,6 +1,7 @@
 package dev.protsenko.securityLinter.utils.image
 
 import com.intellij.codeInsight.intention.HighPriorityAction
+import com.intellij.codeInsight.intention.preview.IntentionPreviewInfo
 import com.intellij.codeInspection.LocalQuickFix
 import com.intellij.codeInspection.ProblemDescriptor
 import com.intellij.codeInspection.util.IntentionFamilyName
@@ -19,6 +20,8 @@ class ReplaceTagWithDigestQuickFix(private val imageName: String) : LocalQuickFi
 
     override fun getFamilyName(): @IntentionFamilyName String =
         SecurityPluginBundle.message("ds001.lookup-for-digest")
+
+    override fun generatePreview(project: Project, previewDescriptor: ProblemDescriptor): IntentionPreviewInfo = IntentionPreviewInfo.EMPTY
 
     override fun applyFix(project: Project, descriptor: ProblemDescriptor) {
         DockerImageDigestFetcher.fetchDigest(imageName)

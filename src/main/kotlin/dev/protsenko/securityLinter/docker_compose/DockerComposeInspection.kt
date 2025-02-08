@@ -16,6 +16,7 @@ import dev.protsenko.securityLinter.docker_compose.DockerComposeConstants.USER_K
 import dev.protsenko.securityLinter.docker_compose.DockerComposeConstants.supportedAttributes
 import dev.protsenko.securityLinter.utils.PortUtils
 import dev.protsenko.securityLinter.utils.image.ImageAnalyzer
+import dev.protsenko.securityLinter.utils.image.ImageDefinition
 import dev.protsenko.securityLinter.utils.image.ImageDefinitionCreator
 import dev.protsenko.securityLinter.utils.isChildOfServiceDefinition
 import org.jetbrains.yaml.psi.YAMLFile
@@ -49,7 +50,7 @@ class DockerComposeInspection: LocalInspectionTool() {
                         // Analyzing image definition
                         IMAGE_KEY_LITERAL -> {
                             val imageDefinition = ImageDefinitionCreator.fromString(attributeValue, emptyMap())
-                            ImageAnalyzer.analyzeAndHighlight(imageDefinition, holder, element)
+                            ImageAnalyzer.analyzeAndHighlight(imageDefinition, holder, element, emptyMap<String, ImageDefinition>())
                         }
                         USER_KEY_LITERAL -> {
                             if (PROHIBITED_USERS.contains(attributeValue.trim())){

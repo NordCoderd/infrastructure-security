@@ -1,18 +1,15 @@
 package dev.protsenko.securityLinter.docker.inspection.maintainer
 
-import com.intellij.codeInspection.LocalInspectionTool
-import com.intellij.codeInspection.LocalQuickFix
-import com.intellij.codeInspection.ProblemDescriptor
-import com.intellij.codeInspection.ProblemHighlightType
-import com.intellij.codeInspection.ProblemsHolder
+import com.intellij.codeInsight.intention.preview.IntentionPreviewInfo
+import com.intellij.codeInspection.*
 import com.intellij.codeInspection.util.IntentionFamilyName
 import com.intellij.docker.dockerFile.DockerPsiFile
 import com.intellij.docker.dockerFile.parser.psi.DockerFileLabelCommand
 import com.intellij.docker.dockerFile.parser.psi.DockerFileMaintainerCommand
+import com.intellij.docker.dockerFile.parser.psi.DockerFileVisitor
 import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiElementVisitor
 import com.intellij.psi.PsiElementVisitor.EMPTY_VISITOR
-import dev.protsenko.securityLinter.core.DockerfileVisitor
 import dev.protsenko.securityLinter.core.SecurityPluginBundle
 import dev.protsenko.securityLinter.utils.PsiElementGenerator
 
@@ -21,10 +18,10 @@ class DockerfileMaintainerInspection : LocalInspectionTool() {
         if (holder.file !is DockerPsiFile) {
             return EMPTY_VISITOR
         }
-        return object : DockerfileVisitor() {
-            override fun visitDockerFileMaintainerCommand(element: DockerFileMaintainerCommand) {
+        return object : DockerFileVisitor() {
+            override fun visitMaintainerCommand(o: DockerFileMaintainerCommand) {
                 holder.registerProblem(
-                    element,
+                    o,
                     SecurityPluginBundle.message("ds020.no-maintainer"),
                     ProblemHighlightType.LIKE_DEPRECATED,
                     ReplaceMaintainerWithLabel()
@@ -37,6 +34,9 @@ class DockerfileMaintainerInspection : LocalInspectionTool() {
         companion object {
             const val AUTHOR_LABEL = "LABEL org.opencontainers.image.authors=\""
         }
+
+        override fun generatePreview(project: Project, previewDescriptor: ProblemDescriptor): IntentionPreviewInfo =
+            IntentionPreviewInfo.EMPTY
 
         override fun getFamilyName(): @IntentionFamilyName String =
             SecurityPluginBundle.message("ds020.replace-maintainer")

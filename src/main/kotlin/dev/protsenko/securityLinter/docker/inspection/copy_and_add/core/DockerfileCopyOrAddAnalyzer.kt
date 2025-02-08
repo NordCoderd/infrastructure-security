@@ -4,5 +4,5 @@ import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.docker.dockerFile.parser.psi.DockerFileAddOrCopyCommand
 
 interface DockerfileCopyOrAddAnalyzer {
-    fun handle(currentStep: String?, element: DockerFileAddOrCopyCommand, holder: ProblemsHolder)
+    fun handle(element: DockerFileAddOrCopyCommand, holder: ProblemsHolder)
 }

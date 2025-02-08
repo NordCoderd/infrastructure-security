@@ -10,7 +10,8 @@ class DS001LatestTagIsUsedTest(
         "Dockerfile-missed-version-tag.denied",
         "Dockerfile-with-slash.denied",
         "Dockerfile-with-args.denied",
-        "Dockerfile-with-envs.denied"
+        "Dockerfile-with-envs.denied",
+        "Dockerfile-alias-of-valid-image.denied"
     ),
     override val targetInspection: LocalInspectionTool = DockerfileFromInspection()
 ) : DockerHighlightingBaseTest()

@@ -5,10 +5,10 @@ import com.intellij.codeInspection.ProblemHighlightType
 import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.docker.dockerFile.DockerPsiFile
 import com.intellij.docker.dockerFile.parser.psi.DockerFileEnvCommand
+import com.intellij.docker.dockerFile.parser.psi.DockerFileVisitor
 import com.intellij.psi.PsiElementVisitor
 import com.intellij.psi.PsiElementVisitor.EMPTY_VISITOR
 import dev.protsenko.securityLinter.core.DockerFileConstants.POTENTIAL_SECRETS_NAME
-import dev.protsenko.securityLinter.core.DockerfileVisitor
 import dev.protsenko.securityLinter.core.SecurityPluginBundle
 import dev.protsenko.securityLinter.core.quickFix.DeletePsiElementQuickFix
 
@@ -17,13 +17,13 @@ class DockerFileEnvInspection : LocalInspectionTool() {
         if (holder.file !is DockerPsiFile){
             return EMPTY_VISITOR
         }
-        return object : DockerfileVisitor() {
-            override fun visitDockerFileEnvCommand(element: DockerFileEnvCommand) {
-                element.envRegularDeclarationList.forEach {
+        return object : DockerFileVisitor() {
+            override fun visitEnvCommand(o: DockerFileEnvCommand) {
+                o.envRegularDeclarationList.forEach {
                     val declaredName = it.declaredName.text.uppercase()
                     if (!POTENTIAL_SECRETS_NAME.contains(declaredName)) return@forEach
                     holder.registerProblem(
-                        element,
+                        o,
                         SecurityPluginBundle.message("ds026.possible-secrets-in-env", declaredName),
                         ProblemHighlightType.ERROR,
                         DeletePsiElementQuickFix(SecurityPluginBundle.message("ds026.remove-env-with-secret"))

@@ -4,10 +4,10 @@ import com.intellij.codeInspection.LocalInspectionTool
 import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.docker.dockerFile.DockerPsiFile
 import com.intellij.docker.dockerFile.parser.psi.DockerFileAddOrCopyCommand
+import com.intellij.docker.dockerFile.parser.psi.DockerFileVisitor
 import com.intellij.openapi.extensions.ExtensionPointName
 import com.intellij.psi.PsiElementVisitor
 import com.intellij.psi.PsiElementVisitor.EMPTY_VISITOR
-import dev.protsenko.securityLinter.core.DockerfileVisitor
 import dev.protsenko.securityLinter.docker.inspection.copy_and_add.core.DockerfileCopyOrAddAnalyzer
 
 class DockerfileCopyAndAddInspection: LocalInspectionTool() {
@@ -18,12 +18,13 @@ class DockerfileCopyAndAddInspection: LocalInspectionTool() {
         if (holder.file !is DockerPsiFile){
             return EMPTY_VISITOR
         }
-        val extensions = extensionPointName.extensions
 
-        return object : DockerfileVisitor(){
-            override fun visitDockerFileAddOrCopyCommand(element: DockerFileAddOrCopyCommand) {
+        return object : DockerFileVisitor(){
+            val extensions = extensionPointName.extensions
+
+            override fun visitAddOrCopyCommand(o: DockerFileAddOrCopyCommand) {
                 for (extension in extensions) {
-                    extension.handle(currentStep, element, holder)
+                    extension.handle(o, holder)
                 }
             }
         }

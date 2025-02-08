@@ -1,20 +1,17 @@
 package dev.protsenko.securityLinter.docker.inspection.user
 
-import com.intellij.codeInspection.LocalInspectionTool
-import com.intellij.codeInspection.LocalInspectionToolSession
-import com.intellij.codeInspection.LocalQuickFix
-import com.intellij.codeInspection.ProblemDescriptor
-import com.intellij.codeInspection.ProblemHighlightType
-import com.intellij.codeInspection.ProblemsHolder
+import com.intellij.codeInsight.intention.preview.IntentionPreviewInfo
+import com.intellij.codeInspection.*
 import com.intellij.codeInspection.util.IntentionFamilyName
 import com.intellij.docker.dockerFile.DockerPsiFile
+import com.intellij.docker.dockerFile.parser.psi.DockerFileFromCommand
 import com.intellij.docker.dockerFile.parser.psi.DockerFileUserCommand
+import com.intellij.docker.dockerFile.parser.psi.DockerFileVisitor
 import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiElementVisitor
 import com.intellij.psi.PsiElementVisitor.EMPTY_VISITOR
 import com.intellij.psi.PsiFile
 import dev.protsenko.securityLinter.core.DockerFileConstants.PROHIBITED_USERS
-import dev.protsenko.securityLinter.core.DockerfileVisitor
 import dev.protsenko.securityLinter.core.SecurityPluginBundle
 import dev.protsenko.securityLinter.utils.DockerPsiAnalyzer
 import dev.protsenko.securityLinter.utils.PsiElementGenerator
@@ -29,14 +26,16 @@ class DockerfileUserInspection : LocalInspectionTool() {
         if (holder.file !is DockerPsiFile) {
             return EMPTY_VISITOR
         }
-        val resolvedUsers = mutableMapOf<Int, DockerFileUserCommand>()
 
-        return object : DockerfileVisitor(trackStages = true) {
-            override fun visitDockerFileUserCommand(element: DockerFileUserCommand) {
-                resolvedUsers[element.textOffset] = element
-            }
+        return object : DockerFileVisitor() {
+            override fun visitFile(file: PsiFile) {
+                if (file !is DockerPsiFile) return
 
-            override fun visitingIsFinished(file: PsiFile) {
+                val buildStages = file.findChildrenByClass(DockerFileFromCommand::class.java)
+                    .associate { it.textOffset to it }
+                val resolvedUsers = file.findChildrenByClass(DockerFileUserCommand::class.java)
+                    .associate { it.textOffset to it }
+
                 val lastStageOffset = buildStages.keys.maxOrNull() ?: return
                 val lastUserOffset = resolvedUsers.keys.maxOrNull()
 
@@ -85,6 +84,9 @@ class DockerfileUserInspection : LocalInspectionTool() {
         companion object {
             const val USER_NOBODY = "USER nobody"
         }
+
+        override fun generatePreview(project: Project, previewDescriptor: ProblemDescriptor): IntentionPreviewInfo =
+            IntentionPreviewInfo.EMPTY
 
         override fun getFamilyName(): @IntentionFamilyName String = if (replace) {
             SecurityPluginBundle.message("ds002.replace-root-with-nobody")

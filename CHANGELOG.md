@@ -4,8 +4,13 @@
 
 ## [1.0.10] 06-02-2025
 
-### Changed
+### Fixed
 - Fixed issue(s) with applying quick fix to the PSI elements. Thanks to [boss-chifra](https://github.com/boss-chifra)
+- Fixed issues with some inspections in newer versions of IDE's
+- Fixed issue with false-positive triggering when image described as alias of another image
+
+### Changed
+- All inspections are used bundled DockerfileVisitor instead new one.  
 
 ## [1.0.9] 04-02-2025
 

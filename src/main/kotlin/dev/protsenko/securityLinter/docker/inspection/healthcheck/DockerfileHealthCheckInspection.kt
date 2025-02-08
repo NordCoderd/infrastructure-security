@@ -4,11 +4,12 @@ import com.intellij.codeInspection.LocalInspectionTool
 import com.intellij.codeInspection.ProblemHighlightType
 import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.docker.dockerFile.DockerPsiFile
+import com.intellij.docker.dockerFile.parser.psi.DockerFileFromCommand
 import com.intellij.docker.dockerFile.parser.psi.DockerFileHealthCheckCommand
+import com.intellij.docker.dockerFile.parser.psi.DockerFileVisitor
 import com.intellij.psi.PsiElementVisitor
 import com.intellij.psi.PsiElementVisitor.EMPTY_VISITOR
 import com.intellij.psi.PsiFile
-import dev.protsenko.securityLinter.core.DockerfileVisitor
 import dev.protsenko.securityLinter.core.SecurityPluginBundle
 import dev.protsenko.securityLinter.core.quickFix.DeletePsiElementQuickFix
 
@@ -17,15 +18,17 @@ class DockerfileHealthCheckInspection: LocalInspectionTool() {
         if (holder.file !is DockerPsiFile){
             return EMPTY_VISITOR
         }
-        return object : DockerfileVisitor(trackStages = true){
-            val healthChecks = mutableListOf<DockerFileHealthCheckCommand>()
-
-            override fun visitDockerFileHealthCheckCommand(element: DockerFileHealthCheckCommand) {
-                healthChecks.add(element)
-            }
-
-            override fun visitingIsFinished(file: PsiFile) {
+        return object : DockerFileVisitor(){
+            override fun visitFile(file: PsiFile) {
+                if (file !is DockerPsiFile){
+                    return
+                }
+                val fromCommands = file.findChildrenByClass(DockerFileFromCommand::class.java)
+                val buildStages = fromCommands.associate { it.textOffset to it }
                 val lastStage = buildStages.keys.maxOrNull() ?: return
+
+                val healthChecks = file.findChildrenByClass(DockerFileHealthCheckCommand::class.java)
+
                 val lastInstructions = healthChecks.filter {
                     it.textOffset > lastStage
                 }
@@ -39,14 +42,6 @@ class DockerfileHealthCheckInspection: LocalInspectionTool() {
                         )
                     }
                 }
-                //TODO: Find better form to notify about missing health check
-                //if (lastInstructions.isEmpty()){
-                //    holder.registerProblem(
-                //        file,
-                //        SecurityPluginBundle.message("ds029.missing-healthcheck"),
-                //        ProblemHighlightType.WEAK_WARNING
-                //    )
-                //}
             }
         }
     }

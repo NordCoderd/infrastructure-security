@@ -8,7 +8,7 @@ import dev.protsenko.securityLinter.docker.inspection.copy_and_add.core.Dockerfi
 import dev.protsenko.securityLinter.utils.removeQuotes
 
 class UseSlashForCopyArgsAnalyzer : DockerfileCopyOrAddAnalyzer {
-    override fun handle(currentStep: String?, element: DockerFileAddOrCopyCommand, holder: ProblemsHolder) {
+    override fun handle(element: DockerFileAddOrCopyCommand, holder: ProblemsHolder) {
         val parametersInJsonForm = element.parametersInJsonForm
         val fileOrUrlList = element.fileOrUrlList
 

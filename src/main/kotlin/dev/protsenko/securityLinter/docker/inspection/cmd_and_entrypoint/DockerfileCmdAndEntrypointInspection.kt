@@ -4,14 +4,10 @@ import com.intellij.codeInspection.LocalInspectionTool
 import com.intellij.codeInspection.ProblemHighlightType
 import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.docker.dockerFile.DockerPsiFile
-import com.intellij.docker.dockerFile.parser.psi.DockerFileCmdCommand
-import com.intellij.docker.dockerFile.parser.psi.DockerFileEntrypointCommand
-import com.intellij.docker.dockerFile.parser.psi.DockerFileHealthCheckCommand
-import com.intellij.docker.dockerFile.parser.psi.DockerPsiExecOrShellCommand
+import com.intellij.docker.dockerFile.parser.psi.*
 import com.intellij.psi.PsiElementVisitor
 import com.intellij.psi.PsiElementVisitor.EMPTY_VISITOR
 import com.intellij.psi.PsiFile
-import dev.protsenko.securityLinter.core.DockerfileVisitor
 import dev.protsenko.securityLinter.core.SecurityPluginBundle
 import dev.protsenko.securityLinter.core.quickFix.DeletePsiElementQuickFix
 import dev.protsenko.securityLinter.core.quickFix.ReplaceWithJsonNotationQuickFix
@@ -21,28 +17,31 @@ class DockerfileCmdAndEntrypointInspection: LocalInspectionTool() {
         if (holder.file !is DockerPsiFile){
             return EMPTY_VISITOR
         }
-        return object: DockerfileVisitor(trackStages = true){
-            val commands = mutableListOf<DockerFileCmdCommand>()
-            val entryPoints = mutableListOf<DockerFileEntrypointCommand>()
-
-            override fun visitDockerFileCmdCommand(element: DockerFileCmdCommand) {
-                if (element.parent !is DockerFileHealthCheckCommand){
-                    commands.add(element)
+        return object: DockerFileVisitor(){
+            override fun visitFile(file: PsiFile) {
+                if (file !is DockerPsiFile){
+                    return
                 }
-                if (element.parametersInJsonForm == null) registerJsonNotationProblem(element)
+                val fromCommands = file.findChildrenByClass(DockerFileFromCommand::class.java)
+                val buildStages = fromCommands.associate { it.textOffset to it }
+
+                val cmdCommands = file.findChildrenByClass(DockerFileCmdCommand::class.java).toList()
+                cmdCommands.forEach { cmd ->
+                    if (cmd.parametersInJsonForm == null) registerJsonNotationProblem(cmd)
+                }
+                val entrypoints = file.findChildrenByClass(DockerFileEntrypointCommand::class.java).toList()
+                entrypoints.forEach { entrypoint ->
+                    if (entrypoint.parametersInJsonForm == null) registerJsonNotationProblem(entrypoint)
+                }
+
+                verifyInstructions(cmdCommands, buildStages)
+                verifyInstructions(entrypoints, buildStages)
             }
 
-            override fun visitDockerFileEntrypointCommand(element: DockerFileEntrypointCommand) {
-                entryPoints.add(element)
-                if (element.parametersInJsonForm == null) registerJsonNotationProblem(element)
-            }
-
-            override fun visitingIsFinished(file: PsiFile) {
-                verifyInstructions(commands)
-                verifyInstructions(entryPoints)
-            }
-
-            private fun verifyInstructions(elementList: List<DockerPsiExecOrShellCommand>){
+            private fun verifyInstructions(
+                elementList: List<DockerPsiExecOrShellCommand>,
+                buildStages: Map<Int, DockerFileFromCommand>
+            ){
                 val lastStage = buildStages.keys.maxOrNull() ?: return
                 val lastInstructions = elementList.filter {
                     it.textOffset > lastStage
@@ -69,6 +68,4 @@ class DockerfileCmdAndEntrypointInspection: LocalInspectionTool() {
             }
         }
     }
-
-
 }
