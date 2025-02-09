@@ -7,8 +7,8 @@ import com.intellij.openapi.util.NlsContexts
 import com.intellij.psi.PsiElement
 
 class HtmlProblemDescriptor(element: PsiElement,
+                            private val urlCode: String,
                             descriptionTemplate: String,
-                            private val toolTip: String? = null,
                             highlightType: ProblemHighlightType,
                             fixes: Array<LocalQuickFix> = emptyArray()
 ) :
@@ -24,9 +24,9 @@ class HtmlProblemDescriptor(element: PsiElement,
         null,
         true
     ) {
-    override fun showTooltip() = toolTip != null
-
     override fun getTooltipTemplate(): @NlsContexts.Tooltip String {
-        return toolTip ?: descriptionTemplate
+        return SecurityPluginBundle.message(
+            "inspection-message-template", urlCode, descriptionTemplate
+        )
     }
 }

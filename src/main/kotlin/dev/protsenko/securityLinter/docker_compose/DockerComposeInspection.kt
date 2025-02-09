@@ -8,6 +8,7 @@ import com.intellij.psi.PsiElementVisitor
 import com.intellij.psi.PsiFile
 import dev.protsenko.securityLinter.core.DockerFileConstants.PROHIBITED_PORTS
 import dev.protsenko.securityLinter.core.DockerFileConstants.PROHIBITED_USERS
+import dev.protsenko.securityLinter.core.HtmlProblemDescriptor
 import dev.protsenko.securityLinter.core.SecurityPluginBundle
 import dev.protsenko.securityLinter.docker_compose.DockerComposeConstants.IMAGE_KEY_LITERAL
 import dev.protsenko.securityLinter.docker_compose.DockerComposeConstants.PORTS_LITERAL
@@ -20,7 +21,6 @@ import dev.protsenko.securityLinter.utils.image.ImageDefinition
 import dev.protsenko.securityLinter.utils.image.ImageDefinitionCreator
 import dev.protsenko.securityLinter.utils.isChildOfServiceDefinition
 import org.jetbrains.yaml.psi.YAMLFile
-
 import org.jetbrains.yaml.psi.YAMLKeyValue
 import org.jetbrains.yaml.psi.YAMLSequenceItem
 
@@ -54,9 +54,14 @@ class DockerComposeInspection: LocalInspectionTool() {
                         }
                         USER_KEY_LITERAL -> {
                             if (PROHIBITED_USERS.contains(attributeValue.trim())){
-                                holder.registerProblem(
-                                    element, SecurityPluginBundle.message("ds002.root-user-is-used"), ProblemHighlightType.ERROR
+                                val descriptor = HtmlProblemDescriptor(
+                                    element,
+                                    SecurityPluginBundle.message("dfs002.documentation"),
+                                    SecurityPluginBundle.message("ds002.root-user-is-used"),
+                                    ProblemHighlightType.ERROR
                                 )
+
+                                holder.registerProblem(descriptor)
                             }
                         }
                         PRIVILEGED_LITERAL -> {

@@ -19,8 +19,8 @@ object ImageAnalyzer {
         if (effectiveImageDefinition.version == null) {
             val descriptor = HtmlProblemDescriptor(
                 element,
+                SecurityPluginBundle.message("dfs001.documentation"),
                 SecurityPluginBundle.message("ds001.missing-version-tag"),
-                SecurityPluginBundle.message("ds001.documentation", SecurityPluginBundle.message("ds001.missing-version-tag")),
                 ProblemHighlightType.ERROR, arrayOf(ReplaceTagWithDigestQuickFix(effectiveImageDefinition.imageName))
             )
 
@@ -28,8 +28,8 @@ object ImageAnalyzer {
         } else if (effectiveImageDefinition.version == DockerRepoTag.DEFAULT_TAG) {
             val descriptor = HtmlProblemDescriptor(
                 element,
+                SecurityPluginBundle.message("dfs001.documentation"),
                 SecurityPluginBundle.message("ds001.latest-tag"),
-                SecurityPluginBundle.message("ds001.documentation", SecurityPluginBundle.message("ds001.latest-tag")),
                 ProblemHighlightType.ERROR, arrayOf(ReplaceTagWithDigestQuickFix(effectiveImageDefinition.imageName))
             )
 

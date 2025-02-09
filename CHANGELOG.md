@@ -2,10 +2,16 @@
 
 # Infrastructure Security Linter Changelog
 
+## [1.1.1] 09-02-2025 [not released]
+
+### Added
+- Documentation for each verification
+
+
 ## [1.0.10] 06-02-2025
 
 ### Fixed
-- Fixed issue(s) with applying quick fix to the PSI elements. Thanks to [boss-chifra](https://github.com/boss-chifra)
+- Fixed issue(s) with applying quick fix to the PSI elements. Thanks to [boss-chifra](https://github.com/boss-chifra) for report
 - Fixed issues with some inspections in newer versions of IDE's
 - Fixed issue with false-positive triggering when image described as alias of another image
 

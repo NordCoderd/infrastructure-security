@@ -9,6 +9,7 @@ import com.intellij.docker.dockerFile.parser.psi.DockerFileVisitor
 import com.intellij.psi.PsiElementVisitor
 import com.intellij.psi.PsiElementVisitor.EMPTY_VISITOR
 import com.intellij.psi.PsiFile
+import dev.protsenko.securityLinter.core.HtmlProblemDescriptor
 import dev.protsenko.securityLinter.core.SecurityPluginBundle
 import dev.protsenko.securityLinter.core.quickFix.DeletePsiElementQuickFix
 import dev.protsenko.securityLinter.utils.image.ImageAnalyzer
@@ -36,12 +37,15 @@ class DockerfileFromInspection : LocalInspectionTool() {
                     val declaredStep = declaredStepName.text
 
                     if (aliasToImageDefinition.containsKey(declaredStep)) {
-                        holder.registerProblem(
+                        val descriptor = HtmlProblemDescriptor(
                             stageDeclaration,
+                            SecurityPluginBundle.message("dfs003.documentation"),
                             SecurityPluginBundle.message("ds011.no-duplicate-alias"),
-                            ProblemHighlightType.WARNING,
-                            DeletePsiElementQuickFix(SecurityPluginBundle.message("ds011.remove-duplicated-alias"))
+                            ProblemHighlightType.ERROR,
+                            arrayOf(DeletePsiElementQuickFix(SecurityPluginBundle.message("ds011.remove-duplicated-alias")))
                         )
+
+                        holder.registerProblem(descriptor)
                     } else {
                         aliasToImageDefinition.put(declaredStep, imageDefinition)
                     }

@@ -12,6 +12,7 @@ import com.intellij.psi.PsiElementVisitor
 import com.intellij.psi.PsiElementVisitor.EMPTY_VISITOR
 import com.intellij.psi.PsiFile
 import dev.protsenko.securityLinter.core.DockerFileConstants.PROHIBITED_USERS
+import dev.protsenko.securityLinter.core.HtmlProblemDescriptor
 import dev.protsenko.securityLinter.core.SecurityPluginBundle
 import dev.protsenko.securityLinter.utils.DockerPsiAnalyzer
 import dev.protsenko.securityLinter.utils.PsiElementGenerator
@@ -41,12 +42,13 @@ class DockerfileUserInspection : LocalInspectionTool() {
 
                 val lastStage = buildStages[lastStageOffset] ?: return
                 if (lastUserOffset == null || lastUserOffset < lastStageOffset) {
-                    holder.registerProblem(
+                    val descriptor = HtmlProblemDescriptor(
                         lastStage,
+                        SecurityPluginBundle.message("dfs002.documentation"),
                         SecurityPluginBundle.message("ds002.missing-user"),
-                        ProblemHighlightType.ERROR,
-                        ReplaceOrAddUserQuickFix(replace = false)
+                        ProblemHighlightType.ERROR, arrayOf(ReplaceOrAddUserQuickFix(replace = false))
                     )
+                    holder.registerProblem(descriptor)
                     return
                 }
 
@@ -54,12 +56,14 @@ class DockerfileUserInspection : LocalInspectionTool() {
                 val variables = lastUser.variableRefSimpleList
 
                 val username = if (variables.isNotEmpty()) {
-                    holder.registerProblem(
+                    val descriptor = HtmlProblemDescriptor(
                         lastUser,
+                        SecurityPluginBundle.message("dfs002.documentation"),
                         SecurityPluginBundle.message("ds025.arg-in-user"),
-                        ProblemHighlightType.ERROR,
-                        ReplaceOrAddUserQuickFix(replace = true)
+                        ProblemHighlightType.ERROR, arrayOf(ReplaceOrAddUserQuickFix(replace = true))
                     )
+                    holder.registerProblem(descriptor)
+
                     val referencedNameVariable = variables.firstOrNull() ?: return
                     referencedNameVariable.resolveVariable()
                 } else {
@@ -69,12 +73,14 @@ class DockerfileUserInspection : LocalInspectionTool() {
                 }
 
                 if (username != null && PROHIBITED_USERS.contains(username)) {
-                    holder.registerProblem(
+                    val descriptor = HtmlProblemDescriptor(
                         lastUser,
+                        SecurityPluginBundle.message("dfs002.documentation"),
                         SecurityPluginBundle.message("ds002.root-user-is-used"),
-                        ProblemHighlightType.ERROR,
-                        ReplaceOrAddUserQuickFix(replace = true)
+                        ProblemHighlightType.ERROR, arrayOf(ReplaceOrAddUserQuickFix(replace = true))
                     )
+
+                    holder.registerProblem(descriptor)
                 }
             }
         }
