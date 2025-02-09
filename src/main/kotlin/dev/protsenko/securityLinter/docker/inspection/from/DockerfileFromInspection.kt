@@ -41,7 +41,7 @@ class DockerfileFromInspection : LocalInspectionTool() {
                             stageDeclaration,
                             SecurityPluginBundle.message("dfs003.documentation"),
                             SecurityPluginBundle.message("ds011.no-duplicate-alias"),
-                            ProblemHighlightType.ERROR,
+                            ProblemHighlightType.WARNING,
                             arrayOf(DeletePsiElementQuickFix(SecurityPluginBundle.message("ds011.remove-duplicated-alias")))
                         )
 
