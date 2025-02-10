@@ -2,11 +2,11 @@
 
 # Infrastructure Security Linter Changelog
 
-## [1.1.1] 09-02-2025 [not released]
+## [1.1.1] 09-02-2025
 
 ### Added
 - Documentation for each verification
-
+- YAML plugin is optional now
 
 ## [1.0.10] 06-02-2025
 
