@@ -2,13 +2,22 @@
 
 # Infrastructure Security Linter Changelog
 
+## [1.1.2] 13-02-2025
+
+# Added
+- New documentation for each highlighted problem
+- Each problem have a link to the documentation
+
+# Changed
+- Adjusted highlighting for some problems
+
 ## [1.1.1] 09-02-2025
 
-### Added
-- Documentation for each verification
-- YAML plugin is optional now
+### Changed
+- Start working on the documentation
+- YAML plugin is optional for the plugin.
 
-## [1.0.10] 06-02-2025
+## [1.0.10] 06-02-2025 [skipped on marketplace as 1.1.1 approved firstly]
 
 ### Fixed
 - Fixed issue(s) with applying quick fix to the PSI elements. Thanks to [boss-chifra](https://github.com/boss-chifra) for report

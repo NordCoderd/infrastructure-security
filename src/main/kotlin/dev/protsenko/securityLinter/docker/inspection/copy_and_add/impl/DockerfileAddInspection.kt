@@ -8,6 +8,7 @@ import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.codeInspection.util.IntentionFamilyName
 import com.intellij.docker.dockerFile.parser.psi.DockerFileAddOrCopyCommand
 import com.intellij.openapi.project.Project
+import dev.protsenko.securityLinter.core.HtmlProblemDescriptor
 import dev.protsenko.securityLinter.core.SecurityPluginBundle
 import dev.protsenko.securityLinter.docker.inspection.copy_and_add.core.DockerfileCopyOrAddAnalyzer
 import dev.protsenko.securityLinter.utils.PsiElementGenerator
@@ -38,12 +39,15 @@ class DockerfileAddInspection : DockerfileCopyOrAddAnalyzer {
 
         for (fileName in files) {
             if (fileName.extension() != GZ_FILE_EXTENSION) {
-                holder.registerProblem(
+                val descriptor = HtmlProblemDescriptor(
                     element,
+                    SecurityPluginBundle.message("dfs007.documentation"),
                     SecurityPluginBundle.message("ds004.add-instead-copy"),
                     ProblemHighlightType.ERROR,
-                    ReplaceAddWithCopyQuickFix()
+                    arrayOf(ReplaceAddWithCopyQuickFix())
                 )
+
+                holder.registerProblem(descriptor)
                 return
             }
         }

@@ -3,7 +3,7 @@ USER mike
 CMD ["./apps"]
 FROM alpine:3.13
 <error descr="Multiple CMD or ENTRYPOINT instructions listed
-There can only be one CMD and ENTRYPOINT instruction in a Dockerfile. If you list more than one instruction then only the last one will take effect.">CMD ./app</error>
+There can only be one CMD and ENTRYPOINT instruction in a Dockerfile. If you list more than one instruction then only the last one will take effect.">CMD ["./app"]</error>
 <error descr="Multiple CMD or ENTRYPOINT instructions listed
-There can only be one CMD and ENTRYPOINT instruction in a Dockerfile. If you list more than one instruction then only the last one will take effect.">CMD ./app</error>
+There can only be one CMD and ENTRYPOINT instruction in a Dockerfile. If you list more than one instruction then only the last one will take effect.">CMD ["./app"]</error>
 CMD ["./app"]

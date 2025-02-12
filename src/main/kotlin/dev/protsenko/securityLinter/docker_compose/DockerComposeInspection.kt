@@ -81,9 +81,16 @@ class DockerComposeInspection: LocalInspectionTool() {
                                         val containerPorts = PortUtils.parseContainerPorts(portsDefinitions)
                                         containerPorts.forEach { containerPort ->
                                             if (PROHIBITED_PORTS.contains(containerPort)){
-                                                holder.registerProblem(
-                                                    it, SecurityPluginBundle.message("ds003.ssh-port-exposed"), ProblemHighlightType.ERROR
+
+                                                val descriptor = HtmlProblemDescriptor(
+                                                    it,
+                                                    SecurityPluginBundle.message("dfs011.documentation"),
+                                                    SecurityPluginBundle.message("ds003.ssh-port-exposed"),
+                                                    ProblemHighlightType.ERROR,
+                                                    emptyArray()
                                                 )
+
+                                                holder.registerProblem(descriptor)
                                             }
                                         }
                                     }

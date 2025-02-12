@@ -9,6 +9,7 @@ import com.intellij.docker.dockerFile.parser.psi.DockerFileVisitor
 import com.intellij.psi.PsiElementVisitor
 import com.intellij.psi.PsiElementVisitor.EMPTY_VISITOR
 import dev.protsenko.securityLinter.core.DockerFileConstants.POTENTIAL_SECRETS_NAME
+import dev.protsenko.securityLinter.core.HtmlProblemDescriptor
 import dev.protsenko.securityLinter.core.SecurityPluginBundle
 import dev.protsenko.securityLinter.core.quickFix.DeletePsiElementQuickFix
 
@@ -22,12 +23,15 @@ class DockerFileEnvInspection : LocalInspectionTool() {
                 o.envRegularDeclarationList.forEach {
                     val declaredName = it.declaredName.text.uppercase()
                     if (!POTENTIAL_SECRETS_NAME.contains(declaredName)) return@forEach
-                    holder.registerProblem(
+                    val descriptor = HtmlProblemDescriptor(
                         o,
+                        SecurityPluginBundle.message("dfs009.documentation"),
                         SecurityPluginBundle.message("ds026.possible-secrets-in-env", declaredName),
                         ProblemHighlightType.ERROR,
-                        DeletePsiElementQuickFix(SecurityPluginBundle.message("ds026.remove-env-with-secret"))
+                        arrayOf(DeletePsiElementQuickFix(SecurityPluginBundle.message("ds026.remove-env-with-secret")))
                     )
+
+                    holder.registerProblem(descriptor)
                 }
             }
         }

@@ -3,6 +3,7 @@ package dev.protsenko.securityLinter.docker.inspection.run.impl
 import com.intellij.codeInspection.ProblemHighlightType
 import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.psi.PsiElement
+import dev.protsenko.securityLinter.core.HtmlProblemDescriptor
 import dev.protsenko.securityLinter.core.SecurityPluginBundle
 import dev.protsenko.securityLinter.docker.checker.CurlBashingValidator
 import dev.protsenko.securityLinter.docker.inspection.run.core.DockerfileRunAnalyzer
@@ -10,11 +11,15 @@ import dev.protsenko.securityLinter.docker.inspection.run.core.DockerfileRunAnal
 class CurlBashingAnalyzer : DockerfileRunAnalyzer {
     override fun handle(runCommand: String, psiElement: PsiElement, holder: ProblemsHolder) {
         if (!CurlBashingValidator.isValid(runCommand)) {
-            holder.registerProblem(
+            val descriptor = HtmlProblemDescriptor(
                 psiElement,
+                SecurityPluginBundle.message("dfs017.documentation"),
                 SecurityPluginBundle.message("ds027.avoid-curl-bashing"),
-                ProblemHighlightType.ERROR
+                ProblemHighlightType.ERROR,
+                emptyArray()
             )
+
+            holder.registerProblem(descriptor)
         }
     }
 }

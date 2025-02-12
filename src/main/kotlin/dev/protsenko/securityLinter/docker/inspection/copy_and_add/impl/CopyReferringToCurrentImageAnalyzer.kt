@@ -5,6 +5,7 @@ import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.docker.dockerFile.DockerPsiFile
 import com.intellij.docker.dockerFile.parser.psi.DockerFileAddOrCopyCommand
 import com.intellij.docker.dockerFile.parser.psi.DockerFileFromCommand
+import dev.protsenko.securityLinter.core.HtmlProblemDescriptor
 import dev.protsenko.securityLinter.core.SecurityPluginBundle
 import dev.protsenko.securityLinter.core.quickFix.DeletePsiElementQuickFix
 import dev.protsenko.securityLinter.docker.inspection.copy_and_add.core.DockerfileCopyOrAddAnalyzer
@@ -31,14 +32,19 @@ class CopyReferringToCurrentImageAnalyzer : DockerfileCopyOrAddAnalyzer {
         val step = copyFromOption.regularValue?.text ?: return
 
         if (step == currentStep) {
-            holder.registerProblem(
+            val descriptor = HtmlProblemDescriptor(
                 copyFromOption,
+                SecurityPluginBundle.message("dfs006.documentation"),
                 SecurityPluginBundle.message("ds005.copy-referring-to-the-current-image"),
                 ProblemHighlightType.ERROR,
-                DeletePsiElementQuickFix(
-                    SecurityPluginBundle.message("ds005.remove-referring")
+                arrayOf(
+                    DeletePsiElementQuickFix(
+                        SecurityPluginBundle.message("ds005.remove-referring")
+                    )
                 )
             )
+
+            holder.registerProblem(descriptor)
         }
     }
 }

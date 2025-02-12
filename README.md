@@ -25,8 +25,10 @@ Scan Docker and Infrastructure as Code (IaC) files for security vulnerabilities 
 
 ## What problems could find that plugin?
 
-Currently, documentation in progress and will be available soon. 
-At that moment you could check [list of inspection messages](https://github.com/NordCoderd/infrastructure-security/blob/ae38c2e2a257d054329929c571e0a5daecfe1171/src/main/resources/messages/SecurityPluginBundle.properties#L20), they describe supported problems. 
+You could find more information about detected problems:
+
+- [Documentation](https://protsenko.dev/infrastructure-security)
+- In IDE popup messages with problem. Problem messages have a link to dedicated article in the documentation.
 
 ## Planned features
 

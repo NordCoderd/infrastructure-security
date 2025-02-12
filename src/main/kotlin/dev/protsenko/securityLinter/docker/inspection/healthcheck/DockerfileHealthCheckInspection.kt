@@ -10,6 +10,7 @@ import com.intellij.docker.dockerFile.parser.psi.DockerFileVisitor
 import com.intellij.psi.PsiElementVisitor
 import com.intellij.psi.PsiElementVisitor.EMPTY_VISITOR
 import com.intellij.psi.PsiFile
+import dev.protsenko.securityLinter.core.HtmlProblemDescriptor
 import dev.protsenko.securityLinter.core.SecurityPluginBundle
 import dev.protsenko.securityLinter.core.quickFix.DeletePsiElementQuickFix
 
@@ -34,12 +35,15 @@ class DockerfileHealthCheckInspection: LocalInspectionTool() {
                 }
                 if (lastInstructions.size > 1){
                     for (instruction in lastInstructions.dropLast(1)) {
-                        holder.registerProblem(
+                        val descriptor = HtmlProblemDescriptor(
                             instruction,
+                            SecurityPluginBundle.message("dfs012.documentation"),
                             SecurityPluginBundle.message("ds021.only-one-healthcheck"),
                             ProblemHighlightType.ERROR,
-                            DeletePsiElementQuickFix(SecurityPluginBundle.message("ds021.remove-redundant-healthcheck"))
+                            arrayOf(DeletePsiElementQuickFix(SecurityPluginBundle.message("ds021.remove-redundant-healthcheck")))
                         )
+
+                        holder.registerProblem(descriptor)
                     }
                 }
             }

@@ -8,6 +8,7 @@ import com.intellij.docker.dockerFile.parser.psi.*
 import com.intellij.psi.PsiElementVisitor
 import com.intellij.psi.PsiElementVisitor.EMPTY_VISITOR
 import com.intellij.psi.PsiFile
+import dev.protsenko.securityLinter.core.HtmlProblemDescriptor
 import dev.protsenko.securityLinter.core.SecurityPluginBundle
 import dev.protsenko.securityLinter.core.quickFix.DeletePsiElementQuickFix
 import dev.protsenko.securityLinter.core.quickFix.ReplaceWithJsonNotationQuickFix
@@ -48,23 +49,29 @@ class DockerfileCmdAndEntrypointInspection: LocalInspectionTool() {
                 }
                 if (lastInstructions.size > 1){
                     for (instruction in lastInstructions.dropLast(1)) {
-                        holder.registerProblem(
+                        val descriptor = HtmlProblemDescriptor(
                             instruction,
+                            SecurityPluginBundle.message("dsf004.documentation"),
                             SecurityPluginBundle.message("ds015.only-one-cmd-or-entrypoint"),
                             ProblemHighlightType.ERROR,
-                            DeletePsiElementQuickFix(SecurityPluginBundle.message("ds006.remove-redundant-instruction"))
+                            arrayOf(DeletePsiElementQuickFix(SecurityPluginBundle.message("ds006.remove-redundant-instruction")))
                         )
+
+                        holder.registerProblem(descriptor)
                     }
                 }
             }
 
             private fun registerJsonNotationProblem(element: DockerPsiExecOrShellCommand){
-                holder.registerProblem(
+                val descriptor = HtmlProblemDescriptor(
                     element,
+                    SecurityPluginBundle.message("dfs005.documentation"),
                     SecurityPluginBundle.message("ds031.use-json-notation"),
                     ProblemHighlightType.WARNING,
-                    ReplaceWithJsonNotationQuickFix()
+                    arrayOf(ReplaceWithJsonNotationQuickFix())
                 )
+
+                holder.registerProblem(descriptor)
             }
         }
     }

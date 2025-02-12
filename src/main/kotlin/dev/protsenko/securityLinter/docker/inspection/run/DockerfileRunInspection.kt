@@ -10,10 +10,10 @@ import com.intellij.openapi.extensions.ExtensionPointName
 import com.intellij.psi.PsiElementVisitor
 import com.intellij.psi.PsiElementVisitor.EMPTY_VISITOR
 import com.intellij.psi.PsiFile
+import dev.protsenko.securityLinter.core.HtmlProblemDescriptor
 import dev.protsenko.securityLinter.core.SecurityPluginBundle
 import dev.protsenko.securityLinter.docker.inspection.run.core.DockerfileRunAnalyzer
 import dev.protsenko.securityLinter.utils.toStringDockerCommand
-import java.util.concurrent.atomic.AtomicBoolean
 
 class DockerfileRunInspection : LocalInspectionTool() {
     val extensionPointName =
@@ -31,8 +31,9 @@ class DockerfileRunInspection : LocalInspectionTool() {
                     return
                 }
 
-                val isContainCurl = AtomicBoolean()
-                val isContainWget = AtomicBoolean()
+                val curlCommands = mutableListOf<DockerFileRunCommand>()
+                val wgetCommands = mutableListOf<DockerFileRunCommand>()
+
                 val runCommands = file.findChildrenByClass(DockerFileRunCommand::class.java)
                 runCommands.forEach { element ->
                     val execForm = element.parametersInJsonForm?.toStringDockerCommand("RUN ")
@@ -41,16 +42,21 @@ class DockerfileRunInspection : LocalInspectionTool() {
                         extension.handle(runCommand, element, holder)
                     }
 
-                    if ("wget" in runCommand) isContainWget.set(true)
-                    if ("curl" in runCommand) isContainCurl.set(true)
+                    if ("wget" in runCommand) wgetCommands.add(element)
+                    if ("curl" in runCommand) curlCommands.add(element)
                 }
 
-                if (isContainCurl.get() && isContainWget.get()){
-                    holder.registerProblem(
-                        file,
-                        SecurityPluginBundle.message("ds013.standardise-remote-get"),
-                        ProblemHighlightType.WARNING
-                    )
+                if (curlCommands.isNotEmpty() && wgetCommands.isNotEmpty()){
+                    (curlCommands + wgetCommands).forEach { runCommand ->
+                        val descriptor = HtmlProblemDescriptor(
+                            runCommand,
+                            SecurityPluginBundle.message("dfs026.documentation"),
+                            SecurityPluginBundle.message("ds013.standardise-remote-get"),
+                            ProblemHighlightType.WARNING
+                        )
+
+                        holder.registerProblem(descriptor)
+                    }
                 }
             }
         }

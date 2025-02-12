@@ -10,6 +10,7 @@ import com.intellij.docker.dockerFile.parser.psi.DockerFileVisitor
 import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiElementVisitor
 import com.intellij.psi.PsiElementVisitor.EMPTY_VISITOR
+import dev.protsenko.securityLinter.core.HtmlProblemDescriptor
 import dev.protsenko.securityLinter.core.SecurityPluginBundle
 import dev.protsenko.securityLinter.utils.PsiElementGenerator
 
@@ -20,12 +21,15 @@ class DockerfileMaintainerInspection : LocalInspectionTool() {
         }
         return object : DockerFileVisitor() {
             override fun visitMaintainerCommand(o: DockerFileMaintainerCommand) {
-                holder.registerProblem(
+                val descriptor = HtmlProblemDescriptor(
                     o,
+                    SecurityPluginBundle.message("dfs013.documentation"),
                     SecurityPluginBundle.message("ds020.no-maintainer"),
                     ProblemHighlightType.LIKE_DEPRECATED,
-                    ReplaceMaintainerWithLabel()
+                    arrayOf(ReplaceMaintainerWithLabel())
                 )
+
+                holder.registerProblem(descriptor)
             }
         }
     }

@@ -3,6 +3,7 @@ package dev.protsenko.securityLinter.docker.inspection.copy_and_add.impl
 import com.intellij.codeInspection.ProblemHighlightType
 import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.docker.dockerFile.parser.psi.DockerFileAddOrCopyCommand
+import dev.protsenko.securityLinter.core.HtmlProblemDescriptor
 import dev.protsenko.securityLinter.core.SecurityPluginBundle
 import dev.protsenko.securityLinter.docker.inspection.copy_and_add.core.DockerfileCopyOrAddAnalyzer
 import dev.protsenko.securityLinter.utils.removeQuotes
@@ -25,9 +26,15 @@ class UseSlashForCopyArgsAnalyzer : DockerfileCopyOrAddAnalyzer {
 
         val lastElement = lastCopyArgument.text?.removeQuotes() ?: return
         if (!lastElement.endsWith("/") && !lastElement.endsWith("\\")) {
-            holder.registerProblem(
-                element, SecurityPluginBundle.message("ds010.use-slash-for-copy-args"), ProblemHighlightType.ERROR
+            val descriptor = HtmlProblemDescriptor(
+                element,
+                SecurityPluginBundle.message("dfs008.documentation"),
+                SecurityPluginBundle.message("ds010.use-slash-for-copy-args"),
+                ProblemHighlightType.ERROR,
+                emptyArray()
             )
+
+            holder.registerProblem(descriptor)
         }
     }
 }

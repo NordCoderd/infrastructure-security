@@ -4,6 +4,7 @@ import com.intellij.codeInspection.ProblemHighlightType
 import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.psi.PsiElement
 import dev.protsenko.securityLinter.core.DockerFileConstants.PROHIBITED_PORTS
+import dev.protsenko.securityLinter.core.HtmlProblemDescriptor
 import dev.protsenko.securityLinter.core.SecurityPluginBundle
 import dev.protsenko.securityLinter.core.quickFix.DeletePsiElementQuickFix
 import dev.protsenko.securityLinter.docker.inspection.expose.core.DockerfileExposeAnalyzer
@@ -15,12 +16,15 @@ class SshPortExposedAnalyzer : DockerfileExposeAnalyzer {
         }
 
         if (prohibitedPortsIsExposed) {
-            holder.registerProblem(
+            val descriptor = HtmlProblemDescriptor(
                 psiElement,
+                SecurityPluginBundle.message("dfs011.documentation"),
                 SecurityPluginBundle.message("ds003.ssh-port-exposed"),
                 ProblemHighlightType.ERROR,
-                DeletePsiElementQuickFix(SecurityPluginBundle.message("ds003.remove-dangerous-port-exposed"))
+                arrayOf(DeletePsiElementQuickFix(SecurityPluginBundle.message("ds003.remove-dangerous-port-exposed")))
             )
+
+            holder.registerProblem(descriptor)
         }
     }
 }
