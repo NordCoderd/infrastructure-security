@@ -1,0 +1,5 @@
+FROM alpine:3.13
+<warning descr="Multiple consecutive 'RUN' instructions. Consider consolidation.">RUN whoami</warning>
+<warning descr="Multiple consecutive 'RUN' instructions. Consider consolidation.">RUN touch test-file</warning>
+<warning descr="Multiple consecutive 'RUN' instructions. Consider consolidation.">RUN ls</warning>
+USER mike

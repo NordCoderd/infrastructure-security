@@ -10,6 +10,8 @@ import com.intellij.openapi.extensions.ExtensionPointName
 import com.intellij.psi.PsiElementVisitor
 import com.intellij.psi.PsiElementVisitor.EMPTY_VISITOR
 import com.intellij.psi.PsiFile
+import com.intellij.refactoring.suggested.endOffset
+import com.intellij.refactoring.suggested.startOffset
 import dev.protsenko.securityLinter.core.HtmlProblemDescriptor
 import dev.protsenko.securityLinter.core.SecurityPluginBundle
 import dev.protsenko.securityLinter.docker.inspection.run.core.DockerfileRunAnalyzer
@@ -35,6 +37,9 @@ class DockerfileRunInspection : LocalInspectionTool() {
                 val wgetCommands = mutableListOf<DockerFileRunCommand>()
 
                 val runCommands = file.findChildrenByClass(DockerFileRunCommand::class.java)
+
+                var currentOffset = 0
+                val runCommandsToHighlight = mutableListOf<DockerFileRunCommand>()
                 runCommands.forEach { element ->
                     val execForm = element.parametersInJsonForm?.toStringDockerCommand("RUN ")
                     val runCommand = execForm ?: element.text
@@ -44,6 +49,29 @@ class DockerfileRunInspection : LocalInspectionTool() {
 
                     if ("wget" in runCommand) wgetCommands.add(element)
                     if ("curl" in runCommand) curlCommands.add(element)
+
+                    if (currentOffset == 0){
+                        currentOffset = element.endOffset
+                    } else {
+                        if (currentOffset + 1 != element.startOffset) {
+                            runCommandsToHighlight.clear()
+                        }
+                        currentOffset = element.endOffset
+                    }
+                    runCommandsToHighlight.add(element)
+                }
+
+                if (runCommandsToHighlight.size > 1){
+                    runCommandsToHighlight.forEach { runCommand ->
+                        val descriptor = HtmlProblemDescriptor(
+                            runCommand,
+                            SecurityPluginBundle.message("dfs028.documentation"),
+                            SecurityPluginBundle.message("ds034.multiple-consecutive-run-commands"),
+                            ProblemHighlightType.WARNING
+                        )
+
+                        holder.registerProblem(descriptor)
+                    }
                 }
 
                 if (curlCommands.isNotEmpty() && wgetCommands.isNotEmpty()){

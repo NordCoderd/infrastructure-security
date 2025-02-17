@@ -10,6 +10,7 @@ import com.intellij.docker.dockerFile.parser.psi.DockerFileFromStageDeclaration
 import com.intellij.notification.NotificationGroupManager
 import com.intellij.notification.NotificationType
 import com.intellij.openapi.application.ApplicationManager
+import com.intellij.openapi.command.WriteCommandAction
 import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiElement
 import dev.protsenko.securityLinter.core.SecurityPluginBundle
@@ -26,7 +27,9 @@ class ReplaceTagWithDigestQuickFix(private val imageName: String) : LocalQuickFi
     override fun applyFix(project: Project, descriptor: ProblemDescriptor) {
         DockerImageDigestFetcher.fetchDigest(imageName)
             .thenAccept { digest ->
-                replaceImageName(project, descriptor, digest)
+                ApplicationManager.getApplication().runReadAction {
+                    replaceImageName(project, descriptor, digest)
+                }
             }
             .exceptionally { throwable ->
                 ApplicationManager.getApplication().invokeLater {
@@ -42,12 +45,20 @@ class ReplaceTagWithDigestQuickFix(private val imageName: String) : LocalQuickFi
             val buildStageName = retrieveBuildStageName(targetElement)
             val dockerFileFromCommand =
                 PsiElementGenerator.getDockerFileFromCommand(project, imageName, digest, buildStageName) ?: return
-            targetElement.replace(dockerFileFromCommand)
+            ApplicationManager.getApplication().invokeLater {
+                WriteCommandAction.runWriteCommandAction(project) {
+                    targetElement.replace(dockerFileFromCommand)
+                }
+            }
         } else if (targetElement is YAMLKeyValue) {
             val imageDefinitionWithDigest =
                 PsiElementGenerator.rawText(project, "$imageName@$digest") ?: return
             val targetValueElement = targetElement.value ?: return
-            targetValueElement.replace(imageDefinitionWithDigest)
+            ApplicationManager.getApplication().invokeLater {
+                WriteCommandAction.runWriteCommandAction(project) {
+                    targetValueElement.replace(imageDefinitionWithDigest)
+                }
+            }
         }
     }
 

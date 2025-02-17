@@ -2,6 +2,14 @@
 
 # Infrastructure Security Linter Changelog
 
+## [1.1.3] 18-02-2025
+
+# Added
+- new rule: consecutive run commands
+
+# Fixed
+- issue: problem with replacing image version tag to digest
+
 ## [1.1.2] 13-02-2025
 
 # Added

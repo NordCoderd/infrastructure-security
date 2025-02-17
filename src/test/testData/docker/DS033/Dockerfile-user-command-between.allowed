@@ -1,0 +1,4 @@
+FROM alpine:3.13
+RUN pip install --upgrade pip
+USER mike
+RUN pip install --upgrade pip
