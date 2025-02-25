@@ -10,8 +10,6 @@ import com.intellij.openapi.extensions.ExtensionPointName
 import com.intellij.psi.PsiElementVisitor
 import com.intellij.psi.PsiElementVisitor.EMPTY_VISITOR
 import com.intellij.psi.PsiFile
-import com.intellij.refactoring.suggested.endOffset
-import com.intellij.refactoring.suggested.startOffset
 import dev.protsenko.securityLinter.core.HtmlProblemDescriptor
 import dev.protsenko.securityLinter.core.SecurityPluginBundle
 import dev.protsenko.securityLinter.docker.inspection.run.core.DockerfileRunAnalyzer
@@ -50,13 +48,14 @@ class DockerfileRunInspection : LocalInspectionTool() {
                     if ("wget" in runCommand) wgetCommands.add(element)
                     if ("curl" in runCommand) curlCommands.add(element)
 
+                    val textRange = element.textRange
                     if (currentOffset == 0){
-                        currentOffset = element.endOffset
+                        currentOffset = textRange.endOffset
                     } else {
-                        if (currentOffset + 1 != element.startOffset) {
+                        if (currentOffset + 1 != textRange.startOffset) {
                             runCommandsToHighlight.clear()
                         }
-                        currentOffset = element.endOffset
+                        currentOffset = textRange.endOffset
                     }
                     runCommandsToHighlight.add(element)
                 }
