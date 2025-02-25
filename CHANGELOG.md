@@ -2,21 +2,26 @@
 
 # Infrastructure Security Linter Changelog
 
+## [1.1.4] 25-02-2025
+
+### Added
+- new rule: 'useradd' without the '-l' flag and a high UID may lead to an excessively large image.
+
 ## [1.1.3] 18-02-2025
 
-# Added
+### Added
 - new rule: consecutive run commands
 
-# Fixed
+### Fixed
 - issue: problem with replacing image version tag to digest
 
 ## [1.1.2] 13-02-2025
 
-# Added
+### Added
 - New documentation for each highlighted problem
 - Each problem have a link to the documentation
 
-# Changed
+### Changed
 - Adjusted highlighting for some problems
 
 ## [1.1.1] 09-02-2025

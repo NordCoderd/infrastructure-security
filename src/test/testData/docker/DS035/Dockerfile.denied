@@ -1,0 +1,2 @@
+FROM alpine:3.13
+<warning descr="'useradd' without the '-l' flag and a high UID may lead to an excessively large image.">RUN useradd -u 198401 nordcoderd</warning>

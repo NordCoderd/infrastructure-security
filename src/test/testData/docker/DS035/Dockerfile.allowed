@@ -1,0 +1,2 @@
+FROM alpine:3.13
+RUN useradd -l -u 198401 nordcoderd
