@@ -1,6 +1,11 @@
 <!-- Keep a Changelog guide -> https://keepachangelog.com -->
 
-# Infrastructure Security Linter Changelog
+# Infrastructure as Code (IaC) Security Linter Changelog
+
+## [1.1.5] 04-03-2025
+
+### Changed
+- name: name of the plugin points to IaC security
 
 ## [1.1.4] 25-02-2025
 

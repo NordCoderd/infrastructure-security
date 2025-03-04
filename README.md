@@ -1,11 +1,11 @@
-# Infrastructure Security Linter | IDEA Plugin
+# Infrastructure as Code (IaC) Security Linter
 
 [![CI](https://github.com/NordCoderd/infrastructure-security/actions/workflows/gradle.yml/badge.svg)](https://github.com/NordCoderd/infrastructure-security/actions/workflows/gradle.yml)
 [![JetBrains Plugin Version](https://img.shields.io/jetbrains/plugin/v/dev.protsenko.security-linter)](https://plugins.jetbrains.com/plugin/25413-infrastructure-security)
 [![JetBrains Plugin Downloads](https://img.shields.io/jetbrains/plugin/d/dev.protsenko.security-linter)](https://plugins.jetbrains.com/plugin/25413-infrastructure-security)
 
 <!-- Plugin description -->
-Infrastructure Security Linter for JetBrains IDEs (e.g., IntelliJ IDEA, PyCharm, WebStorm, and more).
+Infrastructure as Code (IaC) Security Linter for JetBrains IDEs (e.g., IntelliJ IDEA, PyCharm, WebStorm, and more).
 
 Scan Docker and Infrastructure as Code (IaC) files for security vulnerabilities and misconfigurations directly in your JetBrains IDE.
 
