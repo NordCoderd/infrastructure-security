@@ -14,7 +14,7 @@ class ZypperInstallWithoutCleanAnalyzer : DockerfileRunAnalyzer {
             val descriptor = HtmlProblemDescriptor(
                 psiElement,
                 SecurityPluginBundle.message("dfs025.documentation"),
-                SecurityPluginBundle.message("ds018.purge-zipper-cache"),
+                SecurityPluginBundle.message("dfs025.purge-zipper-cache"),
                 ProblemHighlightType.WARNING
             )
 

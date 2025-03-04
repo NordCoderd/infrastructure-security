@@ -15,7 +15,7 @@ class ArgumentsInRunCommandAnalyzer: DockerfileRunAnalyzer {
             val descriptor = HtmlProblemDescriptor(
                 psiElement,
                 SecurityPluginBundle.message("dfs016.documentation"),
-                SecurityPluginBundle.message("ds028.avoid-arg-in-run"),
+                SecurityPluginBundle.message("dfs016.avoid-arg-in-run"),
                 ProblemHighlightType.ERROR
             )
 

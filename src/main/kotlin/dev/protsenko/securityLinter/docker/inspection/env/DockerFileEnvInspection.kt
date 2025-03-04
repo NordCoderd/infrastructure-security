@@ -26,9 +26,9 @@ class DockerFileEnvInspection : LocalInspectionTool() {
                     val descriptor = HtmlProblemDescriptor(
                         o,
                         SecurityPluginBundle.message("dfs009.documentation"),
-                        SecurityPluginBundle.message("ds026.possible-secrets-in-env", declaredName),
+                        SecurityPluginBundle.message("dfs009.possible-secrets-in-env", declaredName),
                         ProblemHighlightType.ERROR,
-                        arrayOf(DeletePsiElementQuickFix(SecurityPluginBundle.message("ds026.remove-env-with-secret")))
+                        arrayOf(DeletePsiElementQuickFix(SecurityPluginBundle.message("dfs009.remove-env-with-secret")))
                     )
 
                     holder.registerProblem(descriptor)

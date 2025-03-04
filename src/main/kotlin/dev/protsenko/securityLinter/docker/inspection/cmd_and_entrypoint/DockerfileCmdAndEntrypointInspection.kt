@@ -52,9 +52,9 @@ class DockerfileCmdAndEntrypointInspection: LocalInspectionTool() {
                         val descriptor = HtmlProblemDescriptor(
                             instruction,
                             SecurityPluginBundle.message("dsf004.documentation"),
-                            SecurityPluginBundle.message("ds015.only-one-cmd-or-entrypoint"),
+                            SecurityPluginBundle.message("dfs004.only-one-cmd-or-entrypoint"),
                             ProblemHighlightType.ERROR,
-                            arrayOf(DeletePsiElementQuickFix(SecurityPluginBundle.message("ds006.remove-redundant-instruction")))
+                            arrayOf(DeletePsiElementQuickFix(SecurityPluginBundle.message("dfs004.remove-redundant-instruction")))
                         )
 
                         holder.registerProblem(descriptor)
@@ -66,7 +66,7 @@ class DockerfileCmdAndEntrypointInspection: LocalInspectionTool() {
                 val descriptor = HtmlProblemDescriptor(
                     element,
                     SecurityPluginBundle.message("dfs005.documentation"),
-                    SecurityPluginBundle.message("ds031.use-json-notation"),
+                    SecurityPluginBundle.message("dfs005.use-json-notation"),
                     ProblemHighlightType.WARNING,
                     arrayOf(ReplaceWithJsonNotationQuickFix())
                 )

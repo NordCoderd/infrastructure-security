@@ -14,7 +14,7 @@ class AptGetNoInstallRecommendsAnalyzer:DockerfileRunAnalyzer {
             val descriptor = HtmlProblemDescriptor(
                 psiElement,
                 SecurityPluginBundle.message("dfs014.documentation"),
-                SecurityPluginBundle.message("ds030.use-no-install-recommends"),
+                SecurityPluginBundle.message("dfs014.use-no-install-recommends"),
                 ProblemHighlightType.WARNING,
                 emptyArray()
             )

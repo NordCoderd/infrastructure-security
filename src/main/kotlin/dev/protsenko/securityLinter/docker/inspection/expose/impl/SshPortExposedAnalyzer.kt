@@ -19,9 +19,9 @@ class SshPortExposedAnalyzer : DockerfileExposeAnalyzer {
             val descriptor = HtmlProblemDescriptor(
                 psiElement,
                 SecurityPluginBundle.message("dfs011.documentation"),
-                SecurityPluginBundle.message("ds003.ssh-port-exposed"),
+                SecurityPluginBundle.message("dfs011.ssh-port-exposed"),
                 ProblemHighlightType.ERROR,
-                arrayOf(DeletePsiElementQuickFix(SecurityPluginBundle.message("ds003.remove-dangerous-port-exposed")))
+                arrayOf(DeletePsiElementQuickFix(SecurityPluginBundle.message("dfs011.remove-dangerous-port-exposed")))
             )
 
             holder.registerProblem(descriptor)

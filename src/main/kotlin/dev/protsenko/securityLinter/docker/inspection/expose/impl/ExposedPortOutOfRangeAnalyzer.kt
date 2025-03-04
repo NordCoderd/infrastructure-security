@@ -15,9 +15,9 @@ class ExposedPortOutOfRangeAnalyzer : DockerfileExposeAnalyzer {
                 val descriptor = HtmlProblemDescriptor(
                     psiElement,
                     SecurityPluginBundle.message("dfs010.documentation"),
-                    SecurityPluginBundle.message("ds007.port-out-of-range", port.toString()),
+                    SecurityPluginBundle.message("dfs010.port-out-of-range", port.toString()),
                     ProblemHighlightType.ERROR,
-                    arrayOf(DeletePsiElementQuickFix(SecurityPluginBundle.message("ds007.remove-broken-port")))
+                    arrayOf(DeletePsiElementQuickFix(SecurityPluginBundle.message("dfs010.remove-broken-port")))
                 )
 
                 holder.registerProblem(descriptor)

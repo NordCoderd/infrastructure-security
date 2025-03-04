@@ -14,7 +14,7 @@ class UserAddAnalyzer:DockerfileRunAnalyzer {
             val descriptor = HtmlProblemDescriptor(
                 psiElement,
                 SecurityPluginBundle.message("dfs029.documentation"),
-                SecurityPluginBundle.message("ds035.useradd-missing-l-flag-high-uid"),
+                SecurityPluginBundle.message("dfs029.useradd-missing-l-flag-high-uid"),
                 ProblemHighlightType.WARNING,
                 emptyArray()
             )

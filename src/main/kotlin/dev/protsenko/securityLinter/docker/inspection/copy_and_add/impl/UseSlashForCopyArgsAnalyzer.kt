@@ -29,7 +29,7 @@ class UseSlashForCopyArgsAnalyzer : DockerfileCopyOrAddAnalyzer {
             val descriptor = HtmlProblemDescriptor(
                 element,
                 SecurityPluginBundle.message("dfs008.documentation"),
-                SecurityPluginBundle.message("ds010.use-slash-for-copy-args"),
+                SecurityPluginBundle.message("dfs008.use-slash-for-copy-args"),
                 ProblemHighlightType.ERROR,
                 emptyArray()
             )

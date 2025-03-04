@@ -38,9 +38,9 @@ class DockerfileHealthCheckInspection: LocalInspectionTool() {
                         val descriptor = HtmlProblemDescriptor(
                             instruction,
                             SecurityPluginBundle.message("dfs012.documentation"),
-                            SecurityPluginBundle.message("ds021.only-one-healthcheck"),
+                            SecurityPluginBundle.message("dfs012.only-one-healthcheck"),
                             ProblemHighlightType.ERROR,
-                            arrayOf(DeletePsiElementQuickFix(SecurityPluginBundle.message("ds021.remove-redundant-healthcheck")))
+                            arrayOf(DeletePsiElementQuickFix(SecurityPluginBundle.message("dfs012.remove-redundant-healthcheck")))
                         )
 
                         holder.registerProblem(descriptor)

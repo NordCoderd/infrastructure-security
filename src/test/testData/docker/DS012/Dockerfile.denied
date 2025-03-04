@@ -1,5 +1,5 @@
 FROM nginx:2.2
 <weak_warning descr="'RUN cd ...' to change directory
-Use WORKDIR instead of proliferating instructions like 'RUN cd ?  do-something', which are hard to read, troubleshoot, and maintain.">RUN cd /usr/share/nginx/html</weak_warning>
+Use WORKDIR instead of instructions like 'RUN cd ...', which are hard to read, troubleshoot, and maintain.">RUN cd /usr/share/nginx/html</weak_warning>
 USER mike
 CMD cd /usr/share/nginx/html && sed -e s/Docker/\"nordcoderd\"/ Hello_docker.html > index.html ; nginx -g 'daemon off;'

@@ -14,7 +14,7 @@ class CurlBashingAnalyzer : DockerfileRunAnalyzer {
             val descriptor = HtmlProblemDescriptor(
                 psiElement,
                 SecurityPluginBundle.message("dfs017.documentation"),
-                SecurityPluginBundle.message("ds027.avoid-curl-bashing"),
+                SecurityPluginBundle.message("dfs017.avoid-curl-bashing"),
                 ProblemHighlightType.ERROR,
                 emptyArray()
             )

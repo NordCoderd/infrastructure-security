@@ -20,7 +20,7 @@ object ImageAnalyzer {
             val descriptor = HtmlProblemDescriptor(
                 element,
                 SecurityPluginBundle.message("dfs001.documentation"),
-                SecurityPluginBundle.message("ds001.missing-version-tag"),
+                SecurityPluginBundle.message("dfs001.missing-version-tag"),
                 ProblemHighlightType.ERROR, arrayOf(ReplaceTagWithDigestQuickFix(effectiveImageDefinition.imageName))
             )
 
@@ -29,7 +29,7 @@ object ImageAnalyzer {
             val descriptor = HtmlProblemDescriptor(
                 element,
                 SecurityPluginBundle.message("dfs001.documentation"),
-                SecurityPluginBundle.message("ds001.latest-tag"),
+                SecurityPluginBundle.message("dfs001.latest-tag"),
                 ProblemHighlightType.ERROR, arrayOf(ReplaceTagWithDigestQuickFix(effectiveImageDefinition.imageName))
             )
 

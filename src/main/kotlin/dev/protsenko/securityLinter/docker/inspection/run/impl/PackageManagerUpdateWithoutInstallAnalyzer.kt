@@ -14,7 +14,7 @@ class PackageManagerUpdateWithoutInstallAnalyzer : DockerfileRunAnalyzer {
             val descriptor = HtmlProblemDescriptor(
                 psiElement,
                 SecurityPluginBundle.message("dfs021.documentation"),
-                SecurityPluginBundle.message("ds016.no-orphan-package-update"),
+                SecurityPluginBundle.message("dfs021.no-orphan-package-update"),
                 ProblemHighlightType.WARNING
             )
 

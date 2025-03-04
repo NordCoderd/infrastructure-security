@@ -14,7 +14,7 @@ class AptIsUsedAnalyzer : DockerfileRunAnalyzer {
             val descriptor = HtmlProblemDescriptor(
                 psiElement,
                 SecurityPluginBundle.message("dfs015.documentation"),
-                SecurityPluginBundle.message("ds032.apt-is-used"),
+                SecurityPluginBundle.message("dfs015.apt-is-used"),
                 ProblemHighlightType.WEAK_WARNING,
                 emptyArray()
             )

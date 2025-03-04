@@ -14,7 +14,7 @@ class MissingDnfCleanAnalyzer : DockerfileRunAnalyzer {
             val descriptor = HtmlProblemDescriptor(
                 psiElement,
                 SecurityPluginBundle.message("dfs019.documentation"),
-                SecurityPluginBundle.message("ds017.purge-dnf-package-cache"),
+                SecurityPluginBundle.message("dfs019.purge-dnf-package-cache"),
                 ProblemHighlightType.WARNING
             )
 

@@ -18,7 +18,7 @@ class UsingCdToChangeDirectoryAnalyzer : DockerfileRunAnalyzer {
             val descriptor = HtmlProblemDescriptor(
                 psiElement,
                 SecurityPluginBundle.message("dfs023.documentation"),
-                SecurityPluginBundle.message("ds012.use-workdir-over-cd"),
+                SecurityPluginBundle.message("dfs023.use-workdir-over-cd"),
                 ProblemHighlightType.WEAK_WARNING,
                 emptyArray()
             )

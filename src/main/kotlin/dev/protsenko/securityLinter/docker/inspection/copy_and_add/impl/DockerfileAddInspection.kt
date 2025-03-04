@@ -42,7 +42,7 @@ class DockerfileAddInspection : DockerfileCopyOrAddAnalyzer {
                 val descriptor = HtmlProblemDescriptor(
                     element,
                     SecurityPluginBundle.message("dfs007.documentation"),
-                    SecurityPluginBundle.message("ds004.add-instead-copy"),
+                    SecurityPluginBundle.message("dfs007.add-instead-copy"),
                     ProblemHighlightType.ERROR,
                     arrayOf(ReplaceAddWithCopyQuickFix())
                 )
@@ -55,7 +55,7 @@ class DockerfileAddInspection : DockerfileCopyOrAddAnalyzer {
 
     private class ReplaceAddWithCopyQuickFix : LocalQuickFix {
         override fun getFamilyName(): @IntentionFamilyName String =
-            SecurityPluginBundle.message("ds004.replace-add-with-copy")
+            SecurityPluginBundle.message("dfs007.replace-add-with-copy")
 
         override fun generatePreview(project: Project, previewDescriptor: ProblemDescriptor): IntentionPreviewInfo =
             IntentionPreviewInfo.EMPTY

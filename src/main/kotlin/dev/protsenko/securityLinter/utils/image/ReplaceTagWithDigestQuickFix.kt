@@ -20,7 +20,7 @@ import org.jetbrains.yaml.psi.YAMLKeyValue
 class ReplaceTagWithDigestQuickFix(private val imageName: String) : LocalQuickFix, HighPriorityAction {
 
     override fun getFamilyName(): @IntentionFamilyName String =
-        SecurityPluginBundle.message("ds001.lookup-for-digest")
+        SecurityPluginBundle.message("dfs001.lookup-for-digest")
 
     override fun generatePreview(project: Project, previewDescriptor: ProblemDescriptor): IntentionPreviewInfo = IntentionPreviewInfo.EMPTY
 

@@ -13,7 +13,7 @@ import dev.protsenko.securityLinter.utils.PsiElementGenerator
 
 class ReplaceWithJsonNotationQuickFix : LocalQuickFix {
     override fun getFamilyName(): @IntentionFamilyName String =
-        SecurityPluginBundle.message("ds031.replace-with-json-notation")
+        SecurityPluginBundle.message("dfs005.replace-with-json-notation")
 
     override fun generatePreview(project: Project, previewDescriptor: ProblemDescriptor): IntentionPreviewInfo =
         IntentionPreviewInfo.EMPTY

@@ -57,7 +57,7 @@ class DockerComposeInspection: LocalInspectionTool() {
                                 val descriptor = HtmlProblemDescriptor(
                                     element,
                                     SecurityPluginBundle.message("dfs002.documentation"),
-                                    SecurityPluginBundle.message("ds002.root-user-is-used"),
+                                    SecurityPluginBundle.message("dfs002.root-user-is-used"),
                                     ProblemHighlightType.ERROR
                                 )
 
@@ -85,7 +85,7 @@ class DockerComposeInspection: LocalInspectionTool() {
                                                 val descriptor = HtmlProblemDescriptor(
                                                     it,
                                                     SecurityPluginBundle.message("dfs011.documentation"),
-                                                    SecurityPluginBundle.message("ds003.ssh-port-exposed"),
+                                                    SecurityPluginBundle.message("dfs011.ssh-port-exposed"),
                                                     ProblemHighlightType.ERROR,
                                                     emptyArray()
                                                 )

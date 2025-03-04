@@ -45,7 +45,7 @@ class DockerfileUserInspection : LocalInspectionTool() {
                     val descriptor = HtmlProblemDescriptor(
                         lastStage,
                         SecurityPluginBundle.message("dfs002.documentation"),
-                        SecurityPluginBundle.message("ds002.missing-user"),
+                        SecurityPluginBundle.message("dfs002.missing-user"),
                         ProblemHighlightType.ERROR, arrayOf(ReplaceOrAddUserQuickFix(replace = false))
                     )
                     holder.registerProblem(descriptor)
@@ -59,7 +59,7 @@ class DockerfileUserInspection : LocalInspectionTool() {
                     val descriptor = HtmlProblemDescriptor(
                         lastUser,
                         SecurityPluginBundle.message("dfs002.documentation"),
-                        SecurityPluginBundle.message("ds025.arg-in-user"),
+                        SecurityPluginBundle.message("dfs002.arg-in-user"),
                         ProblemHighlightType.ERROR, arrayOf(ReplaceOrAddUserQuickFix(replace = true))
                     )
                     holder.registerProblem(descriptor)
@@ -76,7 +76,7 @@ class DockerfileUserInspection : LocalInspectionTool() {
                     val descriptor = HtmlProblemDescriptor(
                         lastUser,
                         SecurityPluginBundle.message("dfs002.documentation"),
-                        SecurityPluginBundle.message("ds002.root-user-is-used"),
+                        SecurityPluginBundle.message("dfs002.root-user-is-used"),
                         ProblemHighlightType.ERROR, arrayOf(ReplaceOrAddUserQuickFix(replace = true))
                     )
 
@@ -95,9 +95,9 @@ class DockerfileUserInspection : LocalInspectionTool() {
             IntentionPreviewInfo.EMPTY
 
         override fun getFamilyName(): @IntentionFamilyName String = if (replace) {
-            SecurityPluginBundle.message("ds002.replace-root-with-nobody")
+            SecurityPluginBundle.message("dfs002.replace-root-with-nobody")
         } else {
-            SecurityPluginBundle.message("ds002.add-nobody-user")
+            SecurityPluginBundle.message("dfs002.add-nobody-user")
         }
 
         override fun applyFix(project: Project, descriptor: ProblemDescriptor) {

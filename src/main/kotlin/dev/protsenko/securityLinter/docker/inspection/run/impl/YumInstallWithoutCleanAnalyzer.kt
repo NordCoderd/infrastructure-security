@@ -14,7 +14,7 @@ class YumInstallWithoutCleanAnalyzer : DockerfileRunAnalyzer {
             val descriptor = HtmlProblemDescriptor(
                 psiElement,
                 SecurityPluginBundle.message("dfs024.documentation"),
-                SecurityPluginBundle.message("ds014.purge-yum-package-cache"),
+                SecurityPluginBundle.message("dfs024.purge-yum-package-cache"),
                 ProblemHighlightType.WARNING
             )
 

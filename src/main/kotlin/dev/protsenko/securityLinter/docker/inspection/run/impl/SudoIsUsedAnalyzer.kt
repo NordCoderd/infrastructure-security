@@ -14,7 +14,7 @@ class SudoIsUsedAnalyzer : DockerfileRunAnalyzer {
             val descriptor = HtmlProblemDescriptor(
                 psiElement,
                 SecurityPluginBundle.message("dfs022.documentation"),
-                SecurityPluginBundle.message("ds009.run-using-sudo"),
+                SecurityPluginBundle.message("dfs022.run-using-sudo"),
                 ProblemHighlightType.ERROR
             )
 

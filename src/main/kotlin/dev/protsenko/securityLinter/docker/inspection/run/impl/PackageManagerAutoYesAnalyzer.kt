@@ -14,7 +14,7 @@ class PackageManagerAutoYesAnalyzer: DockerfileRunAnalyzer {
             val descriptor = HtmlProblemDescriptor(
                 psiElement,
                 SecurityPluginBundle.message("dfs020.documentation"),
-                SecurityPluginBundle.message("ds019.use-package-manager-auto-confirm"),
+                SecurityPluginBundle.message("dfs020.use-package-manager-auto-confirm"),
                 ProblemHighlightType.WARNING
             )
 

@@ -40,9 +40,9 @@ class DockerfileFromInspection : LocalInspectionTool() {
                         val descriptor = HtmlProblemDescriptor(
                             stageDeclaration,
                             SecurityPluginBundle.message("dfs003.documentation"),
-                            SecurityPluginBundle.message("ds011.no-duplicate-alias"),
+                            SecurityPluginBundle.message("dfs003.no-duplicate-alias"),
                             ProblemHighlightType.WARNING,
-                            arrayOf(DeletePsiElementQuickFix(SecurityPluginBundle.message("ds011.remove-duplicated-alias")))
+                            arrayOf(DeletePsiElementQuickFix(SecurityPluginBundle.message("dfs003.remove-duplicated-alias")))
                         )
 
                         holder.registerProblem(descriptor)

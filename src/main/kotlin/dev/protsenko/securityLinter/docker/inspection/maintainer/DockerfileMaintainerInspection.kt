@@ -24,7 +24,7 @@ class DockerfileMaintainerInspection : LocalInspectionTool() {
                 val descriptor = HtmlProblemDescriptor(
                     o,
                     SecurityPluginBundle.message("dfs013.documentation"),
-                    SecurityPluginBundle.message("ds020.no-maintainer"),
+                    SecurityPluginBundle.message("dfs013.no-maintainer"),
                     ProblemHighlightType.LIKE_DEPRECATED,
                     arrayOf(ReplaceMaintainerWithLabel())
                 )
@@ -43,7 +43,7 @@ class DockerfileMaintainerInspection : LocalInspectionTool() {
             IntentionPreviewInfo.EMPTY
 
         override fun getFamilyName(): @IntentionFamilyName String =
-            SecurityPluginBundle.message("ds020.replace-maintainer")
+            SecurityPluginBundle.message("dfs013.replace-maintainer")
 
         override fun applyFix(project: Project, descriptor: ProblemDescriptor) {
             val maintainer = descriptor.psiElement.text

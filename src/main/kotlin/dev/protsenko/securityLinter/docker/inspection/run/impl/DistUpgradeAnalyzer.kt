@@ -14,7 +14,7 @@ class DistUpgradeAnalyzer: DockerfileRunAnalyzer {
             val descriptor = HtmlProblemDescriptor(
                 psiElement,
                 SecurityPluginBundle.message("dfs018.documentation"),
-                SecurityPluginBundle.message("ds022.no-dist-upgrade"),
+                SecurityPluginBundle.message("dfs018.no-dist-upgrade"),
                 ProblemHighlightType.WARNING
             )
 

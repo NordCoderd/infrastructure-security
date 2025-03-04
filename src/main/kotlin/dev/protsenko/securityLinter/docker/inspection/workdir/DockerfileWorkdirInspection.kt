@@ -25,7 +25,7 @@ class DockerfileWorkdirInspection: LocalInspectionTool() {
                     val descriptor = HtmlProblemDescriptor(
                         o,
                         SecurityPluginBundle.message("dfs027.documentation"),
-                        SecurityPluginBundle.message("ds008.workdir-path-not-absolute"),
+                        SecurityPluginBundle.message("dfs027.workdir-path-not-absolute"),
                         ProblemHighlightType.WARNING
                     )
 

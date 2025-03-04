@@ -65,7 +65,7 @@ class DockerfileRunInspection : LocalInspectionTool() {
                         val descriptor = HtmlProblemDescriptor(
                             runCommand,
                             SecurityPluginBundle.message("dfs028.documentation"),
-                            SecurityPluginBundle.message("ds034.multiple-consecutive-run-commands"),
+                            SecurityPluginBundle.message("dfs028.multiple-consecutive-run-commands"),
                             ProblemHighlightType.WARNING
                         )
 
@@ -78,7 +78,7 @@ class DockerfileRunInspection : LocalInspectionTool() {
                         val descriptor = HtmlProblemDescriptor(
                             runCommand,
                             SecurityPluginBundle.message("dfs026.documentation"),
-                            SecurityPluginBundle.message("ds013.standardise-remote-get"),
+                            SecurityPluginBundle.message("dfs026.standardise-remote-get"),
                             ProblemHighlightType.WARNING
                         )
 

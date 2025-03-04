@@ -35,11 +35,11 @@ class CopyReferringToCurrentImageAnalyzer : DockerfileCopyOrAddAnalyzer {
             val descriptor = HtmlProblemDescriptor(
                 copyFromOption,
                 SecurityPluginBundle.message("dfs006.documentation"),
-                SecurityPluginBundle.message("ds005.copy-referring-to-the-current-image"),
+                SecurityPluginBundle.message("dfs006.copy-referring-to-the-current-image"),
                 ProblemHighlightType.ERROR,
                 arrayOf(
                     DeletePsiElementQuickFix(
-                        SecurityPluginBundle.message("ds005.remove-referring")
+                        SecurityPluginBundle.message("dfs006.remove-referring")
                     )
                 )
             )
